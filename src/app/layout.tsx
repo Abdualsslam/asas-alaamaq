@@ -1,0 +1,47 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "أساس الأعماق للمقاولات | ASAS AL-AAMAQ",
+  description:
+    "شركة متخصصة في هندسة الأرض واستقرار الحفريات — سند الحفريات، الشوتكريت، الميكروبايل، نزح المياه، والتصريف الهندسي. الرياض، المملكة العربية السعودية.",
+  keywords: [
+    "سند حفريات",
+    "شوتكريت",
+    "ميكروبايل",
+    "نزح مياه",
+    "مقاولات",
+    "هندسة أرضية",
+    "استقرار تربة",
+    "حفريات عميقة",
+    "الرياض",
+    "shoring",
+    "shotcrete",
+    "micropile",
+    "dewatering",
+  ],
+  authors: [{ name: "أساس الأعماق للمقاولات" }],
+  openGraph: {
+    title: "أساس الأعماق للمقاولات | ASAS AL-AAMAQ",
+    description:
+      "هندسة متخصصة في التحكم بالتربة والمياه الجوفية واستقرار الحفريات العميقة.",
+    locale: "ar_SA",
+    type: "website",
+    siteName: "أساس الأعماق للمقاولات",
+  },
+  icons: {
+    icon: "/brand/icon.svg",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ar" dir="rtl" className="antialiased">
+      <body className="min-h-screen font-brand">{children}</body>
+    </html>
+  );
+}

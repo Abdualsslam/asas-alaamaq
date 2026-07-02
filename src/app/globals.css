@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+/* ===========================
+   FONT FACES - DIN Next LT Arabic
+   =========================== */
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url("/fonts/DINNextLTArabic-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url("/fonts/DINNextLTArabic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url("/fonts/DINNextLTArabic-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url("/fonts/DINNextLTArabic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DIN Next LT Arabic";
+  src: url("/fonts/DINNextLTArabic-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================
+   CSS VARIABLES
+   =========================== */
+
+:root {
+  /* Brand Colors */
+  --color-earth-brown: #934E34;
+  --color-earth-brown-dark: #7A3F2A;
+  --color-earth-brown-light: #A86B55;
+  --color-charcoal: #1F1F1F;
+  --color-sand-light: #F4F0EA;
+  --color-sand-secondary: #D8C1A8;
+  --color-equipment-orange: #D96B2B;
+  --color-concrete-gray: #6E6A64;
+  --color-concrete-gray-light: #8A8680;
+
+  /* Functional */
+  --color-background: var(--color-sand-light);
+  --color-foreground: var(--color-charcoal);
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FAF8F5;
+  --color-border: #E2DDD6;
+  --color-border-strong: #C5BDB3;
+
+  /* Spacing */
+  --section-padding-y: 6rem;
+  --section-padding-y-mobile: 4rem;
+  --container-max-width: 1280px;
+  --container-padding-x: 1.5rem;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+}
+
+/* ===========================
+   TAILWIND v4 THEME
+   =========================== */
+
+@theme inline {
+  --color-earth-brown: var(--color-earth-brown);
+  --color-earth-brown-dark: var(--color-earth-brown-dark);
+  --color-earth-brown-light: var(--color-earth-brown-light);
+  --color-charcoal: var(--color-charcoal);
+  --color-sand-light: var(--color-sand-light);
+  --color-sand-secondary: var(--color-sand-secondary);
+  --color-equipment-orange: var(--color-equipment-orange);
+  --color-concrete-gray: var(--color-concrete-gray);
+  --color-concrete-gray-light: var(--color-concrete-gray-light);
+  --color-surface: var(--color-surface);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+
+  --font-brand: "DIN Next LT Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
+/* ===========================
+   BASE STYLES
+   =========================== */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-brand);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   TYPOGRAPHY
+   =========================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-charcoal);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+
+p {
+  color: var(--color-concrete-gray);
+  line-height: 1.8;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+/* ===========================
+   SELECTION
+   =========================== */
+
+::selection {
+  background-color: var(--color-earth-brown);
+  color: white;
+}
+
+/* ===========================
+   SCROLLBAR
+   =========================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-sand-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-earth-brown);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sand-secondary) var(--color-sand-light);
+}
+
+/* ===========================
+   UTILITY CLASSES
+   =========================== */
+
+.section-padding {
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: var(--section-padding-y-mobile);
+    padding-bottom: var(--section-padding-y-mobile);
+  }
+}
+
+/* Engineering line decorations */
+.engineering-line {
+  width: 60px;
+  height: 3px;
+  background: var(--color-earth-brown);
+  position: relative;
+}
+
+.engineering-line::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 8px;
+  height: 9px;
+  background: var(--color-equipment-orange);
+}
+
+/* Soil layers background pattern */
+.soil-pattern {
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 40px,
+      var(--color-sand-secondary) 40px,
+      var(--color-sand-secondary) 41px
+    );
+  opacity: 0.15;
+}

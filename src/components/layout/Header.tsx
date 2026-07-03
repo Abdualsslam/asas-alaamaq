@@ -101,6 +101,21 @@ export function Header() {
             className="flex items-center gap-3 md:gap-3.5 flex-shrink-0"
             aria-label="أساس الأعماق للمقاولات"
           >
+            <div
+              className={cn(
+                "h-8 md:h-9 w-auto transition-[filter] duration-300 flex items-center justify-center",
+                !isScrolled && "[filter:brightness(0)_invert(1)]"
+              )}
+            >
+              <Image
+                src="/brand/icon.svg"
+                alt="أساس الأعماق للمقاولات"
+                width={30}
+                height={30}
+                className="h-full w-auto"
+                priority
+              />
+            </div>
             <div className="flex flex-col text-right">
               <span
                 className={cn(
@@ -118,21 +133,6 @@ export function Header() {
               >
                 أساس الأعماق للمقاولات
               </span>
-            </div>
-            <div
-              className={cn(
-                "h-8 md:h-9 w-auto transition-[filter] duration-300 flex items-center justify-center",
-                !isScrolled && "[filter:brightness(0)_invert(1)]"
-              )}
-            >
-              <Image
-                src="/brand/icon.svg"
-                alt="أساس الأعماق للمقاولات"
-                width={30}
-                height={30}
-                className="h-full w-auto"
-                priority
-              />
             </div>
           </a>
 
@@ -246,6 +246,13 @@ export function Header() {
               {/* Panel header */}
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div className="flex items-center gap-2.5">
+                  <Image
+                    src="/brand/icon.svg"
+                    alt="أساس الأعماق للمقاولات"
+                    width={26}
+                    height={26}
+                    className="h-[26px] w-auto"
+                  />
                   <div className="flex flex-col text-right">
                     <span className="text-sm font-bold tracking-wider leading-tight text-charcoal">
                       ASAS AL-AAMAQ
@@ -254,13 +261,6 @@ export function Header() {
                       أساس الأعماق للمقاولات
                     </span>
                   </div>
-                  <Image
-                    src="/brand/icon.svg"
-                    alt="أساس الأعماق للمقاولات"
-                    width={26}
-                    height={26}
-                    className="h-[26px] w-auto"
-                  />
                 </div>
                 <button
                   onClick={closeMenu}

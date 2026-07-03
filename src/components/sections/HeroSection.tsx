@@ -90,7 +90,7 @@ export function HeroSection() {
   const reduceMotion = useReducedMotion();
   // Client-only gate for decorative particles (hydration-safe).
   const isClient = useSyncExternalStore(
-    () => () => {},
+    () => () => { },
     () => true,
     () => false
   );
@@ -234,14 +234,15 @@ export function HeroSection() {
               animate={anim}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="mb-7 flex items-center gap-3"
-            >
+            > <span dir="ltr" className="flex items-center gap-2">
+                <span className="h-px w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
+                <span className="h-1.5 w-1.5 rotate-45 bg-equipment-orange shadow-[0_0_8px_rgba(217,107,43,0.55)]" />
+
+              </span>
               <span className="text-sm font-semibold tracking-wide text-equipment-orange">
                 هندسة أرضية متخصصة
               </span>
-              <span dir="ltr" className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rotate-45 bg-equipment-orange shadow-[0_0_8px_rgba(217,107,43,0.55)]" />
-                <span className="h-px w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
-              </span>
+
             </motion.div>
 
             {/* Headline — masked line reveal */}

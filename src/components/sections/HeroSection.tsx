@@ -65,9 +65,9 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-charcoal font-black leading-[1.2] mb-6"
             >
-              الحفر ليس مجرد
+              نُسيطر على التربة
               <br />
-              <span className="text-earth-brown">أعمال حفر</span>
+              <span className="text-earth-brown">قبل أن تسيطر على المشروع</span>
             </motion.h1>
 
             {/* Subtitle */}
@@ -75,22 +75,11 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-lg md:text-xl text-charcoal/80 font-medium mb-4 leading-relaxed"
+              className="text-lg md:text-xl text-charcoal/80 font-medium mb-10 leading-relaxed max-w-xl"
             >
-              بل هندسة للتحكم بالتربة، المياه الجوفية، والمخاطر قبل أن تؤثر
-              على المشروع.
-            </motion.p>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="text-concrete-gray leading-relaxed mb-10 max-w-lg"
-            >
-              في أساس الأعماق، ننفذ حلول سند الحفريات، الشوتكريت، الميكروبايل،
-              نزح المياه، والتصريف الهندسي وفق منهجية دقيقة تضمن الاستقرار
-              والسلامة في ظروف الموقع الحقيقية.
+              حلول هندسية متخصصة في سند الحفريات، الشوتكريت، الميكروبايل،
+              نزح المياه، والتصريف تحت السطحي لضمان استقرار الموقع وسلامة
+              التنفيذ.
             </motion.p>
 
             {/* CTA Buttons */}

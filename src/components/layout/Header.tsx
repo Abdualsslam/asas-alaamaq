@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { Menu, X, Phone, MessageCircle, ArrowLeft } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { contactInfo } from "@/data/contact";
@@ -30,6 +35,8 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("hero");
+  const reduceMotion = useReducedMotion();
+  const headerRevealDelay = reduceMotion ? 0 : 3;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -70,7 +77,16 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-5 md:top-6 right-0 left-0 z-50 px-4 md:px-6 lg:px-8">
+      <motion.header
+        initial={{ opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.7,
+          delay: headerRevealDelay,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="fixed top-5 md:top-6 right-0 left-0 z-50 px-4 md:px-6 lg:px-8"
+      >
         <nav
           className={cn(
             "mx-auto flex max-w-[1280px] items-center justify-between rounded-full px-6 md:px-8 py-3 transition-all duration-500 border",
@@ -204,7 +220,7 @@ export function Header() {
             <Menu size={24} />
           </button>
         </nav>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu */}
       <AnimatePresence>

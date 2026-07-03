@@ -238,3 +238,73 @@ a {
     );
   opacity: 0.15;
 }
+
+/* ===========================
+   HERO — CINEMATIC LAYER
+   =========================== */
+
+/* Legibility shadow for hero text over video */
+.hero-text-shadow {
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.7), 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+
+/* Animated film grain overlay (SVG fractal noise, tiled + shifting) */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: grainShift 0.5s steps(4) infinite;
+}
+
+@keyframes grainShift {
+  0% { background-position: 0 0; }
+  25% { background-position: -48px 24px; }
+  50% { background-position: 36px -36px; }
+  75% { background-position: -24px 48px; }
+  100% { background-position: 0 0; }
+}
+
+/* Floating dust particles (drift upward slowly) */
+.hero-particle {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(216, 193, 168, 0.95), rgba(216, 193, 168, 0));
+  animation: heroDrift linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes heroDrift {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  12% { opacity: var(--p-opacity, 0.4); }
+  85% { opacity: var(--p-opacity, 0.4); }
+  100% { transform: translate3d(14px, -140px, 0); opacity: 0; }
+}
+
+/* Depth-ruler scanning indicator */
+@keyframes depthScan {
+  0% { top: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.depth-scan {
+  animation: depthScan 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Slow parallax drift for the survey guide line */
+@keyframes lineDraw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .film-grain,
+  .hero-particle,
+  .depth-scan {
+    animation: none !important;
+  }
+  .hero-particle {
+    opacity: 0.22;
+  }
+}

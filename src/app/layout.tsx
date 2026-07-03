@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "slot-text/style.css";
 
 export const metadata: Metadata = {
   title: "أساس الأعماق للمقاولات | ASAS AL-AAMAQ",

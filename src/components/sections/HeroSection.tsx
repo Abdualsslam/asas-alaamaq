@@ -75,7 +75,7 @@ const headlineParent: Variants = {
 };
 
 const headlineLine: Variants = {
-  hidden: { y: "115%" },
+  hidden: { y: "150%" },
   visible: { y: "0%", transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] } },
 };
 
@@ -185,7 +185,12 @@ export function HeroSection() {
         </div>
 
         {/* ---------- Depth ruler (desktop, ambient) ---------- */}
-        <div className="pointer-events-none absolute inset-y-0 left-6 z-10 hidden items-center lg:flex xl:left-10">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: revealed ? 1 : 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="pointer-events-none absolute inset-y-0 left-6 z-10 hidden items-center lg:flex xl:left-10"
+        >
           <div className="relative flex h-[56vh] flex-col justify-between">
             <span className="absolute right-[5px] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/25 to-transparent" />
             <span className="depth-scan absolute right-[3px] h-1 w-1 -translate-y-1/2 rounded-full bg-equipment-orange shadow-[0_0_8px_2px_rgba(217,107,43,0.7)]" />
@@ -219,7 +224,7 @@ export function HeroSection() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* ---------- Content (revealed after video) ---------- */}
         <Container className="relative z-10 flex min-h-[100svh] flex-col justify-center pt-28 pb-32 md:pb-36">
@@ -253,9 +258,9 @@ export function HeroSection() {
               className="hero-text-shadow mb-8 flex flex-col leading-[1.1] tracking-tight"
             >
               <span className="block overflow-hidden pt-2 pb-6 -mb-5">
-                <motion.span 
-                  variants={headlineLine} 
-                  className="block text-[clamp(2.5rem,6.5vw,5rem)] font-black text-white"
+                <motion.span
+                  variants={headlineLine}
+                  className="block text-[clamp(2.5rem,6vw,5rem)] font-black text-white"
                 >
                   نُسيطر على التربة
                 </motion.span>

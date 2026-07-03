@@ -14,9 +14,32 @@ import {
   useTransform,
   type Variants,
 } from "framer-motion";
-import { ArrowLeft, ArrowDown, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowDown } from "lucide-react";
+import { SlotText } from "slot-text/react";
 import { Container } from "@/components/ui/Container";
-import { depthMarks } from "@/data/stats";
+import { cn } from "@/lib/utils";
+
+/** Depth ruler levels (metres). 0 = ground surface. */
+const depthLevels = [0, 3, 6, 9, 12, 15] as const;
+
+/** Rolls a metre value in via slot-text; static text for reduced-motion. */
+function DepthValue({
+  value,
+  ready,
+  reduce,
+}: {
+  value: number;
+  ready: boolean;
+  reduce: boolean | null;
+}) {
+  if (reduce) return <>{value}</>;
+  return (
+    <SlotText
+      text={String(ready ? value : 0)}
+      options={{ direction: "down", stagger: 40, duration: 380, bounce: 0.28 }}
+    />
+  );
+}
 
 /**
  * Deterministic dust particles — generated at module load. Rendered client-only
@@ -73,6 +96,8 @@ export function HeroSection() {
   );
   // Content stays hidden until the intro video reaches its final frame.
   const [revealed, setRevealed] = useState(false);
+  // Ambient: depth-ruler numbers roll from 0 to their values shortly after mount.
+  const [rulerReady, setRulerReady] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -94,6 +119,12 @@ export function HeroSection() {
   // a fallback timer guarantees the content appears even if `ended` never fires.
   useEffect(() => {
     const t = window.setTimeout(() => setRevealed(true), reduceMotion ? 0 : 3200);
+    return () => window.clearTimeout(t);
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const t = window.setTimeout(() => setRulerReady(true), 650);
     return () => window.clearTimeout(t);
   }, [reduceMotion]);
 
@@ -155,18 +186,36 @@ export function HeroSection() {
 
         {/* ---------- Depth ruler (desktop, ambient) ---------- */}
         <div className="pointer-events-none absolute inset-y-0 left-6 z-10 hidden items-center lg:flex xl:left-10">
-          <div className="relative flex h-[52vh] flex-col justify-between">
+          <div className="relative flex h-[56vh] flex-col justify-between">
             <span className="absolute right-[5px] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/25 to-transparent" />
             <span className="depth-scan absolute right-[3px] h-1 w-1 -translate-y-1/2 rounded-full bg-equipment-orange shadow-[0_0_8px_2px_rgba(217,107,43,0.7)]" />
-            {depthMarks.map((mark) => (
-              <div key={mark} className="flex items-center gap-2">
-                <span className="h-px w-3 bg-white/40" />
+            {depthLevels.map((level, idx) => (
+              <div key={level} className="flex items-center gap-2.5">
                 <span
-                  dir="ltr"
-                  className="font-mono text-[11px] tracking-wider text-white/50"
-                >
-                  -{mark}
-                </span>
+                  className={cn(
+                    "h-px",
+                    idx === 0 ? "w-4 bg-white/70" : "w-3 bg-white/40"
+                  )}
+                />
+                <div className="flex flex-col leading-none">
+                  <span
+                    dir="ltr"
+                    className={cn(
+                      "flex items-center font-mono tracking-wider",
+                      idx === 0
+                        ? "text-[12px] text-white/80"
+                        : "text-[11px] text-white/55"
+                    )}
+                  >
+                    {idx !== 0 && "-"}
+                    <DepthValue value={level} ready={rulerReady} reduce={reduceMotion} />m
+                  </span>
+                  {idx === 0 && (
+                    <span className="mt-1 text-[9px] tracking-wide text-white/45">
+                      سطح الأرض
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -184,11 +233,14 @@ export function HeroSection() {
               initial="hidden"
               animate={anim}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-7 flex items-center gap-4"
+              className="mb-7 flex items-center gap-3"
             >
-              <span className="h-px w-12 bg-gradient-to-l from-equipment-orange to-transparent" />
               <span className="text-sm font-semibold tracking-wide text-equipment-orange">
                 هندسة أرضية متخصصة
+              </span>
+              <span dir="ltr" className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rotate-45 bg-equipment-orange shadow-[0_0_8px_rgba(217,107,43,0.55)]" />
+                <span className="h-px w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
               </span>
             </motion.div>
 
@@ -238,12 +290,11 @@ export function HeroSection() {
                 href="https://wa.me/966501850513"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange px-7 py-4 text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-equipment-orange/40"
+                className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange py-2 pr-7 pl-2 text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
               >
-                <MessageCircle size={18} />
                 ناقش مشروعك معنا
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:-translate-x-1">
-                  <ArrowLeft size={14} />
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:-translate-x-1">
+                  <ArrowLeft size={16} />
                 </span>
               </a>
               <a

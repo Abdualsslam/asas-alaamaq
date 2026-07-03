@@ -29,12 +29,33 @@ const itemVariants: Variants = {
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll-spy: highlight the nav item for the section crossing the viewport's
+  // middle band, so the active link keeps its orange underline.
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.getElementById(item.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -55% 0px", threshold: 0 }
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   // Lock body scroll when mobile menu is open
@@ -75,45 +96,51 @@ export function Header() {
 
           {/* Desktop Navigation — Center */}
           <ul className="hidden lg:flex items-center gap-1 flex-1 justify-center">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="group relative px-4 py-2 text-sm font-medium"
-                >
-                  <span
-                    className={cn(
-                      "transition-colors duration-200",
-                      isScrolled
-                        ? "text-charcoal/80 group-hover:text-earth-brown"
-                        : "text-white/85 group-hover:text-white"
-                    )}
+            {navItems.map((item) => {
+              const isActive = activeId === item.href.slice(1);
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className="group relative px-4 py-2 text-sm"
                   >
-                    {item.label}
-                  </span>
-                  <span
-                    className={cn(
-                      "absolute inset-x-4 bottom-1 h-0.5 origin-right scale-x-0 rounded-full transition-transform duration-300 group-hover:scale-x-100",
-                      isScrolled ? "bg-earth-brown" : "bg-equipment-orange"
-                    )}
-                  />
-                </a>
-              </li>
-            ))}
+                    <span
+                      className={cn(
+                        "transition-colors duration-200",
+                        isScrolled
+                          ? isActive
+                            ? "font-semibold text-earth-brown"
+                            : "font-medium text-charcoal/70 group-hover:text-earth-brown"
+                          : isActive
+                            ? "font-semibold text-white"
+                            : "font-medium text-white/70 group-hover:text-white"
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                    <span
+                      className={cn(
+                        "absolute inset-x-4 bottom-1 h-0.5 origin-right rounded-full transition-transform duration-300",
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                        isScrolled ? "bg-earth-brown" : "bg-equipment-orange"
+                      )}
+                    />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Desktop CTA — Left side */}
           <a
             href="#contact"
-            className={cn(
-              "hidden lg:inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-300",
-              isScrolled
-                ? "bg-earth-brown text-white hover:bg-earth-brown-dark hover:shadow-lg hover:shadow-earth-brown/20 hover:-translate-y-0.5"
-                : "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
-            )}
+            className="group hidden lg:inline-flex items-center gap-2.5 rounded-full bg-equipment-orange py-1.5 pr-5 pl-1.5 text-sm font-semibold text-white! shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
           >
             تواصل معنا
-            <ArrowLeft size={16} />
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:rotate-12">
+              <Phone size={15} />
+            </span>
           </a>
 
           {/* Mobile Menu Toggle */}

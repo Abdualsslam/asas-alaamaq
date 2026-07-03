@@ -7,7 +7,7 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function ServicesSection() {
   return (
-    <section id="services" className="section-padding bg-surface">
+    <section id="services" className="section-padding scroll-mt-28 bg-surface">
       <Container>
         <MotionReveal>
           <SectionHeader

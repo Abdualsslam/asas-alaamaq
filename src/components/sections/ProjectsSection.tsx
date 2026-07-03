@@ -17,7 +17,7 @@ const projectPlaceholders = [
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="section-padding bg-surface">
+    <section id="projects" className="section-padding scroll-mt-28 bg-surface">
       <Container>
         <MotionReveal>
           <SectionHeader

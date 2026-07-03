@@ -39,7 +39,7 @@ const steps = [
 
 export function ExecutionSection() {
   return (
-    <section id="execution" className="section-padding bg-charcoal relative overflow-hidden">
+    <section id="execution" className="section-padding scroll-mt-28 bg-charcoal relative overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1440 600">

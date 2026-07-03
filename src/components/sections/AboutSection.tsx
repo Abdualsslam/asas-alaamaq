@@ -6,7 +6,7 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function AboutSection() {
   return (
-    <section id="about" className="section-padding bg-sand-light">
+    <section id="about" className="section-padding scroll-mt-28 bg-sand-light">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}

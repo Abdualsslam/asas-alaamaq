@@ -10,7 +10,7 @@ export function FinalCTASection() {
   return (
     <section
       id="contact"
-      className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-earth-brown via-earth-brown-dark to-charcoal"
+      className="relative py-20 md:py-28 scroll-mt-28 overflow-hidden bg-gradient-to-br from-earth-brown via-earth-brown-dark to-charcoal"
     >
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">

@@ -6,7 +6,6 @@ import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Menu, X, Phone, MessageCircle, ArrowLeft } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { contactInfo } from "@/data/contact";
-import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
 const panelVariants: Variants = {
@@ -50,92 +49,85 @@ export function Header() {
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 right-0 left-0 z-50 transition-all duration-300",
-          isScrolled
-            ? "bg-sand-light/85 backdrop-blur-md shadow-sm border-b border-border"
-            : "bg-transparent"
-        )}
-      >
-        {/* Top scrim for legibility over the video */}
-        {!isScrolled && (
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/15 to-transparent" />
-        )}
+      <header className="fixed top-4 md:top-5 right-0 left-0 z-50 px-4 md:px-6 lg:px-8">
+        <nav
+          className={cn(
+            "mx-auto flex max-w-[1280px] items-center justify-between rounded-2xl px-5 md:px-6 py-3.5 transition-all duration-500 border",
+            isScrolled
+              ? "border-border bg-sand-light/90 shadow-lg shadow-black/5 backdrop-blur-xl"
+              : "border-white/15 bg-charcoal/35 backdrop-blur-xl"
+          )}
+        >
+          {/* Logo — Right side */}
+          <a href="#hero" className="flex-shrink-0" aria-label="أساس الأعماق للمقاولات">
+            <Image
+              src="/brand/logo.svg"
+              alt="أساس الأعماق للمقاولات"
+              width={140}
+              height={44}
+              className={cn(
+                "h-8 md:h-10 w-auto transition-[filter] duration-300",
+                !isScrolled && "[filter:brightness(0)_invert(1)]"
+              )}
+              priority
+            />
+          </a>
 
-        <Container>
-          <nav className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="#hero" className="flex-shrink-0" aria-label="أساس الأعماق للمقاولات">
-              <Image
-                src="/brand/logo.svg"
-                alt="أساس الأعماق للمقاولات"
-                width={160}
-                height={50}
-                className={cn(
-                  "h-10 md:h-12 w-auto transition-[filter] duration-300",
-                  !isScrolled && "[filter:brightness(0)_invert(1)]"
-                )}
-                priority
-              />
-            </a>
-
-            {/* Desktop Navigation */}
-            <ul className="hidden lg:flex items-center gap-1">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="group relative px-4 py-2 text-sm font-medium"
+          {/* Desktop Navigation — Center */}
+          <ul className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="group relative px-4 py-2 text-sm font-medium"
+                >
+                  <span
+                    className={cn(
+                      "transition-colors duration-200",
+                      isScrolled
+                        ? "text-charcoal/80 group-hover:text-earth-brown"
+                        : "text-white/85 group-hover:text-white"
+                    )}
                   >
-                    <span
-                      className={cn(
-                        "transition-colors duration-200",
-                        isScrolled
-                          ? "text-charcoal/80 group-hover:text-earth-brown"
-                          : "text-white/85 group-hover:text-white"
-                      )}
-                    >
-                      {item.label}
-                    </span>
-                    <span
-                      className={cn(
-                        "absolute inset-x-4 bottom-1 h-0.5 origin-right scale-x-0 rounded-full transition-transform duration-300 group-hover:scale-x-100",
-                        isScrolled ? "bg-earth-brown" : "bg-equipment-orange"
-                      )}
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
+                    {item.label}
+                  </span>
+                  <span
+                    className={cn(
+                      "absolute inset-x-4 bottom-1 h-0.5 origin-right scale-x-0 rounded-full transition-transform duration-300 group-hover:scale-x-100",
+                      isScrolled ? "bg-earth-brown" : "bg-equipment-orange"
+                    )}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
 
-            {/* Desktop CTA */}
-            <a
-              href="#contact"
-              className={cn(
-                "hidden lg:inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-all duration-300",
-                isScrolled
-                  ? "bg-earth-brown text-white hover:bg-earth-brown-dark hover:shadow-lg hover:shadow-earth-brown/20 hover:-translate-y-0.5"
-                  : "border border-white/40 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
-              )}
-            >
-              تواصل معنا
-              <ArrowLeft size={16} />
-            </a>
+          {/* Desktop CTA — Left side */}
+          <a
+            href="#contact"
+            className={cn(
+              "hidden lg:inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-300",
+              isScrolled
+                ? "bg-earth-brown text-white hover:bg-earth-brown-dark hover:shadow-lg hover:shadow-earth-brown/20 hover:-translate-y-0.5"
+                : "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-charcoal"
+            )}
+          >
+            تواصل معنا
+            <ArrowLeft size={16} />
+          </a>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className={cn(
-                "lg:hidden p-2 transition-colors",
-                isScrolled ? "text-charcoal" : "text-white"
-              )}
-              aria-label="فتح القائمة"
-            >
-              <Menu size={26} />
-            </button>
-          </nav>
-        </Container>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className={cn(
+              "lg:hidden p-2 transition-colors",
+              isScrolled ? "text-charcoal" : "text-white"
+            )}
+            aria-label="فتح القائمة"
+          >
+            <Menu size={24} />
+          </button>
+        </nav>
       </header>
 
       {/* Mobile Menu */}

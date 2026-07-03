@@ -250,19 +250,30 @@ export function HeroSection() {
               variants={headlineParent}
               initial="hidden"
               animate={anim}
-              className="hero-text-shadow mb-7 font-black leading-[1.18] text-[clamp(2.4rem,5.6vw,4.8rem)]"
+              className="hero-text-shadow mb-8 flex flex-col leading-[1.1] tracking-tight"
             >
-              <span className="block overflow-hidden pt-2 pb-1">
-                <motion.span variants={headlineLine} className="block text-white">
+              <span className="block overflow-hidden pt-2 pb-6 -mb-5">
+                <motion.span 
+                  variants={headlineLine} 
+                  className="block text-[clamp(2.5rem,6.5vw,5rem)] font-black text-white"
+                >
                   نُسيطر على التربة
                 </motion.span>
               </span>
-              <span className="block overflow-hidden pt-2 pb-1">
+              <span className="block overflow-hidden pt-1 pb-6 -mb-5">
                 <motion.span
                   variants={headlineLine}
-                  className="block bg-gradient-to-l from-[#E8D0B0] via-[#C9A06C] to-[#A67B4B] bg-clip-text text-transparent"
+                  className="block text-[clamp(1.8rem,4.5vw,3.2rem)] font-light text-sand-secondary"
                 >
-                  قبل أن تسيطر على المشروع
+                  قبل أن تسيطر على
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden pt-1 pb-6">
+                <motion.span
+                  variants={headlineLine}
+                  className="block text-[clamp(2.5rem,6.5vw,5rem)] font-black text-equipment-orange"
+                >
+                  المشروع
                 </motion.span>
               </span>
             </motion.h1>

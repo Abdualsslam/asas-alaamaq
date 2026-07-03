@@ -189,7 +189,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: revealed ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="pointer-events-none absolute inset-y-0 left-6 z-10 hidden items-center lg:flex xl:left-10"
+          className="pointer-events-none absolute inset-y-0 left-[8%] z-10 hidden items-center lg:flex xl:left-[14%] 2xl:left-[20%]"
         >
           <div className="relative flex h-[56vh] flex-col justify-between">
             <span className="absolute right-[5px] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/25 to-transparent" />

@@ -1,0 +1,280 @@
+2026-Jul-04 08:02:12.117931 Docker 29.3.1 with BuildKit and Buildx detected on deployment server (apps-01).
+2026-Jul-04 08:02:12.149577 Starting deployment of Abdualsslam/asas-alaamaq:main to apps-01.
+2026-Jul-04 08:02:12.549188 Preparing container with helper image: ghcr.io/coollabsio/coolify-helper:1.0.13
+2026-Jul-04 08:02:12.791990 [DEBUG] [CMD]: docker stop -t 30 mq0subg43ce1sis2rwyp1to9
+2026-Jul-04 08:02:12.791990 [DEBUG] Error response from daemon: No such container: mq0subg43ce1sis2rwyp1to9
+2026-Jul-04 08:02:13.264052 [DEBUG] [CMD]: docker run -d --network 'coolify' --name mq0subg43ce1sis2rwyp1to9  --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/coollabsio/coolify-helper:1.0.13
+2026-Jul-04 08:02:13.264052 [DEBUG] 9112653acdafba10a195ca6f14a88513aa7102968f670cff895d4df051854df0
+2026-Jul-04 08:02:14.913354 [DEBUG] [CMD]: docker exec mq0subg43ce1sis2rwyp1to9 bash -c 'GIT_SSH_COMMAND="ssh -o ConnectTimeout=30 -p 22 -o Port=22 -o LogLevel=ERROR -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git ls-remote https://github.com/Abdualsslam/asas-alaamaq refs/heads/main'
+2026-Jul-04 08:<REDACTED>@\(.*\):#https://\1/#g" '\''/artifacts/mq0subg43ce1sis2rwyp1to9'\''/.gitmodules || true && git submodule sync && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git submodule update --init --recursive --depth=1; fi && cd '\''/artifacts/mq0subg43ce1sis2rwyp1to9'\'' && GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" git lfs pull'
+2026-Jul-04 08:<REDACTED>@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+2026-Jul-04 08:02:28.483807 [DEBUG] #4 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+2026-Jul-04 08:02:28.816981 [DEBUG] #4 DONE 0.3s
+2026-Jul-04 08:02:28.816981 [DEBUG] 
+2026-Jul-04 08:02:28.816981 [DEBUG] #5 [internal] load build context
+2026-Jul-04 08:02:28.998715 [DEBUG] #5 transferring context: 13.66MB 0.3s done
+2026-Jul-04 08:02:28.998715 [DEBUG] #5 DONE 0.5s
+2026-Jul-04 08:02:28.998715 [DEBUG] 
+2026-Jul-04 08:02:28.998715 [DEBUG] #6 [builder 1/4] WORKDIR /app
+2026-Jul-04 08:02:28.998715 [DEBUG] #6 DONE 0.1s
+2026-Jul-04 08:02:28.998715 [DEBUG] 
+2026-Jul-04 08:02:28.998715 [DEBUG] #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:37.791198 [DEBUG] #7 ...
+2026-Jul-04 08:02:37.791198 [DEBUG] 
+2026-Jul-04 08:02:37.791198 [DEBUG] #8 [deps 1/4] RUN apk add --no-cache libc6-compat
+2026-Jul-04 08:02:37.791198 [DEBUG] #8 9.143 (1/3) Installing musl-obstack (1.2.3-r2)
+2026-Jul-04 08:02:37.940224 [DEBUG] #8 9.156 (2/3) Installing libucontext (1.3.3-r0)
+2026-Jul-04 08:02:37.940224 [DEBUG] #8 9.163 (3/3) Installing gcompat (1.1.0-r4)
+2026-Jul-04 08:02:37.940224 [DEBUG] #8 9.177 OK: 11.0 MiB in 21 packages
+2026-Jul-04 08:02:37.940224 [DEBUG] #8 DONE 9.3s
+2026-Jul-04 08:02:37.940224 [DEBUG] 
+2026-Jul-04 08:02:37.940224 [DEBUG] #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:38.115669 [DEBUG] #7 ...
+2026-Jul-04 08:02:38.115669 [DEBUG] 
+2026-Jul-04 08:02:38.115669 [DEBUG] #9 [deps 2/4] WORKDIR /app
+2026-Jul-04 08:02:38.115669 [DEBUG] #9 DONE 0.1s
+2026-Jul-04 08:02:38.115669 [DEBUG] 
+2026-Jul-04 08:02:38.115669 [DEBUG] #10 [deps 3/4] COPY package.json package-lock.json* ./
+2026-Jul-04 08:02:38.115669 [DEBUG] #10 DONE 0.1s
+2026-Jul-04 08:02:38.273117 [DEBUG] #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:38.632275 [DEBUG] #11 ...
+2026-Jul-04 08:02:38.632275 [DEBUG] 
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.495 (1/9) Installing brotli-libs (1.2.0-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.520 (2/9) Installing c-ares (1.34.6-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.529 (3/9) Installing libunistring (1.4.1-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.554 (4/9) Installing libidn2 (2.3.8-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.569 (5/9) Installing nghttp2-libs (1.69.0-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.593 (6/9) Installing libpsl (0.21.5-r3)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.601 (7/9) Installing zstd-libs (1.5.7-r2)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.620 (8/9) Installing libcurl (8.19.0-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.639 (9/9) Installing curl (8.19.0-r0)
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.653 Executing busybox-1.37.0-r30.trigger
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 9.695 OK: 15.9 MiB in 27 packages
+2026-Jul-04 08:02:38.632275 [DEBUG] #7 DONE 9.8s
+2026-Jul-04 08:02:38.779605 [DEBUG] #12 [runner 3/9] RUN addgroup --system --gid 1001 nodejs
+2026-Jul-04 08:02:38.863737 [DEBUG] #12 DONE 0.2s
+2026-Jul-04 08:02:38.863737 [DEBUG] 
+2026-Jul-04 08:02:38.863737 [DEBUG] #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:39.238135 [DEBUG] #11 ...
+2026-Jul-04 08:02:39.238135 [DEBUG] 
+2026-Jul-04 08:02:39.238135 [DEBUG] #13 [runner 4/9] RUN adduser --system --uid 1001 nextjs
+2026-Jul-04 08:02:39.238135 [DEBUG] #13 DONE 0.4s
+2026-Jul-04 08:02:39.389572 [DEBUG] #14 [runner 5/9] RUN mkdir .next
+2026-Jul-04 08:02:39.658432 [DEBUG] #14 DONE 0.4s
+2026-Jul-04 08:02:39.658432 [DEBUG] 
+2026-Jul-04 08:02:39.658432 [DEBUG] #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:39.959218 [DEBUG] #11 ...
+2026-Jul-04 08:02:39.959218 [DEBUG] 
+2026-Jul-04 08:02:39.959218 [DEBUG] #15 [runner 6/9] RUN chown nextjs:nodejs .next
+2026-Jul-04 08:02:39.959218 [DEBUG] #15 DONE 0.3s
+2026-Jul-04 08:02:40.113237 [DEBUG] #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error code EUSAGE
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Missing: @emnapi/runtime@1.11.2 from lock file
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Missing: @emnapi/core@1.11.2 from lock file
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Invalid: lock file's @emnapi/wasi-threads@1.2.1 does not satisfy @emnapi/wasi-threads@1.2.2
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Missing: @emnapi/core@1.10.0 from lock file
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Missing: @emnapi/wasi-threads@1.2.1 from lock file
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Clean install a project
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Usage:
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error npm ci
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Options:
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error
+2026-Jul-04 08:02:42.473192 [DEBUG] #11 4.349 npm error Run "npm help ci" for more info
+2026-Jul-04 08:02:42.636215 [DEBUG] #11 4.356 npm notice
+2026-Jul-04 08:02:42.636215 [DEBUG] #11 4.356 npm notice New major version of npm available! 10.8.2 -> 11.18.0
+2026-Jul-04 08:02:42.636215 [DEBUG] #11 4.356 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.18.0
+2026-Jul-04 08:<REDACTED>@11.18.0
+2026-Jul-04 08:02:42.636215 [DEBUG] #11 4.356 npm notice
+2026-Jul-04 08:02:42.636215 [DEBUG] #11 4.359 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-04T08_02_38_656Z-debug-0.log
+2026-Jul-04 08:02:42.699949 [DEBUG] #11 ERROR: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2026-Jul-04 08:02:42.878995 [DEBUG] ------
+2026-Jul-04 08:02:42.878995 [DEBUG] > [deps 4/4] RUN npm ci:
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.349 npm error
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.349 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.349 npm error
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.349 npm error Run "npm help ci" for more info
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.356 npm notice
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.356 npm notice New major version of npm available! 10.8.2 -> 11.18.0
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.356 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.18.0
+2026-Jul-04 08:<REDACTED>@11.18.0
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.356 npm notice
+2026-Jul-04 08:02:42.878995 [DEBUG] 4.359 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-04T08_02_38_656Z-debug-0.log
+2026-Jul-04 08:02:42.878995 [DEBUG] ------
+2026-Jul-04 08:02:42.887893 [DEBUG] Dockerfile:19
+2026-Jul-04 08:02:42.887893 [DEBUG] --------------------
+2026-Jul-04 08:02:42.887893 [DEBUG] 17 |     # Install dependencies based on the preferred package manager
+2026-Jul-04 08:02:42.887893 [DEBUG] 18 |     COPY package.json package-lock.json* ./
+2026-Jul-04 08:02:42.887893 [DEBUG] 19 | >>> RUN npm ci
+2026-Jul-04 08:02:42.887893 [DEBUG] 20 |
+2026-Jul-04 08:02:42.887893 [DEBUG] 21 |     # Rebuild the source code only when needed
+2026-Jul-04 08:02:42.887893 [DEBUG] --------------------
+2026-Jul-04 08:02:42.887893 [DEBUG] ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2026-Jul-04 08:02:42.902136 [DEBUG] exit status 1
+2026-Jul-04 08:02:43.196518 ========================================
+2026-Jul-04 08:02:43.243810 Deployment failed: Command execution failed (exit code 1): docker exec mq0subg43ce1sis2rwyp1to9 bash -c 'bash /artifacts/build.sh'
+2026-Jul-04 08:02:43.243810 Error: #0 building with "default" instance using docker driver
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #1 [internal] load build definition from Dockerfile
+2026-Jul-04 08:02:43.243810 #1 transferring dockerfile: 2.27kB done
+2026-Jul-04 08:02:43.243810 #1 DONE 0.1s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #2 [internal] load metadata for docker.io/library/node:20-alpine
+2026-Jul-04 08:02:43.243810 #2 DONE 2.0s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #3 [internal] load .dockerignore
+2026-Jul-04 08:02:43.243810 #3 transferring context: 113B done
+2026-Jul-04 08:02:43.243810 #3 DONE 0.1s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #4 [base 1/1] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+2026-Jul-04 08:02:43.243810 #4 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.1s done
+2026-Jul-04 08:02:43.243810 #4 DONE 0.3s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #5 [internal] load build context
+2026-Jul-04 08:02:43.243810 #5 transferring context: 13.66MB 0.3s done
+2026-Jul-04 08:02:43.243810 #5 DONE 0.5s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #6 [builder 1/4] WORKDIR /app
+2026-Jul-04 08:02:43.243810 #6 DONE 0.1s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:43.243810 #7 ...
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #8 [deps 1/4] RUN apk add --no-cache libc6-compat
+2026-Jul-04 08:02:43.243810 #8 9.143 (1/3) Installing musl-obstack (1.2.3-r2)
+2026-Jul-04 08:02:43.243810 #8 9.156 (2/3) Installing libucontext (1.3.3-r0)
+2026-Jul-04 08:02:43.243810 #8 9.163 (3/3) Installing gcompat (1.1.0-r4)
+2026-Jul-04 08:02:43.243810 #8 9.177 OK: 11.0 MiB in 21 packages
+2026-Jul-04 08:02:43.243810 #8 DONE 9.3s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:43.243810 #7 ...
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #9 [deps 2/4] WORKDIR /app
+2026-Jul-04 08:02:43.243810 #9 DONE 0.1s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #10 [deps 3/4] COPY package.json package-lock.json* ./
+2026-Jul-04 08:02:43.243810 #10 DONE 0.1s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:43.243810 #11 ...
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #7 [runner 2/9] RUN apk add --no-cache curl
+2026-Jul-04 08:02:43.243810 #7 9.495 (1/9) Installing brotli-libs (1.2.0-r0)
+2026-Jul-04 08:02:43.243810 #7 9.520 (2/9) Installing c-ares (1.34.6-r0)
+2026-Jul-04 08:02:43.243810 #7 9.529 (3/9) Installing libunistring (1.4.1-r0)
+2026-Jul-04 08:02:43.243810 #7 9.554 (4/9) Installing libidn2 (2.3.8-r0)
+2026-Jul-04 08:02:43.243810 #7 9.569 (5/9) Installing nghttp2-libs (1.69.0-r0)
+2026-Jul-04 08:02:43.243810 #7 9.593 (6/9) Installing libpsl (0.21.5-r3)
+2026-Jul-04 08:02:43.243810 #7 9.601 (7/9) Installing zstd-libs (1.5.7-r2)
+2026-Jul-04 08:02:43.243810 #7 9.620 (8/9) Installing libcurl (8.19.0-r0)
+2026-Jul-04 08:02:43.243810 #7 9.639 (9/9) Installing curl (8.19.0-r0)
+2026-Jul-04 08:02:43.243810 #7 9.653 Executing busybox-1.37.0-r30.trigger
+2026-Jul-04 08:02:43.243810 #7 9.695 OK: 15.9 MiB in 27 packages
+2026-Jul-04 08:02:43.243810 #7 DONE 9.8s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #12 [runner 3/9] RUN addgroup --system --gid 1001 nodejs
+2026-Jul-04 08:02:43.243810 #12 DONE 0.2s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:43.243810 #11 ...
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #13 [runner 4/9] RUN adduser --system --uid 1001 nextjs
+2026-Jul-04 08:02:43.243810 #13 DONE 0.4s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #14 [runner 5/9] RUN mkdir .next
+2026-Jul-04 08:02:43.243810 #14 DONE 0.4s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:43.243810 #11 ...
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #15 [runner 6/9] RUN chown nextjs:nodejs .next
+2026-Jul-04 08:02:43.243810 #15 DONE 0.3s
+2026-Jul-04 08:02:43.243810 
+2026-Jul-04 08:02:43.243810 #11 [deps 4/4] RUN npm ci
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error code EUSAGE
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Missing: @emnapi/runtime@1.11.2 from lock file
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Missing: @emnapi/core@1.11.2 from lock file
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Invalid: lock file's @emnapi/wasi-threads@1.2.1 does not satisfy @emnapi/wasi-threads@1.2.2
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Missing: @emnapi/core@1.10.0 from lock file
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Missing: @emnapi/wasi-threads@1.2.1 from lock file
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Clean install a project
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Usage:
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error npm ci
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Options:
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [--no-bin-links] [--no-fund] [--dry-run]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error
+2026-Jul-04 08:02:43.243810 #11 4.349 npm error Run "npm help ci" for more info
+2026-Jul-04 08:02:43.243810 #11 4.356 npm notice
+2026-Jul-04 08:02:43.243810 #11 4.356 npm notice New major version of npm available! 10.8.2 -> 11.18.0
+2026-Jul-04 08:02:43.243810 #11 4.356 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.18.0
+2026-Jul-04 08:<REDACTED>@11.18.0
+2026-Jul-04 08:02:43.243810 #11 4.356 npm notice
+2026-Jul-04 08:02:43.243810 #11 4.359 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-04T08_02_38_656Z-debug-0.log
+2026-Jul-04 08:02:43.243810 #11 ERROR: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2026-Jul-04 08:02:43.243810 ------
+2026-Jul-04 08:02:43.243810 > [deps 4/4] RUN npm ci:
+2026-Jul-04 08:02:43.243810 4.349 npm error
+2026-Jul-04 08:02:43.243810 4.349 npm error aliases: clean-install, ic, install-clean, isntall-clean
+2026-Jul-04 08:02:43.243810 4.349 npm error
+2026-Jul-04 08:02:43.243810 4.349 npm error Run "npm help ci" for more info
+2026-Jul-04 08:02:43.243810 4.356 npm notice
+2026-Jul-04 08:02:43.243810 4.356 npm notice New major version of npm available! 10.8.2 -> 11.18.0
+2026-Jul-04 08:02:43.243810 4.356 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.18.0
+2026-Jul-04 08:<REDACTED>@11.18.0
+2026-Jul-04 08:02:43.243810 4.356 npm notice
+2026-Jul-04 08:02:43.243810 4.359 npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-04T08_02_38_656Z-debug-0.log
+2026-Jul-04 08:02:43.243810 ------
+2026-Jul-04 08:02:43.243810 Dockerfile:19
+2026-Jul-04 08:02:43.243810 --------------------
+2026-Jul-04 08:02:43.243810 17 |     # Install dependencies based on the preferred package manager
+2026-Jul-04 08:02:43.243810 18 |     COPY package.json package-lock.json* ./
+2026-Jul-04 08:02:43.243810 19 | >>> RUN npm ci
+2026-Jul-04 08:02:43.243810 20 |
+2026-Jul-04 08:02:43.243810 21 |     # Rebuild the source code only when needed
+2026-Jul-04 08:02:43.243810 --------------------
+2026-Jul-04 08:02:43.243810 ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci" did not complete successfully: exit code: 1
+2026-Jul-04 08:02:43.243810 exit status 1
+2026-Jul-04 08:02:43.260784 [DEBUG] Error type: App\Exceptions\DeploymentException
+2026-Jul-04 08:02:43.288413 [DEBUG] Error code: 0
+2026-Jul-04 08:02:43.312171 [DEBUG] Location: /var/www/html/app/Traits/ExecuteRemoteCommand.php:242
+2026-Jul-04 08:02:43.327861 [DEBUG] Stack trace (first 5 lines):
+2026-Jul-04 08:02:43.344736 [DEBUG] #0 /var/www/html/app/Traits/ExecuteRemoteCommand.php(106): App\Jobs\ApplicationDeploymentJob->executeCommandWithProcess()
+2026-Jul-04 08:02:43.360807 [DEBUG] #1 /var/www/html/vendor/laravel/framework/src/Illuminate/Collections/Traits/EnumeratesValues.php(275): App\Jobs\ApplicationDeploymentJob->{closure:App\Traits\ExecuteRemoteCommand::execute_remote_command():72}()
+2026-Jul-04 08:02:43.379764 [DEBUG] #2 /var/www/html/app/Traits/ExecuteRemoteCommand.php(72): Illuminate\Support\Collection->each()
+2026-Jul-04 08:02:43.403574 [DEBUG] #3 /var/www/html/app/Jobs/ApplicationDeploymentJob.php(3290): App\Jobs\ApplicationDeploymentJob->execute_remote_command()
+2026-Jul-04 08:02:43.431232 [DEBUG] #4 /var/www/html/app/Jobs/ApplicationDeploymentJob.php(898): App\Jobs\ApplicationDeploymentJob->build_image()
+2026-Jul-04 08:02:43.450424 ========================================
+2026-Jul-04 08:02:43.467968 Deployment failed. Removing the new version of your application.
+2026-Jul-04 08:02:44.962238 Gracefully shutting down build container: mq0subg43ce1sis2rwyp1to9
+2026-Jul-04 08:02:45.583080 [DEBUG] [CMD]: docker stop -t 30 mq0subg43ce1sis2rwyp1to9
+2026-Jul-04 08:02:45.583080 [DEBUG] mq0subg43ce1sis2rwyp1to9

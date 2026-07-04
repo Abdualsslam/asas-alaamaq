@@ -11,24 +11,27 @@ import { CapabilitiesSection } from "@/components/sections/CapabilitiesSection";
 import { SafetySection } from "@/components/sections/SafetySection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
+import { Preloader } from "@/components/layout/Preloader";
 
 export default function Home() {
   return (
-    <SmoothScroll>
-      <Header />
-      <main>
-        <HeroSection />
-        <RiskSection />
-        <AboutSection />
-        <ServicesSection />
-        <ExecutionSection />
-        <CapabilitiesSection />
-        <SafetySection />
-        <ProjectsSection />
-        <FinalCTASection />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </SmoothScroll>
+    <Preloader>
+      <SmoothScroll>
+        <Header />
+        <main>
+          <HeroSection />
+          <RiskSection />
+          <AboutSection />
+          <ServicesSection />
+          <ExecutionSection />
+          <CapabilitiesSection />
+          <SafetySection />
+          <ProjectsSection />
+          <FinalCTASection />
+        </main>
+        <Footer />
+        <WhatsAppButton />
+      </SmoothScroll>
+    </Preloader>
   );
 }

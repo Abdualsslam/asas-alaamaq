@@ -109,24 +109,70 @@ export function HeroSection() {
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-28%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  // Pause the video for reduced-motion users (it stays on the poster frame).
+  // Listen for the preloaderFinished event to begin video playback
+  const [preloaderDone, setPreloaderDone] = useState(false);
+
+  useEffect(() => {
+    const handlePreloaderDone = () => {
+      setPreloaderDone(true);
+    };
+    window.addEventListener("preloaderFinished", handlePreloaderDone);
+    
+    // Check if the preloader finished before this component mounted
+    if (typeof window !== "undefined" && (window as any).preloaderFinished) {
+      setPreloaderDone(true);
+    }
+    
+    return () => window.removeEventListener("preloaderFinished", handlePreloaderDone);
+  }, []);
+
+  // Caching safeguard: trigger video loaded event if video is already cached/ready on mount
   useEffect(() => {
     const video = videoRef.current;
-    if (video && reduceMotion) video.pause();
-  }, [reduceMotion]);
+    if (video && video.readyState >= 3) {
+      (window as any).heroVideoLoaded = true;
+      window.dispatchEvent(new Event("heroVideoLoaded"));
+    }
+  }, []);
 
-  // Reveal the content after the video ends. Reduced-motion reveals instantly;
-  // a fallback timer guarantees the content appears even if `ended` never fires.
+  // Control video playback based on preloader state
   useEffect(() => {
-    const t = window.setTimeout(() => setRevealed(true), reduceMotion ? 0 : 3200);
+    const video = videoRef.current;
+    if (!video) return;
+    
+    if (reduceMotion) {
+      video.pause();
+      return;
+    }
+    
+    if (preloaderDone) {
+      // Start playing only after the preloader finishes fading out
+      video.play().catch((err) => {
+        console.log("Video auto-play blocked or failed, playing muted:", err);
+      });
+    } else {
+      video.pause();
+    }
+  }, [preloaderDone, reduceMotion]);
+
+  // Reveal the content after the video ends (or fallback timer starting from preloader finish)
+  useEffect(() => {
+    if (!preloaderDone) return;
+    
+    if (reduceMotion) {
+      setRevealed(true);
+      return;
+    }
+    
+    const t = window.setTimeout(() => setRevealed(true), 3200);
     return () => window.clearTimeout(t);
-  }, [reduceMotion]);
+  }, [preloaderDone, reduceMotion]);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (!revealed || reduceMotion) return;
     const t = window.setTimeout(() => setRulerReady(true), 650);
     return () => window.clearTimeout(t);
-  }, [reduceMotion]);
+  }, [revealed, reduceMotion]);
 
   const anim = revealed ? "visible" : "hidden";
 
@@ -146,11 +192,15 @@ export function HeroSection() {
             ref={videoRef}
             className="h-full w-full object-cover brightness-[0.78] contrast-[1.05] saturate-[1.1]"
             poster="/hero-poster.jpg"
-            autoPlay
+            autoPlay={false} // Autoplay is controlled manually via preloaderDone useEffect
             muted
             playsInline
             preload="auto"
             aria-hidden="true"
+            onCanPlay={() => {
+              (window as any).heroVideoLoaded = true;
+              window.dispatchEvent(new Event("heroVideoLoaded"));
+            }}
             onEnded={() => setRevealed(true)}
           >
             <source src="/hero.mp4" type="video/mp4" />

@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, ChevronLeft, ArrowUp } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { contactInfo } from "@/data/contact";
 import { Container } from "@/components/ui/Container";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -47,7 +48,7 @@ export function Footer() {
                 className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-equipment-orange hover:border-equipment-orange hover:text-white transition-all text-white/50"
                 aria-label="WhatsApp"
               >
-                <Phone size={18} />
+                <WhatsAppIcon size={18} />
               </a>
               <a
                 href={contactInfo.getMailtoLink()}
@@ -137,6 +138,9 @@ export function Footer() {
         <div className="border-t border-white/10 pt-8 relative flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/40 text-sm">
             © {new Date().getFullYear()} أساس الأعماق للمقاولات. جميع الحقوق محفوظة.
+          </p>
+          <p className="text-white/40 text-sm">
+            صنع بـ <span className="text-equipment-orange font-bold">عُمق</span> من <a href="https://smartagency-ye.com/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-equipment-orange transition-colors font-medium underline underline-offset-4 decoration-white/10 hover:decoration-equipment-orange/50">وكالة سمارت</a>
           </p>
           <p className="text-white/20 text-xs tracking-[0.2em] uppercase" dir="ltr">
             ASAS AL-AAMAQ Contracting

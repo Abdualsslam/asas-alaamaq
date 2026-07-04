@@ -17,10 +17,12 @@ export function AnimeBrandLoader() {
         .wave-path {
           animation: wave-float 4s linear infinite;
           transform-origin: left bottom;
+          will-change: transform;
         }
         .wave-wrapper {
           animation: wave-rise 8s ease-in-out infinite;
           transform-origin: center bottom;
+          will-change: transform;
         }
       `}</style>
 
@@ -54,7 +56,7 @@ export function AnimeBrandLoader() {
 
         {/* 2. Liquid wave clipped inside the official logo geometry */}
         <g clipPath="url(#brand-logo-clip)">
-          <g className="wave-wrapper">
+          <g className="wave-wrapper" style={{ transform: "translateY(230px)" }}>
             <path
               className="wave-path"
               fill="url(#wave-grad)"

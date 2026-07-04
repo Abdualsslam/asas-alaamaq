@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { contactInfo } from "@/data/contact";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,7 +39,7 @@ export function WhatsAppButton() {
           className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 hover:scale-110 transition-all duration-300 group"
           aria-label="تواصل عبر واتساب"
         >
-          <MessageCircle
+          <WhatsAppIcon
             size={26}
             className="group-hover:rotate-12 transition-transform duration-300"
           />

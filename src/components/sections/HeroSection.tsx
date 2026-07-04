@@ -135,7 +135,7 @@ export function HeroSection() {
     }
   }, []);
 
-  // Control video playback based on preloader state
+  // Control video playback based on preloader state with a 500ms delayed start
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -145,17 +145,25 @@ export function HeroSection() {
       return;
     }
     
+    let playTimer: number;
+
     if (preloaderDone) {
-      // Start playing only after the preloader finishes fading out
-      video.play().catch((err) => {
-        console.log("Video auto-play blocked or failed, playing muted:", err);
-      });
+      // Start playing after a 500ms cinematic pause once preloader is done
+      playTimer = window.setTimeout(() => {
+        video.play().catch((err) => {
+          console.log("Video auto-play blocked or failed, playing muted:", err);
+        });
+      }, 500);
     } else {
       video.pause();
     }
+
+    return () => {
+      if (playTimer) window.clearTimeout(playTimer);
+    };
   }, [preloaderDone, reduceMotion]);
 
-  // Reveal the content after the video ends (or fallback timer starting from preloader finish)
+  // Reveal the content after the video ends (or fallback timer starting from preloader finish + 500ms delay)
   useEffect(() => {
     if (!preloaderDone) return;
     
@@ -164,7 +172,7 @@ export function HeroSection() {
       return;
     }
     
-    const t = window.setTimeout(() => setRevealed(true), 3200);
+    const t = window.setTimeout(() => setRevealed(true), 3700); // 500ms play delay + 3200ms duration
     return () => window.clearTimeout(t);
   }, [preloaderDone, reduceMotion]);
 

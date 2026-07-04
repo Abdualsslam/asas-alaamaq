@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import { MessageCircle, Mail, Phone, MapPin, HardHat, Building2, ChevronLeft } from "lucide-react";
+import { Mail, Phone, MapPin, HardHat, Building2, ChevronLeft } from "lucide-react";
 import { contactInfo } from "@/data/contact";
 import { Container } from "@/components/ui/Container";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 export function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -125,7 +126,7 @@ export function FinalCTASection() {
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
                   <div className="flex items-center gap-4 relative z-10">
                     <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
-                      <MessageCircle className="w-6 h-6 text-white" />
+                      <WhatsAppIcon className="w-6 h-6 text-white" />
                     </div>
                     <div className="text-right">
                       <div className="text-white font-bold text-lg">واتساب</div>

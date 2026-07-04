@@ -8,10 +8,11 @@ import {
   useReducedMotion,
   type Variants,
 } from "framer-motion";
-import { Menu, X, Phone, MessageCircle, ArrowLeft } from "lucide-react";
+import { Menu, X, Phone, ArrowLeft } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { contactInfo } from "@/data/contact";
 import { cn } from "@/lib/utils";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 const panelVariants: Variants = {
   hidden: { x: "100%" },
@@ -308,9 +309,9 @@ export function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMenu}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-earth-brown px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-earth-brown-dark"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#20BD5A] shadow-md shadow-[#25D366]/10"
                 >
-                  <MessageCircle size={18} />
+                  <WhatsAppIcon size={18} />
                   تواصل معنا عبر واتساب
                 </a>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ShieldCheck, HardHat, Building2, Target, CheckCircle2, Activity, ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -83,6 +84,22 @@ export function SafetySection() {
             {/* Glowing Orb */}
             <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-earth-brown/40 blur-[100px] rounded-full group-hover:bg-earth-brown/60 group-hover:scale-110 transition-all duration-1000" />
             <div className="absolute -top-32 -left-32 w-80 h-80 bg-blue-500/10 blur-[100px] rounded-full" />
+
+            {/* Faded Safety Worker Background Image on the Left */}
+            <div className="absolute left-0 bottom-0 w-full lg:w-[45%] h-[75%] lg:h-[90%] pointer-events-none select-none overflow-hidden rounded-bl-3xl">
+              <Image
+                src="/images/safety_worker.png"
+                alt="Safety Worker"
+                fill
+                className="object-cover object-bottom opacity-20 lg:opacity-30 group-hover:opacity-45 transition-opacity duration-700"
+                style={{
+                  WebkitMaskImage: "linear-gradient(to right, black 30%, transparent 90%), linear-gradient(to top, black 85%, transparent 100%)",
+                  maskImage: "linear-gradient(to right, black 30%, transparent 90%), linear-gradient(to top, black 85%, transparent 100%)",
+                  maskComposite: "intersect",
+                  WebkitMaskComposite: "source-in"
+                }}
+              />
+            </div>
 
             {/* Top Header of Main Card */}
             <div className="relative z-10 flex flex-wrap justify-between items-start gap-4">

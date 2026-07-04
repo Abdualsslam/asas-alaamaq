@@ -40,110 +40,25 @@ export function ExecutionSection() {
   return (
     <section
       id="execution"
-      className="relative scroll-mt-28 py-28 lg:py-32 overflow-hidden"
-      style={{ backgroundColor: "#1F1F1F" }}
+      className="relative scroll-mt-28 pt-20 pb-12 lg:pt-24 lg:pb-16 overflow-hidden"
+      style={{ backgroundColor: "#0F1114" }}
     >
-      {/* ─── Transition gradient from previous section ─── */}
-      <div
-        className="absolute top-0 left-0 right-0 h-32 z-10 pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, #0F1114 0%, #1F1F1F 100%)",
-        }}
-      />
-
-      {/* ─── Topographic / Grid background pattern ─── */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Grid lines */}
-        <svg
-          width="100%"
-          height="100%"
-          className="absolute inset-0"
-          style={{ opacity: 0.025 }}
-        >
-          <defs>
-            <pattern
-              id="execGrid"
-              width="60"
-              height="60"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 60 0 L 0 0 0 60"
-                fill="none"
-                stroke="#D8C1A8"
-                strokeWidth="0.5"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#execGrid)" />
-        </svg>
-
-        {/* Topographic curves - top left */}
-        <svg
-          className="absolute top-0 left-0 w-[500px] h-[400px]"
-          viewBox="0 0 500 400"
-          fill="none"
-          style={{ opacity: 0.04 }}
-        >
-          <path
-            d="M0,80 Q80,60 160,90 T320,70 T500,100"
-            stroke="#C98645"
-            strokeWidth="1"
-            fill="none"
-          />
-          <path
-            d="M0,120 Q100,100 200,130 T400,110 T500,140"
-            stroke="#C98645"
-            strokeWidth="0.8"
-            fill="none"
-          />
-          <path
-            d="M0,160 Q120,140 240,170 T480,150"
-            stroke="#C98645"
-            strokeWidth="0.6"
-            fill="none"
-          />
-          <path
-            d="M0,200 Q90,180 180,210 T360,190 T500,220"
-            stroke="#C98645"
-            strokeWidth="0.5"
-            fill="none"
-          />
-        </svg>
-
-        {/* Topographic curves - top right */}
-        <svg
-          className="absolute top-0 right-0 w-[500px] h-[400px]"
-          viewBox="0 0 500 400"
-          fill="none"
-          style={{ opacity: 0.04 }}
-        >
-          <path
-            d="M500,60 Q400,40 300,70 T100,50 T0,80"
-            stroke="#C98645"
-            strokeWidth="1"
-            fill="none"
-          />
-          <path
-            d="M500,100 Q380,80 260,110 T60,90 T0,120"
-            stroke="#C98645"
-            strokeWidth="0.8"
-            fill="none"
-          />
-          <path
-            d="M500,140 Q420,120 340,150 T160,130 T0,160"
-            stroke="#C98645"
-            strokeWidth="0.6"
-            fill="none"
-          />
-        </svg>
-
-        {/* Subtle radial glow */}
+      {/* ─── Background Image ─── */}
+      <div className="absolute inset-0 z-0 select-none pointer-events-none">
+        <Image
+          src="/images/execution/execution-process-bg.png"
+          alt="منهجية التنفيذ خلفية"
+          fill
+          className="object-cover object-bottom"
+          style={{ opacity: 0.6 }}
+          sizes="100vw"
+          priority
+        />
+        {/* Transition gradient from previous section */}
         <div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[200px]"
+          className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-10"
           style={{
-            background:
-              "radial-gradient(circle, rgba(201,134,69,0.06), transparent 70%)",
+            background: "linear-gradient(to bottom, #0F1114, transparent)",
           }}
         />
       </div>
@@ -151,7 +66,7 @@ export function ExecutionSection() {
       <Container className="relative z-20">
         {/* ─── Section Header ─── */}
         <MotionReveal>
-          <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-24">
+          <div className="max-w-3xl mx-auto text-center mb-12 lg:mb-16">
             {/* Subtitle */}
             <div className="flex items-center justify-center gap-4 mb-6">
               <div
@@ -212,7 +127,7 @@ export function ExecutionSection() {
         </MotionReveal>
 
         {/* ─── Timeline Cards ─── */}
-        <div className="relative mb-16 lg:mb-24">
+        <div className="relative mb-6 lg:mb-8">
           {/* Desktop Timeline Line */}
           <div
             className="hidden lg:flex absolute top-[60px] left-0 right-0 h-[1px] z-0 justify-between px-[12.5%] pointer-events-none"
@@ -326,24 +241,9 @@ export function ExecutionSection() {
         </div>
       </Container>
 
-      {/* ─── Bottom Cross-section Image & Depth Markers ─── */}
-      <div className="relative w-full mt-10 overflow-hidden">
-        <div className="relative w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px]">
-          <Image
-            src="/images/execution/execution-process-bg.png"
-            alt="مقطع هندسي لعملية الحفر والسند"
-            fill
-            className="object-cover object-top"
-            style={{ opacity: 0.6 }}
-            sizes="100vw"
-          />
-          {/* Fade to dark background at the top */}
-          <div
-            className="absolute inset-x-0 top-0 h-32 pointer-events-none z-10"
-            style={{
-              background: "linear-gradient(to bottom, #1F1F1F, transparent)",
-            }}
-          />
+      {/* ─── Bottom Depth Markers & Closing Statement ─── */}
+      <div className="relative w-full mt-0 overflow-hidden z-10">
+        <div className="relative w-full h-[200px] sm:h-[280px] md:h-[360px] lg:h-[400px]">
 
           {/* Depth markers overlay */}
           <div

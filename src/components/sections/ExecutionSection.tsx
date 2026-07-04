@@ -40,15 +40,14 @@ export function ExecutionSection() {
   return (
     <section
       id="execution"
-      className="relative scroll-mt-28 overflow-hidden"
+      className="relative scroll-mt-28 py-28 lg:py-32 overflow-hidden"
       style={{ backgroundColor: "#1F1F1F" }}
     >
       {/* ─── Transition gradient from previous section ─── */}
       <div
         className="absolute top-0 left-0 right-0 h-32 z-10 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to bottom, #0F1114 0%, #1F1F1F 100%)",
+          background: "linear-gradient(to bottom, #0F1114 0%, #1F1F1F 100%)",
         }}
       />
 
@@ -141,7 +140,7 @@ export function ExecutionSection() {
 
         {/* Subtle radial glow */}
         <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[200px]"
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[200px]"
           style={{
             background:
               "radial-gradient(circle, rgba(201,134,69,0.06), transparent 70%)",
@@ -149,303 +148,299 @@ export function ExecutionSection() {
         />
       </div>
 
-      {/* ─── Main Content ─── */}
-      <div className="relative z-20 pt-40 pb-0">
-        <Container>
-          {/* Section Header */}
-          <MotionReveal>
-            <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-20">
-              {/* Badge */}
+      <Container className="relative z-20">
+        {/* ─── Section Header ─── */}
+        <MotionReveal>
+          <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-24">
+            {/* Subtitle */}
+            <div className="flex items-center justify-center gap-4 mb-6">
               <div
-                className="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full mb-7 backdrop-blur-sm"
+                className="w-8 lg:w-12 h-[1px]"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  background:
+                    "linear-gradient(to left, transparent, rgba(201,134,69,0.6))",
+                }}
+              />
+              <div
+                className="w-1.5 h-1.5 rounded-full"
+                style={{
+                  backgroundColor: "#C98645",
+                  boxShadow: "0 0 8px rgba(201,134,69,0.8)",
+                }}
+              />
+              <span
+                className="text-sm font-bold tracking-wide"
+                style={{ color: "#C98645" }}
+              >
+                منهجية التنفيذ
+              </span>
+              <div
+                className="w-1.5 h-1.5 rounded-full"
+                style={{
+                  backgroundColor: "#C98645",
+                  boxShadow: "0 0 8px rgba(201,134,69,0.8)",
+                }}
+              />
+              <div
+                className="w-8 lg:w-12 h-[1px]"
+                style={{
+                  background:
+                    "linear-gradient(to right, transparent, rgba(201,134,69,0.6))",
+                }}
+              />
+            </div>
+
+            {/* Main Title */}
+            <h2
+              className="font-black mb-6 leading-[1.2] tracking-tight text-white"
+              style={{
+                fontSize: "clamp(2rem, 4.5vw, 3.4rem)",
+              }}
+            >
+              لا نبدأ بالتنفيذ… نبدأ بالفهم
+            </h2>
+
+            {/* Description */}
+            <p
+              className="text-lg lg:text-[1.15rem] leading-relaxed font-medium max-w-2xl mx-auto"
+              style={{ color: "#B8B0A6" }}
+            >
+              كل مشروع حفر له ظروفه الخاصة. منهجيتنا تضمن أن كل قرار مبني على فهم
+              حقيقي للموقع، وليس على تنفيذ تقليدي.
+            </p>
+          </div>
+        </MotionReveal>
+
+        {/* ─── Timeline Cards ─── */}
+        <div className="relative mb-16 lg:mb-24">
+          {/* Desktop Timeline Line */}
+          <div
+            className="hidden lg:flex absolute top-[60px] left-0 right-0 h-[1px] z-0 justify-between px-[12.5%] pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(201,134,69,0.4) 15%, rgba(201,134,69,0.4) 85%, transparent)",
+            }}
+          >
+            {/* Dots placed perfectly between cards */}
+            <div className="absolute inset-0 flex justify-evenly items-center">
+              <div className="w-3 h-3 rounded-full bg-[#1F1F1F] border-2 border-[#C98645] shadow-[0_0_12px_rgba(201,134,69,0.8)]" />
+              <div className="w-3 h-3 rounded-full bg-[#1F1F1F] border-2 border-[#C98645] shadow-[0_0_12px_rgba(201,134,69,0.8)]" />
+              <div className="w-3 h-3 rounded-full bg-[#1F1F1F] border-2 border-[#C98645] shadow-[0_0_12px_rgba(201,134,69,0.8)]" />
+            </div>
+          </div>
+
+          {/* Mobile Timeline Line */}
+          <div
+            className="lg:hidden absolute top-8 bottom-8 right-[11px] w-[2px] z-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent, rgba(201,134,69,0.3) 10%, rgba(201,134,69,0.3) 90%, transparent)",
+            }}
+          />
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-6 relative z-10">
+            {steps.map((step, index) => (
+              <MotionReveal key={step.number} delay={0.1 + index * 0.1}>
+                <div className="relative group/card flex lg:block items-start gap-5 lg:gap-0">
+                  {/* Mobile Dot */}
+                  <div className="lg:hidden flex-shrink-0 mt-8 relative z-10 w-[24px] flex justify-center">
+                    <div className="w-3.5 h-3.5 rounded-full bg-[#1F1F1F] border-2 border-[#C98645] shadow-[0_0_12px_rgba(201,134,69,0.6)]" />
+                  </div>
+
+                  {/* Card */}
+                  <div
+                    className="flex-1 lg:h-full rounded-2xl p-7 lg:p-8 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(216,193,168,0.16)",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.borderColor =
+                        "rgba(201,134,69,0.45)";
+                      e.currentTarget.style.boxShadow =
+                        "0 12px 40px rgba(201,134,69,0.08)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor =
+                        "rgba(255,255,255,0.04)";
+                      e.currentTarget.style.borderColor =
+                        "rgba(216,193,168,0.16)";
+                      e.currentTarget.style.boxShadow =
+                        "0 4px 20px rgba(0,0,0,0.1)";
+                    }}
+                  >
+                    {/* Hover Glow */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background:
+                          "radial-gradient(circle at top right, rgba(201,134,69,0.1), transparent 70%)",
+                      }}
+                    />
+
+                    {/* Top Row: Number & Icon */}
+                    <div className="flex justify-between items-start mb-8 relative z-10">
+                      {/* Number */}
+                      <span
+                        className="text-6xl lg:text-[4.5rem] font-light font-sans tracking-tighter select-none pointer-events-none transition-colors duration-500 group-hover/card:text-[rgba(201,134,69,0.15)]"
+                        style={{ color: "rgba(255,255,255,0.06)" }}
+                        dir="ltr"
+                      >
+                        {step.number}
+                      </span>
+
+                      {/* Icon */}
+                      <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/card:scale-110"
+                        style={{
+                          border: "1px solid rgba(201,134,69,0.25)",
+                          backgroundColor: "rgba(201,134,69,0.08)",
+                        }}
+                      >
+                        <step.icon
+                          size={26}
+                          style={{ color: "#C98645" }}
+                          strokeWidth={1.5}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="relative z-10 font-bold text-xl lg:text-[1.35rem] mb-4 text-white leading-tight">
+                      {step.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="relative z-10 text-[15px] lg:text-base leading-[1.8] text-[#B8B0A6]">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </MotionReveal>
+            ))}
+          </div>
+        </div>
+      </Container>
+
+      {/* ─── Bottom Cross-section Image & Depth Markers ─── */}
+      <div className="relative w-full mt-10 overflow-hidden">
+        <div className="relative w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px]">
+          <Image
+            src="/images/execution/execution-process-bg.png"
+            alt="مقطع هندسي لعملية الحفر والسند"
+            fill
+            className="object-cover object-top"
+            style={{ opacity: 0.6 }}
+            sizes="100vw"
+          />
+          {/* Fade to dark background at the top */}
+          <div
+            className="absolute inset-x-0 top-0 h-32 pointer-events-none z-10"
+            style={{
+              background: "linear-gradient(to bottom, #1F1F1F, transparent)",
+            }}
+          />
+
+          {/* Depth markers overlay */}
+          <div
+            className="absolute left-0 top-[20%] bottom-[20%] w-full flex flex-col justify-between pointer-events-none z-10"
+            dir="ltr"
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className="text-[11px] lg:text-xs font-bold tracking-wider w-8 lg:w-10 text-right"
+                style={{ color: "rgba(255,255,255,0.3)" }}
+              >
+                0m
+              </span>
+              <div
+                className="flex-1 h-px"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(216,193,168,0.25), transparent)",
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <span
+                className="text-[11px] lg:text-xs font-bold tracking-wider w-8 lg:w-10 text-right"
+                style={{ color: "rgba(255,255,255,0.2)" }}
+              >
+                -5m
+              </span>
+              <div
+                className="flex-1 h-px"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(216,193,168,0.15), transparent)",
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <span
+                className="text-[11px] lg:text-xs font-bold tracking-wider w-8 lg:w-10 text-right"
+                style={{ color: "rgba(255,255,255,0.15)" }}
+              >
+                -10m
+              </span>
+              <div
+                className="flex-1 h-px"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(216,193,168,0.08), transparent)",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Closing Statement */}
+          <div className="absolute bottom-6 left-0 right-0 z-20 flex justify-center">
+            <MotionReveal delay={0.2}>
+              <div
+                className="flex items-center gap-3 lg:gap-5 px-6 lg:px-8 py-3.5 lg:py-4 rounded-3xl backdrop-blur-md"
+                style={{
+                  backgroundColor: "rgba(31,31,31,0.7)",
                   border: "1px solid rgba(216,193,168,0.12)",
                 }}
               >
-                <span
-                  className="text-sm font-bold tracking-wide"
+                <div
+                  className="w-8 lg:w-12 h-[1px]"
+                  style={{
+                    background:
+                      "linear-gradient(to left, transparent, rgba(201,134,69,0.8))",
+                  }}
+                />
+                <div
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: "#C98645" }}
+                />
+                <p
+                  className="text-[15px] sm:text-lg lg:text-[1.3rem] font-bold tracking-wide"
                   style={{ color: "#C98645" }}
                 >
-                  منهجية التنفيذ
-                </span>
-              </div>
-
-              {/* Main Title */}
-              <h2
-                className="font-black mb-6 leading-[1.2] tracking-tight"
-                style={{
-                  color: "#FFFFFF",
-                  fontSize: "clamp(1.9rem, 4.5vw, 3.2rem)",
-                }}
-              >
-                لا نبدأ بالتنفيذ…{" "}
-                <span
-                  className="text-transparent bg-clip-text"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to left, #D96B2B, #C98645)",
-                    WebkitBackgroundClip: "text",
-                  }}
-                >
-                  نبدأ بالفهم
-                </span>
-              </h2>
-
-              {/* Subtitle */}
-              <p
-                className="text-lg leading-relaxed font-medium max-w-2xl mx-auto"
-                style={{ color: "#B8B0A6" }}
-              >
-                كل مشروع حفر له ظروفه الخاصة. منهجيتنا تضمن أن كل قرار مبني
-                على فهم حقيقي للموقع، وليس على تنفيذ تقليدي.
-              </p>
-            </div>
-          </MotionReveal>
-
-          {/* ─── Timeline Cards ─── */}
-          <MotionReveal delay={0.15}>
-            <div className="relative">
-              {/* ── Desktop Horizontal Connector Line ── */}
-              <div className="hidden lg:block absolute top-[72px] right-[12.5%] left-[12.5%] h-[2px] z-0">
+                  الاستقرار لا يحدث بالصدفة…{" "}
+                  <span style={{ color: "#FFFFFF" }}>
+                    بل يتم تحقيقه هندسيًا.
+                  </span>
+                </p>
                 <div
-                  className="w-full h-full"
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: "#C98645" }}
+                />
+                <div
+                  className="w-8 lg:w-12 h-[1px]"
                   style={{
                     background:
-                      "linear-gradient(to left, #C98645, rgba(201,134,69,0.3) 50%, #C98645)",
+                      "linear-gradient(to right, transparent, rgba(201,134,69,0.8))",
                   }}
                 />
               </div>
-
-              {/* ── Desktop Connector Glowing Dots ── */}
-              <div className="hidden lg:flex absolute top-[66px] right-[12.5%] left-[12.5%] z-10 justify-between pointer-events-none">
-                {steps.map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="relative"
-                    style={{
-                      marginRight: idx === 0 ? "0" : "0",
-                    }}
-                  >
-                    <div
-                      className="w-[14px] h-[14px] rounded-full"
-                      style={{
-                        backgroundColor: "#C98645",
-                        boxShadow:
-                          "0 0 12px rgba(201,134,69,0.6), 0 0 30px rgba(201,134,69,0.3)",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* ── Mobile Vertical Connector Line ── */}
-              <div
-                className="lg:hidden absolute right-[28px] top-0 bottom-0 w-[2px] z-0"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, transparent, rgba(201,134,69,0.4) 10%, rgba(201,134,69,0.4) 90%, transparent)",
-                }}
-              />
-
-              {/* ── Cards Grid ── */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-5">
-                {steps.map((step, index) => (
-                  <MotionReveal
-                    key={step.number}
-                    delay={0.1 + index * 0.12}
-                    direction={index % 2 === 0 ? "up" : "up"}
-                  >
-                    {/* Mobile layout with timeline dot */}
-                    <div className="flex lg:block items-start gap-5">
-                      {/* Mobile timeline dot */}
-                      <div className="lg:hidden flex-shrink-0 mt-8 relative z-10">
-                        <div
-                          className="w-[14px] h-[14px] rounded-full"
-                          style={{
-                            backgroundColor: "#C98645",
-                            boxShadow:
-                              "0 0 10px rgba(201,134,69,0.5), 0 0 24px rgba(201,134,69,0.2)",
-                          }}
-                        />
-                      </div>
-
-                      {/* Card */}
-                      <div
-                        className="relative group cursor-default flex-1 rounded-2xl p-7 lg:p-8 transition-all duration-500 hover:-translate-y-2"
-                        style={{
-                          backgroundColor: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(216,193,168,0.16)",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor =
-                            "rgba(255,255,255,0.07)";
-                          e.currentTarget.style.borderColor =
-                            "rgba(201,134,69,0.45)";
-                          e.currentTarget.style.boxShadow =
-                            "0 12px 40px rgba(201,134,69,0.08)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor =
-                            "rgba(255,255,255,0.04)";
-                          e.currentTarget.style.borderColor =
-                            "rgba(216,193,168,0.16)";
-                          e.currentTarget.style.boxShadow = "none";
-                        }}
-                      >
-                        {/* Step Number - large faint background */}
-                        <span
-                          className="absolute top-4 left-5 text-7xl lg:text-8xl font-black select-none pointer-events-none"
-                          style={{ color: "rgba(201,134,69,0.07)" }}
-                        >
-                          {step.number}
-                        </span>
-
-                        {/* Icon */}
-                        <div
-                          className="relative z-10 w-14 h-14 flex items-center justify-center rounded-xl mb-6 transition-all duration-500 group-hover:scale-105"
-                          style={{
-                            backgroundColor: "rgba(201,134,69,0.12)",
-                            border: "1px solid rgba(201,134,69,0.15)",
-                          }}
-                        >
-                          <step.icon
-                            size={26}
-                            className="transition-colors duration-500"
-                            style={{ color: "#C98645" }}
-                            strokeWidth={1.5}
-                          />
-                        </div>
-
-                        {/* Title */}
-                        <h3
-                          className="relative z-10 font-bold text-xl lg:text-[1.35rem] mb-4 leading-tight"
-                          style={{ color: "#FFFFFF" }}
-                        >
-                          {step.title}
-                        </h3>
-
-                        {/* Description */}
-                        <p
-                          className="relative z-10 text-[15px] lg:text-base leading-[1.9]"
-                          style={{ color: "#B8B0A6" }}
-                        >
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-                  </MotionReveal>
-                ))}
-              </div>
-            </div>
-          </MotionReveal>
-
-          {/* ─── Depth Markers (like the design) ─── */}
-          <MotionReveal delay={0.3}>
-            <div className="relative mt-10 lg:mt-14 mr-4 lg:mr-8 flex flex-col gap-6">
-              <div className="flex items-center gap-3">
-                <span
-                  className="text-xs font-bold tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.15)" }}
-                  dir="ltr"
-                >
-                  0m
-                </span>
-                <div
-                  className="flex-1 h-px"
-                  style={{
-                    background:
-                      "linear-gradient(to left, transparent, rgba(216,193,168,0.08))",
-                  }}
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <span
-                  className="text-xs font-bold tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.12)" }}
-                  dir="ltr"
-                >
-                  -5m
-                </span>
-                <div
-                  className="flex-1 h-px"
-                  style={{
-                    background:
-                      "linear-gradient(to left, transparent, rgba(216,193,168,0.05))",
-                  }}
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <span
-                  className="text-xs font-bold tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.09)" }}
-                  dir="ltr"
-                >
-                  -10m
-                </span>
-                <div
-                  className="flex-1 h-px"
-                  style={{
-                    background:
-                      "linear-gradient(to left, transparent, rgba(216,193,168,0.03))",
-                  }}
-                />
-              </div>
-            </div>
-          </MotionReveal>
-        </Container>
-
-        {/* ─── Background Image (excavation cross-section) ─── */}
-        <div className="relative w-full mt-4 lg:mt-6">
-          <div className="relative w-full h-[180px] sm:h-[220px] md:h-[280px] lg:h-[340px]">
-            <Image
-              src="/images/execution/execution-process-bg.png"
-              alt="مقطع هندسي لعملية الحفر والسند"
-              fill
-              className="object-cover object-top"
-              style={{ opacity: 0.85 }}
-              sizes="100vw"
-            />
-            {/* Top fade into dark background */}
-            <div
-              className="absolute inset-x-0 top-0 h-24 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(to bottom, #1F1F1F, transparent)",
-              }}
-            />
+            </MotionReveal>
           </div>
-        </div>
-
-        {/* ─── Closing Statement ─── */}
-        <div
-          className="relative w-full py-10 lg:py-14"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(31,31,31,0.95), #1F1F1F)",
-          }}
-        >
-          <MotionReveal delay={0.2}>
-            <div className="text-center">
-              <p
-                className="text-xl sm:text-2xl lg:text-[1.7rem] font-bold leading-relaxed"
-                style={{ color: "#C98645" }}
-              >
-                الاستقرار لا يحدث بالصدفة…{" "}
-                <span style={{ color: "#FFFFFF" }}>
-                  بل يتم تحقيقه هندسيًا.
-                </span>
-              </p>
-              {/* Decorative line under closing */}
-              <div
-                className="mx-auto mt-5 w-16 h-[2px]"
-                style={{
-                  background:
-                    "linear-gradient(to left, transparent, #C98645, transparent)",
-                }}
-              />
-            </div>
-          </MotionReveal>
         </div>
       </div>
     </section>

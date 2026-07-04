@@ -1,109 +1,130 @@
 "use client";
 
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { MotionReveal } from "@/components/ui/MotionReveal";
+import { ShieldCheck, SlidersHorizontal, Search, ShieldHalf } from "lucide-react";
 
 export function AboutSection() {
   return (
-    <section id="about" className="section-padding scroll-mt-28 bg-sand-light">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Text Content */}
-          <div>
+    <section id="about" className="section-padding scroll-mt-28 bg-sand-light relative overflow-hidden">
+      
+      {/* Background Subtle Engineering Pattern */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none text-earth-brown">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="engineering-grid-about" width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#engineering-grid-about)" />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 gap-x-12 lg:gap-x-16 items-start">
+          
+          {/* Text Content (Right column, Row 1) */}
+          <div className="order-1 lg:col-start-1 lg:row-start-1 flex flex-col pt-4">
+            
             <MotionReveal>
-              <SectionHeader
-                title="متخصصون في هندسة الأرض واستقرار الحفريات"
-              />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-earth-brown/30 bg-white/50 backdrop-blur-sm mb-6 w-fit">
+                <span className="text-sm font-bold text-charcoal">من نحن</span>
+                <ShieldHalf className="w-4 h-4 text-earth-brown" />
+              </div>
+            </MotionReveal>
+
+            <MotionReveal delay={0.1}>
+              <h2 className="text-3xl lg:text-[2.75rem] font-black text-charcoal mb-6 leading-[1.2]">
+                متخصصون في هندسة الأرض<br />
+                واستقرار الحفريات
+              </h2>
             </MotionReveal>
 
             <MotionReveal delay={0.15}>
-              <p className="text-concrete-gray leading-relaxed mb-8 text-base">
+              <p className="text-concrete-gray leading-relaxed mb-8 text-lg font-medium">
                 أساس الأعماق للمقاولات جهة متخصصة في حلول الهندسة الأرضية،
-                نركز على استقرار الحفريات والتحكم بحركة التربة وإدارة المياه
+                نركز على استقرار الحفريات، التحكم بحركة التربة، وإدارة المياه
                 الجوفية أثناء مراحل الحفر الحرجة.
               </p>
             </MotionReveal>
 
             {/* Positioning quote */}
             <MotionReveal delay={0.25}>
-              <blockquote className="relative border-r-4 border-earth-brown pr-6 py-4 bg-earth-brown/5 rounded-l-lg">
-                <p className="text-charcoal font-bold text-lg leading-relaxed">
+              <div className="relative border-r-4 border-earth-brown pr-6 py-6 bg-sand-secondary/30 rounded-l-xl mb-6">
+                <p className="text-charcoal font-bold text-xl leading-relaxed">
                   لسنا مقاول حفر تقليدي.
                   <br />
                   <span className="text-earth-brown">
                     نحن شريك هندسي للمواقع التي لا تقبل الفشل.
                   </span>
                 </p>
-              </blockquote>
+              </div>
             </MotionReveal>
+          </div>
 
-            {/* Stats */}
-            <MotionReveal delay={0.35}>
-              <div className="flex gap-8 mt-10">
-                <div className="text-center">
-                  <span className="block text-3xl font-black text-earth-brown">٥+</span>
-                  <span className="text-concrete-gray text-sm mt-1 block">خدمات متخصصة</span>
-                </div>
-                <div className="w-px bg-border" />
-                <div className="text-center">
-                  <span className="block text-3xl font-black text-earth-brown">٢٤/٧</span>
-                  <span className="text-concrete-gray text-sm mt-1 block">جاهزية ميدانية</span>
-                </div>
-                <div className="w-px bg-border" />
-                <div className="text-center">
-                  <span className="block text-3xl font-black text-earth-brown">١٠٠٪</span>
-                  <span className="text-concrete-gray text-sm mt-1 block">التزام هندسي</span>
+          {/* Visual Side (Left column, spans Row 1 & 2) */}
+          <div className="order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 h-full flex items-center justify-center">
+            <MotionReveal direction="left" delay={0.2} className="w-full">
+              {/* Luxurious Card Wrapper */}
+              <div className="relative w-full rounded-[2rem] shadow-xl border border-earth-brown/10 bg-white/40 p-2 lg:p-4 backdrop-blur-sm">
+                <div className="relative w-full rounded-2xl lg:rounded-3xl overflow-hidden bg-sand-light">
+                  <Image
+                    src="/images/asas_about_left_visual.png"
+                    alt="مقطع هندسي لاستقرار الحفريات"
+                    width={800}
+                    height={800}
+                    className="w-full h-auto object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
                 </div>
               </div>
             </MotionReveal>
           </div>
 
-          {/* Visual Side */}
-          <MotionReveal direction="left" delay={0.2}>
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-earth-brown/8 via-sand-secondary/20 to-concrete-gray/10 border border-border">
-              {/* Abstract engineering diagram */}
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 400 400"
-              >
-                {/* Grid pattern */}
-                <defs>
-                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#934E34" strokeWidth="0.5" opacity="0.08" />
-                  </pattern>
-                </defs>
-                <rect width="400" height="400" fill="url(#grid)" />
+          {/* Feature Cards (Right column, Row 2) */}
+          <div className="order-3 lg:col-start-1 lg:row-start-2">
+            <MotionReveal delay={0.35}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                
+                {/* Card 1 (Right in RTL) */}
+                <div className="bg-white/30 border border-border/80 rounded-2xl p-5 text-center sm:text-right flex flex-col items-center sm:items-start justify-start hover:border-earth-brown/30 hover:bg-white/60 transition-all duration-300 group shadow-sm">
+                  <div className="w-12 h-12 rounded-full border border-border/80 flex items-center justify-center mb-4 bg-white/70 group-hover:bg-white transition-colors">
+                    <Search className="w-5 h-5 text-earth-brown" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-2">فهم الموقع</h3>
+                  <p className="text-concrete-gray text-[13px] leading-relaxed">
+                    نبدأ بدراسة سلوك التربة، منسوب المياه، عمق الحفر، والمنشآت المحيطة.
+                  </p>
+                </div>
 
-                {/* Cross-section illustration */}
-                <rect x="80" y="60" width="240" height="280" fill="none" stroke="#934E34" strokeWidth="1.5" opacity="0.2" strokeDasharray="6,3" />
+                {/* Card 2 (Middle) */}
+                <div className="bg-white/30 border border-border/80 rounded-2xl p-5 text-center sm:text-right flex flex-col items-center sm:items-start justify-start hover:border-earth-brown/30 hover:bg-white/60 transition-all duration-300 group shadow-sm">
+                  <div className="w-12 h-12 rounded-full border border-border/80 flex items-center justify-center mb-4 bg-white/70 group-hover:bg-white transition-colors">
+                    <SlidersHorizontal className="w-5 h-5 text-earth-brown" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-2">اختيار النظام</h3>
+                  <p className="text-concrete-gray text-[13px] leading-relaxed">
+                    نحدد نظام السند أو التصريف أو التقوية الأنسب حسب ظروف الموقع.
+                  </p>
+                </div>
 
-                {/* Ground level */}
-                <line x1="40" y1="120" x2="360" y2="120" stroke="#D8C1A8" strokeWidth="2" opacity="0.4" />
+                {/* Card 3 (Left in RTL) */}
+                <div className="bg-white/30 border border-border/80 rounded-2xl p-5 text-center sm:text-right flex flex-col items-center sm:items-start justify-start hover:border-earth-brown/30 hover:bg-white/60 transition-all duration-300 group shadow-sm">
+                  <div className="w-12 h-12 rounded-full border border-border/80 flex items-center justify-center mb-4 bg-white/70 group-hover:bg-white transition-colors">
+                    <ShieldCheck className="w-5 h-5 text-earth-brown" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="font-bold text-charcoal mb-2">تحكم أثناء التنفيذ</h3>
+                  <p className="text-concrete-gray text-[13px] leading-relaxed">
+                    ننفذ على مراحل مدروسة مع مراقبة مستمرة لضمان الاستقرار والسلامة.
+                  </p>
+                </div>
 
-                {/* Excavation outline */}
-                <path d="M 140 120 L 140 300 L 260 300 L 260 120" fill="#F4F0EA" fillOpacity="0.5" stroke="#934E34" strokeWidth="1.5" opacity="0.4" />
-
-                {/* Support walls */}
-                <rect x="130" y="120" width="8" height="180" fill="#934E34" opacity="0.25" rx="2" />
-                <rect x="262" y="120" width="8" height="180" fill="#934E34" opacity="0.25" rx="2" />
-
-                {/* Struts */}
-                <line x1="138" y1="180" x2="262" y2="180" stroke="#D96B2B" strokeWidth="2" opacity="0.35" />
-                <line x1="138" y1="240" x2="262" y2="240" stroke="#D96B2B" strokeWidth="2" opacity="0.35" />
-
-                {/* Depth annotations */}
-                <text x="310" y="150" fontSize="10" fill="#6E6A64" opacity="0.5" fontFamily="sans-serif">-3m</text>
-                <text x="310" y="210" fontSize="10" fill="#6E6A64" opacity="0.5" fontFamily="sans-serif">-6m</text>
-                <text x="310" y="270" fontSize="10" fill="#6E6A64" opacity="0.5" fontFamily="sans-serif">-9m</text>
-              </svg>
-
-              {/* TODO: استبدل هذا بصورة فعلية للشركة لاحقًا */}
-              <div className="absolute bottom-6 right-6 bg-earth-brown/90 text-white px-4 py-2 rounded-lg text-sm font-medium backdrop-blur-sm">
-                مقطع هندسي — سند حفريات
               </div>
-            </div>
-          </MotionReveal>
+            </MotionReveal>
+          </div>
+
         </div>
       </Container>
     </section>

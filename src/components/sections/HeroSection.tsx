@@ -342,7 +342,7 @@ export function HeroSection() {
       </section>
 
       {/* ---------- Services strip (below hero, in normal flow) ---------- */}
-      <div className="relative z-10 border-t border-white/10 bg-charcoal">
+      <div className="relative z-10 border-t border-white/10 border-b-2 border-equipment-orange bg-charcoal">
         <Container>
           <div className="flex items-center justify-center py-5 overflow-x-auto">
             {heroServices.map((service, idx) => (
@@ -358,14 +358,6 @@ export function HeroSection() {
           </div>
         </Container>
       </div>
-
-      {/* ---------- Transition spacer: charcoal → sand-light ---------- */}
-      <div
-        className="h-20 md:h-24"
-        style={{
-          background: "linear-gradient(to bottom, var(--color-charcoal), var(--color-sand-light))",
-        }}
-      />
     </>
   );
 }

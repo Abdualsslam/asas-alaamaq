@@ -70,7 +70,7 @@ export function AboutSection() {
               <div className="relative w-full rounded-[2rem] shadow-xl border border-earth-brown/10 bg-white/40 p-2 lg:p-4 backdrop-blur-sm">
                 <div className="relative w-full rounded-2xl lg:rounded-3xl overflow-hidden bg-sand-light">
                   <Image
-                    src="/images/asas_about_left_visual.png"
+                    src="/images/asas_about_left_visual.webp"
                     alt="مقطع هندسي لاستقرار الحفريات"
                     width={800}
                     height={800}

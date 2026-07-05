@@ -88,7 +88,7 @@ export function SafetySection() {
             {/* Faded Safety Worker Background Image on the Left */}
             <div className="absolute left-0 bottom-0 w-full lg:w-[45%] h-[75%] lg:h-[90%] pointer-events-none select-none overflow-hidden rounded-bl-3xl">
               <Image
-                src="/images/safety_worker.png"
+                src="/images/safety_worker.webp"
                 alt="Safety Worker"
                 fill
                 className="object-cover object-bottom opacity-20 lg:opacity-30 group-hover:opacity-45 transition-opacity duration-700"

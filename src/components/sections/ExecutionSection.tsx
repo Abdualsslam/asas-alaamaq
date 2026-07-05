@@ -46,7 +46,7 @@ export function ExecutionSection() {
       {/* ─── Background Image ─── */}
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
         <Image
-          src="/images/execution/execution-process-bg.png"
+          src="/images/execution/execution-process-bg.webp"
           alt="منهجية التنفيذ خلفية"
           fill
           className="object-cover object-bottom"

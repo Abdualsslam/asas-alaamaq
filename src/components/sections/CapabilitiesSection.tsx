@@ -326,7 +326,7 @@ export function CapabilitiesSection() {
             >
               <div className="relative w-full h-full overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/capabilities.png"
+                  src="/images/capabilities.webp"
                   alt="Excavation shoring blueprint sketch"
                   fill
                   className="object-cover object-center opacity-90 select-none"

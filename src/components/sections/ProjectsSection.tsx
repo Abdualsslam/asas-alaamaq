@@ -492,7 +492,7 @@ export function ProjectsSection() {
               <div className="text-center lg:text-left">
                 <div className="flex items-center gap-2 mb-1">
                   <Layers size={18} className="text-earth-brown" />
-                  <span className="text-3xl font-black text-white tabular-nums">+20</span>
+                  <span className="text-3xl font-black text-white tabular-nums">+40</span>
                 </div>
                 <span className="text-gray-500 text-sm font-medium">
                   مشروع مُنجز

@@ -1,36 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# أساس الأعماق للمقاولات (Asas Al-Aamaq) 🏗️🏜️
+**الصفحة التعريفية الرسمية لشركة أساس الأعماق للمقاولات - الرياض، المملكة العربية السعودية**
 
-## Getting Started
+تعتبر **شركة أساس الأعماق للمقاولات** شريكاً هندسياً رائداً متقدماً في هندسة الأرض وإدارة الحفريات العميقة. ترتكز فلسفتنا على أن "الحفر ليس مجرد أعمال حفر، بل هندسة للتحكم بالتربة، المياه الجوفية، والمخاطر قبل أن تؤثر على المشروع".
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 نظرة عامة على المشروع
+
+تم بناء هذا المشروع كصفحة هبوط (Landing Page) تفاعلية حديثة، مصممة بهوية بصرية متميزة تعكس قوة وصلابة قطاع المقاولات والهندسة الأرضية العميقة. تم التركيز في التصميم على التفاصيل الهندسية والألوان المستوحاة من الأرض، الخرسانة، والعمق لضمان تقديم انطباع احترافي وموثوق لشركاء الأعمال والعملاء.
+
+---
+
+## 🛠️ التقنيات المستخدمة (Tech Stack)
+
+تم اختيار تقنيات حديثة لضمان سرعة التحميل، استقرار الأداء، وديناميكية الحركات البصرية:
+
+*   **الإطار الأساسي:** [Next.js 16 (App Router)](https://nextjs.org/) مع [TypeScript](https://www.typescriptlang.org/)
+*   **التنسيق والتصميم:** [Tailwind CSS v4](https://tailwindcss.com/)
+*   **المكتبة الأساسية:** [React 19](https://react.dev/)
+*   **الحركات والتفاعل (Animations):**
+    *   [Framer Motion](https://www.framer.com/motion/) للتأثيرات الانتقالية وظهور العناصر.
+    *   [GSAP (GreenSock)](https://gsap.com/) للحركات المعقدة.
+    *   [Anime.js](https://animejs.com/) للأنيميشن المتقدم في واجهة التحميل والشعار.
+*   **التمرير الانسيابي:** [Lenis Smooth Scroll](https://lenis.darkroom.engineering/) لتجربة تصفح غاية في النعومة.
+*   **الأيقونات:** [Lucide React](https://lucide.dev/)
+
+---
+
+## 📂 بنية المجلدات والملفات (File Structure)
+
+تم تنظيم المشروع ليكون قابلاً للتوسع وإضافة المحتوى بسهولة تامة:
+
+```text
+src/
+├── app/                  # إعدادات Next.js وصفحة البداية والتنسيق العام
+│   ├── globals.css       # الأنماط والـ CSS variables (الهوية والألوان الأساسية)
+│   ├── layout.tsx        # الهيكل العام والتغذية البرمجية للموقع
+│   └── page.tsx          # الصفحة الرئيسية المجمعة لكافة الأقسام
+├── components/           # المكونات التفاعلية للموقع
+│   ├── layout/           # مكونات الإطار العام (Header, Footer, Preloader, SmoothScroll, WhatsAppButton)
+│   ├── sections/         # أقسام الصفحة التعريفية (Hero, Risk, About, Services, Execution, Capabilities, Safety, Projects, FinalCTA)
+│   └── ui/               # مكونات واجهة المستخدم الصغيرة القابلة لإعادة الاستخدام (Button, Container, MotionReveal, SectionHeader, AnimeBrandLoader)
+├── data/                 # ملفات البيانات الثابتة لتسهيل تعديل المحتوى والنصوص دون المساس بالـ JSX
+│   ├── contact.ts        # بيانات التواصل والهاتف والبريد والموقع
+│   ├── navigation.ts     # روابط القائمة العلوية
+│   ├── risks.ts          # بيانات بطاقات مخاطر التربة
+│   ├── services.ts       # تفاصيل الخدمات المقدمة
+│   └── stats.ts          # أرقام وإحصائيات الشركة
+└── lib/                  # دوال مساعدة ومكتبات مشتركة (مثل utils.ts)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💡 أقسام الصفحة الهامة
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  **مقدمة الصفحة (Hero Section):** عنوان قوي يعبر عن الفلسفة الهندسية مع خلفية ديناميكية وحركات انسيابية.
+2.  **قسم المخاطر (Soil Risk Section):** يستعرض بطاقات تفاعلية لمخاطر التربة والمياه الجوفية والضغط الجانبي.
+3.  **عن الشركة (About Section):** يركز على تموضع الشركة كشريك هندسي لحلول الأرض المعقدة.
+4.  **الخدمات (Services Section):**
+    *   سند الحفريات (Shoring Systems)
+    *   الشوتكريت (Shotcrete)
+    *   الميكروبايل (Micropile)
+    *   نزح المياه (Dewatering)
+    *   الأنابيب المثقبة (Perforated Pipe)
+5.  **نهج التنفيذ (Execution Approach):** يوضح خطوات العمل الهندسي بدءاً من الفهم والتحليل وحتى السيطرة والمراقبة.
+6.  **القدرات (Capabilities Section):** استعراض الميزات الفنية مثل العمل في ظروف معقدة ومواقع ضيقة.
+7.  **السلامة والجودة (Safety Section):** يوضح التزام الشركة بنظام سلامة متكامل لحماية المنشآت المجاورة والعاملين.
+8.  **معرض المشاريع (Projects Gallery):** شبكة لعرض المشاريع المنجزة ومواقع العمل.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ⚙️ إعداد وتشغيل المشروع محلياً
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+اتبع الخطوات التالية لتشغيل المشروع في بيئة التطوير الخاصة بك:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. تثبيت الحزم (Dependencies)
+تأكد من وجود بيئة [Node.js](https://nodejs.org/) مثبتة على جهازك، ثم نفذ الأمر التالي:
+```bash
+npm install
+```
 
-## Deploy on Vercel
+### 2. تشغيل خادم التطوير (Development Server)
+لتشغيل المشروع محلياً ومراقبة التغييرات بشكل مباشر:
+```bash
+npm run dev
+```
+افتح الرابط التالي في المتصفح: [http://localhost:3000](http://localhost:3000)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. بناء النسخة الإنتاجية (Build for Production)
+لتجهيز المشروع للرفع والتشغيل الفعلي:
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. تشغيل النسخة الإنتاجية محلياً (Start Production Server)
+```bash
+npm run start
+```
+
+---
+
+## 🎨 الهوية البصرية وتخصيص الأصول (Branding & Assets)
+
+لإضافة الشعار، الأيقونات، والخطوط الخاصة بالشركة، يرجى وضع الملفات في المسارات التالية داخل مجلد `public`:
+
+*   **الشعار الرسمي:** `public/brand/logo.svg`
+*   **أيقونة الموقع (Favicon/Icon):** `public/brand/icon.svg`
+*   **الخط المخصص للعلامة:** `public/fonts/brand-font.woff2` (أو أي صيغة متوافقة)
+*   **صور معرض المشاريع:** `public/images/projects/`
+*   **صور الخدمات:** `public/images/services/`
+*   **صور الخلفيات والمقدمة:** `public/images/hero/`
+
+---
+
+## 📞 بيانات التواصل الافتراضية بالمشروع
+
+*   **أرقام الهاتف:** `+966 50 185 0513` | `+966 55 460 1539`
+*   **البريد الإلكتروني:** `info@asasalaamaq.com`
+*   **الموقع الإلكتروني:** [asasalaamaq.com](https://asasalaamaq.com)
+*   **الموقع الجغرافي:** الرياض، المملكة العربية السعودية (Riyadh, Saudi Arabia)

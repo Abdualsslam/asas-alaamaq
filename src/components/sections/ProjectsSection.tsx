@@ -412,18 +412,21 @@ export function ProjectsSection() {
 
   const filteredImages =
     activeFilter === "الكل"
-      ? galleryImages
+      ? [
+          ...galleryImages.filter((img) => img.category !== "سند حفريات"),
+          ...galleryImages.filter((img) => img.category === "سند حفريات"),
+        ]
       : galleryImages.filter((img) => img.category === activeFilter);
 
-  const openLightbox = (globalIndex: number) => setLightboxIndex(globalIndex);
+  const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
   const nextImage = () =>
     setLightboxIndex((prev) =>
-      prev !== null ? (prev + 1) % galleryImages.length : null
+      prev !== null ? (prev + 1) % filteredImages.length : null
     );
   const prevImage = () =>
     setLightboxIndex((prev) =>
-      prev !== null ? (prev - 1 + galleryImages.length) % galleryImages.length : null
+      prev !== null ? (prev - 1 + filteredImages.length) % filteredImages.length : null
     );
 
   return (
@@ -548,15 +551,12 @@ export function ProjectsSection() {
           >
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => {
-                const globalIndex = galleryImages.findIndex(
-                  (img) => img.id === image.id
-                );
                 return (
                   <GalleryCard
                     key={image.id}
                     image={image}
                     index={index}
-                    onOpen={() => openLightbox(globalIndex)}
+                    onOpen={() => openLightbox(index)}
                     layoutClass={getCardLayout(index)}
                   />
                 );
@@ -579,7 +579,7 @@ export function ProjectsSection() {
       <AnimatePresence>
         {lightboxIndex !== null && (
           <Lightbox
-            images={galleryImages}
+            images={filteredImages}
             currentIndex={lightboxIndex}
             onClose={closeLightbox}
             onNext={nextImage}

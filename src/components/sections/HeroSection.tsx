@@ -216,8 +216,8 @@ export function HeroSection() {
         </motion.div>
 
         {/* ---------- Cinematic scrims (lighter, focused on text side) ---------- */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-charcoal/88 via-charcoal/45 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-charcoal/70 via-charcoal/30 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-charcoal/90 via-charcoal/60 to-transparent md:from-charcoal/88 md:via-charcoal/45 md:to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 md:h-1/2 bg-gradient-to-t from-charcoal/95 via-charcoal/50 to-transparent md:from-charcoal/70 md:via-charcoal/30 md:to-transparent" />
         <div className="film-grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
 
         {/* ---------- Dust particles (ambient, during & after video) ---------- */}
@@ -285,10 +285,10 @@ export function HeroSection() {
         </motion.div>
 
         {/* ---------- Content (revealed after video) ---------- */}
-        <Container className="relative z-10 flex min-h-[100svh] flex-col justify-center pt-28 pb-32 md:pb-36">
+        <Container className="relative z-10 flex min-h-[100svh] flex-col justify-end md:justify-center pb-24 pt-32 md:pt-28 md:pb-36">
           <motion.div
             style={reduceMotion ? undefined : { y: contentY, opacity: contentOpacity }}
-            className="max-w-3xl"
+            className="max-w-3xl w-full"
           >
             {/* Editorial eyebrow */}
             <motion.div
@@ -296,13 +296,13 @@ export function HeroSection() {
               initial="hidden"
               animate={anim}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-7 flex items-center gap-3"
+              className="mb-5 md:mb-7 flex items-center gap-3"
             > <span dir="ltr" className="flex items-center gap-2">
-                <span className="h-px w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
+                <span className="h-px w-10 md:w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
                 <span className="h-1.5 w-1.5 rotate-45 bg-equipment-orange shadow-[0_0_8px_rgba(217,107,43,0.55)]" />
 
               </span>
-              <span className="text-sm font-semibold tracking-wide text-equipment-orange">
+              <span className="text-[13px] md:text-sm font-semibold tracking-wide text-equipment-orange">
                 هندسة أرضية متخصصة
               </span>
 
@@ -313,28 +313,28 @@ export function HeroSection() {
               variants={headlineParent}
               initial="hidden"
               animate={anim}
-              className="hero-text-shadow mb-8 flex flex-col leading-[1.1] tracking-tight"
+              className="hero-text-shadow mb-6 md:mb-8 flex flex-col leading-[1.1] md:leading-[1.1] tracking-tight"
             >
-              <span className="block overflow-hidden pt-2 pb-6 -mb-5">
+              <span className="block overflow-hidden pt-2 pb-4 -mb-3 md:pb-6 md:-mb-5">
                 <motion.span
                   variants={headlineLine}
-                  className="block text-[clamp(2.5rem,6vw,5rem)] font-black text-white"
+                  className="block text-[clamp(2.2rem,10vw,5rem)] md:text-[clamp(2.5rem,6vw,5rem)] font-black text-white"
                 >
                   نُسيطر على التربة
                 </motion.span>
               </span>
-              <span className="block overflow-hidden pt-1 pb-6 -mb-5">
+              <span className="block overflow-hidden pt-1 pb-4 -mb-3 md:pb-6 md:-mb-5">
                 <motion.span
                   variants={headlineLine}
-                  className="block text-[clamp(1.8rem,4.5vw,3.2rem)] font-light text-sand-secondary"
+                  className="block text-[clamp(1.5rem,7vw,3.2rem)] md:text-[clamp(1.8rem,4.5vw,3.2rem)] font-light text-sand-secondary"
                 >
                   قبل أن تسيطر على
                 </motion.span>
               </span>
-              <span className="block overflow-hidden pt-1 pb-6">
+              <span className="block overflow-hidden pt-1 pb-4 md:pb-6">
                 <motion.span
                   variants={headlineLine}
-                  className="block text-[clamp(2.5rem,6.5vw,5rem)] font-black text-equipment-orange"
+                  className="block text-[clamp(2.2rem,11vw,5rem)] md:text-[clamp(2.5rem,6.5vw,5rem)] font-black text-equipment-orange"
                 >
                   المشروع
                 </motion.span>
@@ -347,7 +347,7 @@ export function HeroSection() {
               initial="hidden"
               animate={anim}
               transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="hero-text-shadow mb-10 max-w-[600px] border-r-2 border-equipment-orange/40 pr-5 text-base leading-relaxed text-white/75 md:text-lg"
+              className="hero-text-shadow mb-8 md:mb-10 max-w-[600px] border-r-2 border-equipment-orange/40 pr-4 md:pr-5 text-[15px] leading-[1.7] md:leading-relaxed text-white/80 md:text-base lg:text-lg"
             >
               حلول هندسية متخصصة في سند الحفريات، الشوتكريت، الميكروبايل، نزح
               المياه، والتصريف تحت السطحي — لضمان استقرار الموقع وسلامة التنفيذ.
@@ -359,22 +359,22 @@ export function HeroSection() {
               initial="hidden"
               animate={anim}
               transition={{ duration: 0.7, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 flex flex-wrap items-center gap-4"
+              className="mt-6 md:mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 md:gap-4 w-full sm:w-auto"
             >
               <a
                 href="https://wa.me/966501850513"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange py-2 pr-7 pl-2 text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
+                className="group flex justify-center items-center gap-3 rounded-full bg-equipment-orange py-3 md:py-2 px-6 md:pr-7 md:pl-2 text-[15px] md:text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
               >
                 ناقش مشروعك معنا
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:-translate-x-1">
+                <span className="grid h-8 w-8 md:h-9 md:w-9 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:-translate-x-1">
                   <ArrowLeft size={16} />
                 </span>
               </a>
               <a
                 href="#services"
-                className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-7 py-4 text-base font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:border-white/50 hover:bg-white/10"
+                className="flex justify-center items-center rounded-full border border-white/25 bg-white/5 px-6 py-3 md:px-7 md:py-4 text-[15px] md:text-base font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:border-white/50 hover:bg-white/10"
               >
                 استعرض خدماتنا
               </a>

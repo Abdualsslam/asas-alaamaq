@@ -17,7 +17,7 @@ const galleryImages = [
     id: 2,
     src: "/images/gallary/img (2).webp",
     label: "أعمال حفر الخوازيق",
-    category: "خوازيق",
+    category: "ميكروبايل",
   },
   {
     id: 3,
@@ -29,13 +29,13 @@ const galleryImages = [
     id: 4,
     src: "/images/gallary/img (4).webp",
     label: "تركيب أنظمة التثبيت",
-    category: "تثبيت",
+    category: "سند حفريات",
   },
   {
     id: 5,
     src: "/images/gallary/img (5).webp",
     label: "جدران الخوازيق المتلاصقة",
-    category: "خوازيق",
+    category: "ميكروبايل",
   },
   {
     id: 6,
@@ -53,13 +53,13 @@ const galleryImages = [
     id: 8,
     src: "/images/gallary/img (8).webp",
     label: "أنظمة الدعم المؤقت",
-    category: "تثبيت",
+    category: "سند حفريات",
   },
   {
     id: 9,
     src: "/images/gallary/img (9).webp",
     label: "رقابة جودة ميدانية",
-    category: "خوازيق",
+    category: "ميكروبايل",
   },
   {
     id: 10,
@@ -71,13 +71,13 @@ const galleryImages = [
     id: 11,
     src: "/images/gallary/img (11).webp",
     label: "أعمال التسليح والصب",
-    category: "خوازيق",
+    category: "ميكروبايل",
   },
   {
     id: 12,
     src: "/images/gallary/img (12).webp",
-    label: "مراقبة جيوتقنية",
-    category: "تثبيت",
+    label: "شبكات الأنابيب المثقبة للتصريف",
+    category: "الأنابيب المثقبة",
   },
   {
     id: 13,
@@ -88,7 +88,7 @@ const galleryImages = [
   {
     id: 14,
     src: "/images/gallary/img (14).webp",
-    label: "أنظمة نزح المياه",
+    label: "أنظمة نزح المياه الجوفية",
     category: "نزح مياه",
   },
   {
@@ -401,7 +401,14 @@ export function ProjectsSection() {
   const bgY1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const bgY2 = useTransform(scrollYProgress, [0, 1], [-80, 80]);
 
-  const categories = ["الكل", ...Array.from(new Set(galleryImages.map((img) => img.category)))];
+  const categories = [
+    "الكل",
+    "سند حفريات",
+    "شوتكريت",
+    "نزح مياه",
+    "ميكروبايل",
+    "الأنابيب المثقبة"
+  ];
 
   const filteredImages =
     activeFilter === "الكل"

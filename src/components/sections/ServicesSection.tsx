@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
-import { ArrowLeft, Zap } from "lucide-react";
+import { ArrowLeft, Zap, ChevronLeft } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -97,327 +97,521 @@ const servicesData = [
 
 export function ServicesSection() {
   const [activeId, setActiveId] = useState("shoring");
-  const activeService = servicesData.find((s) => s.id === activeId)!;
-  const otherServices = servicesData.filter((s) => s.id !== activeId);
+  
+  // Safe resolution of active service and index
+  const activeService = servicesData.find((s) => s.id === activeId) || servicesData[0];
+  const activeIndex = servicesData.findIndex((s) => s.id === activeService.id);
+
+  const handleNext = useCallback(() => {
+    const nextIndex = (activeIndex + 1) % servicesData.length;
+    setActiveId(servicesData[nextIndex].id);
+  }, [activeIndex]);
+
+  const handlePrev = useCallback(() => {
+    const prevIndex = (activeIndex - 1 + servicesData.length) % servicesData.length;
+    setActiveId(servicesData[prevIndex].id);
+  }, [activeIndex]);
 
   return (
     <section
       id="services"
-      className="relative py-28 lg:py-36 scroll-mt-28 bg-[#0F1114] overflow-hidden"
+      className="relative py-24 lg:py-32 scroll-mt-28 overflow-hidden bg-[#FAF8F5]"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(147, 78, 52, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(147, 78, 52, 0.03) 1px, transparent 1px)
+        `,
+        backgroundSize: "32px 32px",
+      }}
     >
-      {/* ─── Ambient Background ─── */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Radial glow matching active service */}
+      {/* ─── Ambient Background Glows (Dynamic Color) ─── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+        {/* Dynamic color glow top-right */}
         <motion.div
-          key={activeId + "-glow"}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[160px]"
-          style={{ background: `radial-gradient(circle, ${activeService.accentHex}18, transparent 70%)` }}
+          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.06] filter blur-[80px]"
+          animate={{
+            backgroundColor: activeService.accentHex,
+          }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         />
-        {/* Subtle grid */}
-        <svg width="100%" height="100%" className="opacity-[0.03]">
-          <defs>
-            <pattern id="servicesGrid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#servicesGrid)" />
-        </svg>
+        {/* Dynamic color glow bottom-left */}
+        <motion.div
+          className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.04] filter blur-[60px]"
+          animate={{
+            backgroundColor: activeService.accentHex,
+          }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        />
+        
+        {/* Technical crosshair and lines */}
+        <div className="absolute top-10 right-10 text-charcoal/10 font-mono text-[10px] tracking-wider hidden lg:block select-none">
+          + LAT: 24.7136° N
+        </div>
+        <div className="absolute top-10 left-10 text-charcoal/10 font-mono text-[10px] tracking-wider hidden lg:block select-none">
+          + LNG: 46.6753° E
+        </div>
+        <div className="absolute bottom-10 right-10 text-charcoal/10 font-mono text-[10px] tracking-wider hidden lg:block select-none">
+          + AZIMUTH: 184.2°
+        </div>
+        <div className="absolute bottom-10 left-10 text-charcoal/10 font-mono text-[10px] tracking-wider hidden lg:block select-none">
+          + GRID_REF: {activeService.id.toUpperCase()}-0{activeIndex + 1}
+        </div>
+      </div>
+
+      {/* Decorative Blueprint Ruler Ticks */}
+      <div className="absolute top-0 left-0 right-0 h-5 border-b border-charcoal/[0.04] hidden md:flex items-center justify-between px-10 text-[9px] font-mono text-charcoal/20 select-none">
+        <span>[ STATUS: SYSTEM_ONLINE ]</span>
+        <span className="tracking-[0.5em] opacity-40">| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |</span>
+        <span>[ SECTION: SERVICES_05 ]</span>
       </div>
 
       <Container className="relative z-10">
         {/* ─── Section Header ─── */}
         <MotionReveal>
           <div className="max-w-3xl mx-auto text-center mb-16 lg:mb-20">
-            <div className="inline-flex items-center justify-center gap-2.5 px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/60 mb-7 backdrop-blur-sm">
-              <Zap size={15} className="text-equipment-orange" />
-              <span className="text-sm font-bold tracking-wide">خدماتنا الهندسية</span>
+            <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-earth-brown/[0.05] border border-earth-brown/[0.1] text-earth-brown mb-6">
+              <Zap size={14} className="text-equipment-orange animate-pulse" />
+              <span className="text-xs font-bold tracking-wide uppercase">الخدمات والحلول الهندسية</span>
             </div>
-            <h2 className="text-4xl md:text-[3.2rem] font-black text-white mb-6 leading-[1.2] tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-black text-charcoal mb-6 leading-tight tracking-tight">
               أنظمة متكاملة{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-l from-equipment-orange via-[#E8955A] to-earth-brown">
+              <span className="text-transparent bg-clip-text bg-gradient-to-l from-equipment-orange via-earth-brown-light to-earth-brown">
                 لاستقرار الحفريات
               </span>
             </h2>
-            <p className="text-lg text-white/45 leading-relaxed font-medium max-w-2xl mx-auto">
-              ننفذ حلولاً هندسية مترابطة للتحكم بحركة التربة، تخفيف ضغط المياه الجوفية، ودعم واجهات الحفر بأعلى معايير الجودة والسلامة.
+            <p className="text-base md:text-lg text-concrete-gray leading-relaxed font-medium max-w-2xl mx-auto">
+              ننفذ حلولاً هندسية مترابطة للتحكم بحركة التربة، وتخفيف ضغط المياه الجوفية، ودعم واجهات الحفر بأعلى معايير الدقة والأمان.
             </p>
           </div>
         </MotionReveal>
 
-        {/* ─── Navigation Rail (Horizontal Tabs) ─── */}
-        <MotionReveal delay={0.1}>
-          <div className="flex justify-center mb-12 lg:mb-16">
-            <div className="inline-flex items-center gap-2 p-2 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm">
-              {servicesData.map((service) => {
-                const isActive = activeId === service.id;
-                return (
-                  <button
-                    key={service.id}
-                    onClick={() => setActiveId(service.id)}
-                    className={`relative flex items-center gap-3 px-5 py-3.5 rounded-xl font-bold text-sm transition-all duration-400 cursor-pointer ${
-                      isActive
-                        ? "text-white"
-                        : "text-white/35 hover:text-white/60 hover:bg-white/[0.03]"
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeServiceTab"
-                        className={`absolute inset-0 rounded-xl bg-gradient-to-l ${service.gradient} shadow-lg`}
-                        style={{ boxShadow: `0 8px 32px ${service.accentHex}30` }}
-                        transition={{ type: "spring", bounce: 0.18, duration: 0.55 }}
-                      />
-                    )}
-                    <div className="relative z-10 w-5 h-5 flex items-center justify-center">
-                      <Image
-                        src={service.imagePath}
-                        alt={service.titleAr}
-                        width={20}
-                        height={20}
-                        className={`object-contain transition-all duration-300 ${
-                          isActive ? "opacity-100 filter-none" : "opacity-50 grayscale hover:opacity-85 hover:grayscale-0"
-                        }`}
-                      />
-                    </div>
-                    <span className="relative z-10 hidden md:inline">{service.titleAr}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </MotionReveal>
-
-        {/* ─── Active Service Showcase ─── */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeId}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mb-12 lg:mb-16"
-          >
-            <div className="relative rounded-[2rem] overflow-hidden border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
-              {/* Card inner glow */}
-              <div
-                className="absolute inset-0 opacity-[0.06] pointer-events-none"
-                style={{
-                  background: `radial-gradient(ellipse at 30% 20%, ${activeService.accentHex}, transparent 60%)`,
-                }}
-              />
-
-              <div className="relative p-8 sm:p-10 lg:p-14">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-                  {/* Right Column: Content */}
-                  <div className="lg:col-span-7 order-2 lg:order-1">
-                    {/* Service Number + English Title */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <span
-                        className="text-7xl sm:text-8xl font-black leading-none"
-                        style={{ color: `${activeService.accentHex}12` }}
-                      >
-                        0{servicesData.findIndex((s) => s.id === activeId) + 1}
-                      </span>
-                      <div>
-                        <p
-                          className="text-xs font-bold tracking-[0.25em] uppercase"
-                          style={{ color: activeService.accentHex }}
-                          dir="ltr"
-                        >
-                          {activeService.titleEn}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Arabic Title */}
-                    <h3 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-black text-white mb-5 leading-[1.25]">
-                      {activeService.titleAr}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-lg text-white/50 leading-[1.9] font-medium mb-10 max-w-xl">
-                      {activeService.description}
-                    </p>
-
-                    {/* Includes */}
-                    <div>
-                      <h4 className="text-sm font-bold text-white/30 mb-5 tracking-wider">
-                        تشمل هذه الخدمة
-                      </h4>
-                      <div className="space-y-3">
-                        {activeService.includes.map((item, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.15 + idx * 0.1, duration: 0.4 }}
-                            className="flex items-center gap-4 group"
-                          >
-                            <div
-                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5 transition-transform duration-300 group-hover:scale-110"
-                              style={{ backgroundColor: `${activeService.accentHex}18` }}
-                            >
-                              <Image
-                                src={item.iconPath}
-                                alt={item.text}
-                                width={20}
-                                height={20}
-                                className="object-contain w-full h-full"
-                              />
-                            </div>
-                            <span className="text-white/75 font-medium text-[15px] leading-snug">
-                              {item.text}
-                            </span>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Left Column: Visual Block */}
-                  <div className="lg:col-span-5 order-1 lg:order-2">
-                    <div className="relative">
-                      {/* Main visual card */}
+        {/* ─── Interactive Layout Container ─── */}
+        <div className="w-full">
+          {/* ========================================================
+              DESKTOP LAYOUT (Asymmetric Blueprint Dashboard Panel)
+             ======================================================== */}
+          <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch">
+            
+            {/* RIGHT SIDE: Vertical Tab Selection (5 Cols) */}
+            <div className="col-span-5 bg-white/60 backdrop-blur-sm rounded-2xl border border-charcoal/[0.06] overflow-hidden flex flex-col shadow-[0_8px_32px_rgba(0,0,0,0.02)]">
+              <div className="p-5 border-b border-charcoal/[0.06] bg-charcoal/[0.01] flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-charcoal/40 uppercase tracking-wider">[ قائمة الأنظمة الإنشائية ]</span>
+                <span className="text-[10px] font-mono text-charcoal/40">SELECT_SERVICE</span>
+              </div>
+              <div className="flex flex-col divide-y divide-charcoal/[0.04]">
+                {servicesData.map((service, index) => {
+                  const isActive = activeId === service.id;
+                  return (
+                    <button
+                      key={service.id}
+                      onClick={() => setActiveId(service.id)}
+                      className="relative text-right w-full cursor-pointer focus:outline-none transition-all duration-300"
+                    >
                       <div
-                        className="relative rounded-[1.5rem] overflow-hidden aspect-square max-w-[420px] mx-auto"
-                        style={{
-                          background: `linear-gradient(145deg, ${activeService.accentHex}10, ${activeService.accentHex}04)`,
-                          border: `1px solid ${activeService.accentHex}15`,
-                        }}
+                        className={`px-7 py-6 transition-all duration-300 flex flex-col gap-1.5 ${
+                          isActive 
+                            ? "bg-white shadow-[inset_-3px_0_0_0_rgba(0,0,0,0.1),0_4px_24px_rgba(0,0,0,0.02)]" 
+                            : "hover:bg-charcoal/[0.01]"
+                        }`}
                       >
-                        {/* Decorative circles */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-                            className="absolute w-[85%] h-[85%] rounded-full border border-dashed"
-                            style={{ borderColor: `${activeService.accentHex}15` }}
-                          />
-                          <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-                            className="absolute w-[65%] h-[65%] rounded-full border"
-                            style={{ borderColor: `${activeService.accentHex}10` }}
-                          />
-                          {/* Center icon */}
-                          <motion.div
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2, type: "spring", bounce: 0.3 }}
-                            className="relative z-10 w-28 h-28 sm:w-32 sm:h-32 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden p-4"
-                            style={{
-                              background: `linear-gradient(135deg, ${activeService.accentHex}20, ${activeService.accentHex}40)`,
-                              border: `1px solid ${activeService.accentHex}40`,
-                              boxShadow: `0 20px 60px ${activeService.accentHex}20`,
-                            }}
+                        {/* Dynamic Side Highlight Bar */}
+                        <motion.div
+                          className="absolute right-0 top-0 bottom-0 w-[4px]"
+                          style={{ backgroundColor: service.accentHex }}
+                          initial={{ scaleY: 0 }}
+                          animate={{ scaleY: isActive ? 1 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        />
+
+                        <div className="flex items-center justify-between">
+                          {/* Titles on the right (RTL: first element renders on right) */}
+                          <div className="flex flex-col items-start text-right">
+                            <h4 
+                              className={`text-[17px] font-black transition-colors duration-300 ${
+                                isActive ? "text-charcoal" : "text-charcoal/60"
+                              }`}
+                            >
+                              {service.titleAr}
+                            </h4>
+                            <span 
+                              className="text-[9px] tracking-widest font-bold uppercase text-charcoal/30 mt-0.5" 
+                              dir="ltr"
+                            >
+                              {service.titleEn}
+                            </span>
+                          </div>
+
+                          {/* Number on the left (RTL: second element renders on left) */}
+                          <span 
+                            className={`text-[10px] font-mono transition-colors duration-300 ${
+                              isActive ? "font-bold" : "text-charcoal/30"
+                            }`}
+                            style={{ color: isActive ? service.accentHex : undefined }}
                           >
-                            <Image
-                              src={activeService.imagePath}
-                              alt={activeService.titleAr}
-                              width={80}
-                              height={80}
-                              className="object-contain w-full h-full"
-                            />
-                          </motion.div>
+                            [ 0{index + 1} ]
+                          </span>
                         </div>
 
-                        {/* Stat badge */}
+                        {/* Interactive Accordion-style preview text */}
+                        <AnimatePresence initial={false}>
+                          {isActive && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <p className="text-[13px] text-concrete-gray-light leading-relaxed mt-2 pr-1">
+                                {service.description}
+                              </p>
+                              <div 
+                                className="mt-3 flex items-center justify-end gap-1.5 text-[10px] font-black"
+                                style={{ color: service.accentHex }}
+                              >
+                                <span>عرض كامل المواصفات</span>
+                                <ArrowLeft size={10} className="transition-transform group-hover:-translate-x-1" />
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* LEFT SIDE: Main Interactive Monitor / Viewport (7 Cols) */}
+            <div className="col-span-7 bg-white rounded-2xl border border-charcoal/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.03)] overflow-hidden flex flex-col justify-between">
+              
+              {/* Viewport Status Header */}
+              <div className="px-6 py-4 bg-charcoal/[0.01] border-b border-charcoal/[0.05] flex items-center justify-between text-[11px] font-mono text-charcoal/40">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="relative flex h-2 w-2">
+                      <span 
+                        className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                        style={{ backgroundColor: activeService.accentHex }}
+                      />
+                      <span 
+                        className="relative inline-flex rounded-full h-2 w-2"
+                        style={{ backgroundColor: activeService.accentHex }}
+                      />
+                    </span>
+                    <span className="font-bold tracking-wider text-[10px] uppercase text-charcoal/60">SYSTEM_LIVE</span>
+                  </div>
+                  <span className="opacity-30">|</span>
+                  <span>VIEW: {activeService.id.toUpperCase()}-0{activeIndex + 1}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[9px] px-2 py-0.5 rounded bg-charcoal/5 font-bold">W-X64</span>
+                </div>
+              </div>
+
+              {/* Viewport Content Panel */}
+              <div className="p-6 md:p-8 flex-grow">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeId}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                    className="flex flex-col h-full justify-between"
+                  >
+                    <div>
+                      {/* Main Image Frame with HUD overlays */}
+                      <div className="relative aspect-[16/9.5] w-full rounded-xl overflow-hidden border border-charcoal/[0.08] bg-sand-light/10 shadow-inner group">
+                        
+                        {/* Blueprint overlay grid lines */}
+                        <div className="absolute inset-0 z-10 pointer-events-none opacity-20 bg-[linear-gradient(to_right,#80808022_1px,transparent_1px),linear-gradient(to_bottom,#80808022_1px,transparent_1px)] bg-[size:28px_28px]" />
+                        
+                        {/* Background blurred image to fill any empty space */}
+                        <Image
+                          src={activeService.imagePath}
+                          alt=""
+                          fill
+                          className="object-cover blur-md opacity-25 scale-110 pointer-events-none"
+                          sizes="10vw"
+                        />
+                        {/* Foreground crisp image (contain to avoid cropping) */}
+                        <Image
+                          src={activeService.imagePath}
+                          alt={activeService.titleAr}
+                          fill
+                          className="object-contain z-10 transition-transform duration-700 ease-out group-hover:scale-102"
+                          sizes="(max-width: 1280px) 60vw, 800px"
+                          priority
+                        />
+                        
+                        {/* Subtle colored shadow wash */}
+                        <div 
+                          className="absolute inset-0 mix-blend-multiply opacity-[0.06] transition-all duration-700 pointer-events-none" 
+                          style={{ backgroundColor: activeService.accentHex }}
+                        />
+
+                        {/* Viewport Technical Corners */}
+                        <div className="absolute top-3 right-3 z-10 w-4 h-4 border-t border-r border-white/40 pointer-events-none" />
+                        <div className="absolute top-3 left-3 z-10 w-4 h-4 border-t border-l border-white/40 pointer-events-none" />
+                        <div className="absolute bottom-3 right-3 z-10 w-4 h-4 border-b border-r border-white/40 pointer-events-none" />
+                        <div className="absolute bottom-3 left-3 z-10 w-4 h-4 border-b border-l border-white/40 pointer-events-none" />
+
+                        {/* Moving Scan Line */}
+                        <div className="absolute left-0 right-0 h-[1.5px] bg-white/25 depth-scan z-15 pointer-events-none" />
+
+                        {/* Floating Tech Stat Badge */}
                         <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.35 }}
-                          className="absolute bottom-6 left-6 right-6 bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-2xl p-5 flex items-center justify-between"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.2, duration: 0.4 }}
+                          className="absolute bottom-4 right-4 z-20 backdrop-blur-md border border-white/10 rounded-xl px-5 py-3.5 text-right shadow-lg"
+                          style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
                         >
-                          <div>
-                            <p className="text-white/40 text-xs font-bold tracking-wider mb-1">
-                              {activeService.statLabel}
-                            </p>
-                          </div>
-                          <span
-                            className="text-3xl font-black"
-                            style={{ color: activeService.accentHex }}
-                            dir="ltr"
-                          >
+                          <span className="text-3xl font-black block text-white font-mono leading-none tracking-tight" dir="ltr">
                             {activeService.stat}
+                          </span>
+                          <span className="text-[9px] text-white/50 font-bold block mt-1 tracking-wider uppercase">
+                            {activeService.statLabel}
                           </span>
                         </motion.div>
                       </div>
 
-                      {/* Floating particle dots */}
-                      <motion.div
-                        animate={{ y: [0, -12, 0] }}
-                        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-                        className="absolute -top-3 -right-3 w-5 h-5 rounded-full"
-                        style={{ backgroundColor: `${activeService.accentHex}40` }}
-                      />
-                      <motion.div
-                        animate={{ y: [0, 10, 0] }}
-                        transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-                        className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full"
-                        style={{ backgroundColor: `${activeService.accentHex}30` }}
-                      />
+                      {/* Scope of Work specifications */}
+                      <div className="mt-8">
+                        <div className="flex items-center justify-between border-b border-charcoal/[0.06] pb-3 mb-5">
+                          <h5 className="text-[11px] font-mono font-bold text-charcoal/40 uppercase tracking-widest">
+                            [ SCOPE OF WORK // نطاق تنفيذ الخدمات ]
+                          </h5>
+                          <span className="text-[10px] font-mono font-bold" style={{ color: activeService.accentHex }}>
+                            {activeService.titleEn.toUpperCase()}
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {activeService.includes.map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="flex flex-col gap-3 p-4 rounded-xl bg-sand-light/20 border border-charcoal/[0.04] hover:bg-white hover:border-charcoal/[0.1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.03)] transition-all duration-300 group"
+                            >
+                              {/* Micro Icon Container */}
+                              <div
+                                className="w-9 h-9 rounded-lg flex items-center justify-center border transition-all duration-300 group-hover:scale-105"
+                                style={{
+                                  backgroundColor: `${activeService.accentHex}08`,
+                                  borderColor: `${activeService.accentHex}18`,
+                                }}
+                              >
+                                <div className="relative w-4.5 h-4.5">
+                                  <Image
+                                    src={item.iconPath}
+                                    alt={item.text}
+                                    fill
+                                    className="object-contain"
+                                  />
+                                </div>
+                              </div>
+                              
+                              {/* Item Text */}
+                              <span className="text-charcoal/80 font-bold text-[13px] leading-snug group-hover:text-charcoal transition-colors duration-300">
+                                {item.text}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+
+                    {/* Bottom Viewer Actions */}
+                    <div className="mt-8 pt-6 border-t border-charcoal/[0.06] flex items-center justify-between">
+                      {/* Dashboard Indicators */}
+                      <div className="flex items-center gap-1.5">
+                        {servicesData.map((service) => (
+                          <button
+                            key={service.id}
+                            onClick={() => setActiveId(service.id)}
+                            className="group p-1 cursor-pointer focus:outline-none"
+                            aria-label={service.titleAr}
+                          >
+                            <div
+                              className="h-1 rounded-full transition-all duration-300"
+                              style={{
+                                width: activeId === service.id ? "24px" : "6px",
+                                backgroundColor: activeId === service.id ? activeService.accentHex : "rgba(0,0,0,0.08)"
+                              }}
+                            />
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Navigation Controls */}
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={handlePrev}
+                          className="w-8 h-8 rounded-lg bg-charcoal/[0.02] hover:bg-charcoal/[0.05] border border-charcoal/[0.06] flex items-center justify-center text-charcoal/60 hover:text-charcoal transition-all cursor-pointer focus:outline-none"
+                          aria-label="Previous service"
+                        >
+                          <ChevronLeft size={14} className="rotate-180" />
+                        </button>
+                        <span className="text-[11px] font-mono text-charcoal/40 font-bold">
+                          0{activeIndex + 1} / 0{servicesData.length}
+                        </span>
+                        <button
+                          onClick={handleNext}
+                          className="w-8 h-8 rounded-lg bg-charcoal/[0.02] hover:bg-charcoal/[0.05] border border-charcoal/[0.06] flex items-center justify-center text-charcoal/60 hover:text-charcoal transition-all cursor-pointer focus:outline-none"
+                          aria-label="Next service"
+                        >
+                          <ChevronLeft size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
-          </motion.div>
-        </AnimatePresence>
 
-        {/* ─── Other Services Grid ─── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {otherServices.map((service, index) => (
-            <MotionReveal key={service.id} delay={0.05 * index}>
-              <button
-                onClick={() => setActiveId(service.id)}
-                className="w-full text-right group relative rounded-2xl p-6 transition-all duration-400 cursor-pointer bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.05] hover:border-white/[0.12]"
-              >
-                {/* Top row */}
-                <div className="flex items-center justify-between mb-5">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden p-2 transition-all duration-400 group-hover:scale-110"
-                    style={{
-                      backgroundColor: `${service.accentHex}12`,
-                    }}
-                  >
-                    <Image
-                      src={service.imagePath}
-                      alt={service.titleAr}
-                      width={32}
-                      height={32}
-                      className="object-contain w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-400"
-                    />
-                  </div>
-                  <ArrowLeft
-                    size={16}
-                    className="text-white/15 group-hover:text-white/40 transition-all duration-400 group-hover:-translate-x-1"
-                  />
-                </div>
+          </div>
 
-                {/* Title */}
-                <h4 className="text-white font-bold text-lg mb-1.5 group-hover:text-white transition-colors">
-                  {service.titleAr}
-                </h4>
-                <p
-                  className="text-xs font-bold tracking-widest uppercase text-white/20"
-                  dir="ltr"
+          {/* ========================================================
+              MOBILE & TABLET LAYOUT (Sleek Vertical Accordion Stack)
+             ======================================================== */}
+          <div className="lg:hidden flex flex-col gap-4">
+            {servicesData.map((service, index) => {
+              const isActive = activeId === service.id;
+              return (
+                <div
+                  key={service.id}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden bg-white text-right ${
+                    isActive 
+                      ? "border-charcoal/[0.12] shadow-[0_8px_30px_rgba(0,0,0,0.04)]" 
+                      : "border-charcoal/[0.05] shadow-sm"
+                  }`}
                 >
-                  {service.titleEn}
-                </p>
+                  {/* Accordion Toggle Header */}
+                  <button
+                    className="w-full flex items-center justify-between p-5 text-right cursor-pointer select-none focus:outline-none"
+                    onClick={() => setActiveId(isActive ? service.id : service.id)}
+                  >
+                    {/* Titles on the right (RTL: first element renders on right) */}
+                    <div className="flex flex-col items-start text-right">
+                      <h4 className={`text-base font-black transition-colors ${isActive ? "text-charcoal" : "text-charcoal/70"}`}>
+                        {service.titleAr}
+                      </h4>
+                      <span className="text-[8px] tracking-wider uppercase text-charcoal/30 font-bold mt-0.5" dir="ltr">
+                        {service.titleEn}
+                      </span>
+                    </div>
 
-                {/* Bottom accent line */}
-                <div className="mt-5 h-[2px] rounded-full bg-white/[0.04] overflow-hidden">
-                  <div
-                    className="h-full w-0 group-hover:w-full transition-all duration-700 rounded-full"
-                    style={{ backgroundColor: service.accentHex }}
-                  />
+                    {/* Number and Chevron on the left (RTL: second element renders on left) */}
+                    <div className="flex items-center gap-2.5">
+                      <ChevronLeft 
+                        size={15} 
+                        className={`transition-transform duration-300 text-charcoal/40 ${
+                          isActive ? "-rotate-90" : "rotate-180"
+                        }`} 
+                      />
+                      <span 
+                        className="text-[10px] font-mono font-bold"
+                        style={{ color: isActive ? service.accentHex : "rgba(0,0,0,0.3)" }}
+                      >
+                        [ 0{index + 1} ]
+                      </span>
+                    </div>
+                  </button>
+
+                  {/* Expanded Content Panel */}
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-6 border-t border-charcoal/[0.04] pt-5 flex flex-col gap-5">
+                          {/* Image Box */}
+                          <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-charcoal/[0.06] bg-sand-light/10">
+                            <div className="absolute inset-0 z-10 pointer-events-none opacity-15 bg-[linear-gradient(to_right,#80808022_1px,transparent_1px),linear-gradient(to_bottom,#80808022_1px,transparent_1px)] bg-[size:24px_24px]" />
+                            {/* Background blurred image to fill any empty space */}
+                            <Image
+                              src={service.imagePath}
+                              alt=""
+                              fill
+                              className="object-cover blur-md opacity-25 scale-110 pointer-events-none"
+                              sizes="10vw"
+                            />
+                            {/* Foreground crisp image (contain to avoid cropping) */}
+                            <Image
+                              src={service.imagePath}
+                              alt={service.titleAr}
+                              fill
+                              className="object-contain z-10"
+                              sizes="100vw"
+                            />
+                            <div className="absolute inset-0 mix-blend-multiply opacity-[0.06]" style={{ backgroundColor: service.accentHex }} />
+                            
+                            {/* Floating Stats */}
+                            <div
+                              className="absolute bottom-3 right-3 z-20 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 text-right"
+                              style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
+                            >
+                              <span className="text-2xl font-black block text-white font-mono leading-none" dir="ltr">
+                                {service.stat}
+                              </span>
+                              <span className="text-[8px] text-white/50 font-bold block mt-0.5 tracking-wider uppercase">
+                                {service.statLabel}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Description text */}
+                          <p className="text-sm text-concrete-gray leading-relaxed pr-1">
+                            {service.description}
+                          </p>
+
+                          {/* Specifications includes list */}
+                          <div className="flex flex-col gap-2.5">
+                            <h5 className="text-[10px] font-mono font-bold text-charcoal/40 tracking-wider">
+                              [ تشمل هذه الخدمة ]
+                            </h5>
+                            <div className="flex flex-col gap-2">
+                              {service.includes.map((item, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-center gap-3.5 p-3 rounded-xl bg-sand-light/10 border border-charcoal/[0.04]"
+                                >
+                                  <div
+                                    className="w-8 h-8 rounded-lg flex items-center justify-center border flex-shrink-0"
+                                    style={{
+                                      backgroundColor: `${service.accentHex}08`,
+                                      borderColor: `${service.accentHex}18`,
+                                    }}
+                                  >
+                                    <div className="relative w-4 h-4">
+                                      <Image
+                                        src={item.iconPath}
+                                        alt={item.text}
+                                        fill
+                                        className="object-contain"
+                                      />
+                                    </div>
+                                  </div>
+                                  <span className="text-charcoal/80 font-bold text-xs">
+                                    {item.text}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </button>
-            </MotionReveal>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </Container>
     </section>

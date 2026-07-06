@@ -10,8 +10,8 @@ const galleryImages = [
   {
     id: 1,
     src: "/images/gallary/img (1).webp",
-    label: "أعمال نزح المياه الجوفية",
-    category: "نزح مياه",
+    label: "تمديد الأنابيب المثقبة للتصريف",
+    category: "الأنابيب المثقبة",
   },
   {
     id: 2,
@@ -40,8 +40,8 @@ const galleryImages = [
   {
     id: 6,
     src: "/images/gallary/img (6).webp",
-    label: "أعمال شوتكريت ميداني",
-    category: "شوتكريت",
+    label: "معدات ضخ ونزح المياه الجوفية",
+    category: "نزح مياه",
   },
   {
     id: 7,
@@ -76,8 +76,8 @@ const galleryImages = [
   {
     id: 12,
     src: "/images/gallary/img (12).webp",
-    label: "شبكات الأنابيب المثقبة للتصريف",
-    category: "الأنابيب المثقبة",
+    label: "أعمال التدعيم وسند الجوانب الخشبي",
+    category: "سند حفريات",
   },
   {
     id: 13,
@@ -94,8 +94,8 @@ const galleryImages = [
   {
     id: 15,
     src: "/images/gallary/img (15).webp",
-    label: "مشروع متكامل",
-    category: "سند حفريات",
+    label: "تركيب شبكات الأنابيب المثقبة بالموقع",
+    category: "الأنابيب المثقبة",
   },
 ];
 

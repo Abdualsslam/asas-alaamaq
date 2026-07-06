@@ -20,7 +20,7 @@ import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
 /** Depth ruler levels (metres). 0 = ground surface. */
-const depthLevels = [0, 3, 6, 9, 12, 15] as const;
+const depthLevels = [0, 3, 6, 9, 12, 15, 18] as const;
 
 /** Rolls a metre value in via slot-text; static text for reduced-motion. */
 function DepthValue({

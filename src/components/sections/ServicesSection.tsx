@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Shield, Layers, CircleDot, Droplets, Hammer, Check, ArrowLeft, Zap } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Zap } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,11 +15,11 @@ const servicesData = [
     description:
       "أنظمة دعم مصممة لمنع انهيار جوانب الحفر والتحكم بحركة التربة أثناء مراحل التنفيذ، لضمان استقرار الموقع بأعلى درجات الأمان.",
     includes: [
-      "Soldier Pile & Lagging",
-      "أنظمة التثبيت بالأنكور (Anchors)",
-      "الدعامات والجسور الداخلية (Struts)",
+      { text: "Soldier Pile & Lagging", iconPath: "/images/servises/علامة خازوق.webp" },
+      { text: "أنظمة التثبيت بالأنكور (Anchors)", iconPath: "/images/servises/علامة مرساة.webp" },
+      { text: "الدعامات والجسور الداخلية (Struts)", iconPath: "/images/servises/علامة دعامة.webp" },
     ],
-    icon: Shield,
+    imagePath: "/images/servises/سند الحفريات.webp",
     stat: "100+",
     statLabel: "مشروع منفذ",
     gradient: "from-[#D96B2B] to-[#B85520]",
@@ -31,11 +32,11 @@ const servicesData = [
     description:
       "تثبيت فوري لواجهات الحفر والتربة المكشوفة لتقليل مخاطر الانهيار أثناء التنفيذ، مع توفير طبقة حماية قوية ومستدامة.",
     includes: [
-      "دعم واجهات الحفر المفتوحة",
-      "تثبيت الأسطح الصخرية والتربة",
-      "تقليل المخاطر الميدانية بشكل فوري",
+      { text: "دعم واجهات الحفر المفتوحة", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تثبيت الأسطح الصخرية والتربة", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تقليل المخاطر الميدانية بشكل فوري", iconPath: "/images/servises/علامة تحقق فني.webp" },
     ],
-    icon: Layers,
+    imagePath: "/images/servises/الخرسانة المقذوفة.webp",
     stat: "50K+",
     statLabel: "متر مربع",
     gradient: "from-[#934E34] to-[#7A3F2A]",
@@ -48,11 +49,11 @@ const servicesData = [
     description:
       "حلول تقوية عميقة للأساسات في المواقع المعقدة أو المساحات المحدودة حيث لا تكفي الحلول التقليدية، لضمان قدرة تحمل عالية.",
     includes: [
-      "الحفر والتركيب في المساحات الضيقة",
-      "التسليح والحقن تحت الضغط",
-      "تعزيز أساسات المباني القائمة",
+      { text: "الحفر والتركيب في المساحات الضيقة", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "التسليح والحقن تحت الضغط", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تعزيز أساسات المباني القائمة", iconPath: "/images/servises/علامة تحقق فني.webp" },
     ],
-    icon: CircleDot,
+    imagePath: "/images/servises/الخوازيق الدقيقة.webp",
     stat: "30m",
     statLabel: "أقصى عمق",
     gradient: "from-[#2B6CB0] to-[#1E4D7B]",
@@ -65,11 +66,11 @@ const servicesData = [
     description:
       "إدارة فعالة للمياه الجوفية والتحكم بمنسوبها لتقليل الضغط الهيدروستاتيكي على جوانب الحفر وحماية استقرار الموقع بالكامل.",
     includes: [
-      "حفر الآبار العميقة (Deep Wells)",
-      "تركيب وتشغيل أنظمة الضخ",
-      "تصريف المياه والتحكم بالمناسيب",
+      { text: "حفر الآبار العميقة (Deep Wells)", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تركيب وتشغيل أنظمة الضخ", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تصريف المياه والتحكم بالمناسيب", iconPath: "/images/servises/علامة تحقق فني.webp" },
     ],
-    icon: Droplets,
+    imagePath: "/images/servises/نزح المياة الجوفية.webp",
     stat: "24/7",
     statLabel: "مراقبة مستمرة",
     gradient: "from-[#2D8B75] to-[#1E6B5A]",
@@ -82,11 +83,11 @@ const servicesData = [
     description:
       "أنظمة تصريف تحت سطحية استراتيجية تساعد على تخفيف ضغط المياه الجوفية وتوجيه مسارها بعيداً عن مناطق الحفر.",
     includes: [
-      "تصميم شبكات التصريف الفعالة",
-      "تخفيف ضغط المياه المستمر",
-      "حماية استقرار الحفر والأساسات",
+      { text: "تصميم شبكات التصريف الفعالة", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "تخفيف ضغط المياه المستمر", iconPath: "/images/servises/علامة تحقق فني.webp" },
+      { text: "حماية استقرار الحفر والأساسات", iconPath: "/images/servises/علامة تحقق فني.webp" },
     ],
-    icon: Hammer,
+    imagePath: "/images/servises/الانابيب المثقبة.webp",
     stat: "∞",
     statLabel: "حلول مخصصة",
     gradient: "from-[#6B5B3E] to-[#534832]",
@@ -170,7 +171,17 @@ export function ServicesSection() {
                         transition={{ type: "spring", bounce: 0.18, duration: 0.55 }}
                       />
                     )}
-                    <service.icon size={18} className="relative z-10" />
+                    <div className="relative z-10 w-5 h-5 flex items-center justify-center">
+                      <Image
+                        src={service.imagePath}
+                        alt={service.titleAr}
+                        width={20}
+                        height={20}
+                        className={`object-contain transition-all duration-300 ${
+                          isActive ? "opacity-100 filter-none" : "opacity-50 grayscale hover:opacity-85 hover:grayscale-0"
+                        }`}
+                      />
+                    </div>
                     <span className="relative z-10 hidden md:inline">{service.titleAr}</span>
                   </button>
                 );
@@ -246,17 +257,19 @@ export function ServicesSection() {
                             className="flex items-center gap-4 group"
                           >
                             <div
-                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden p-1.5 transition-transform duration-300 group-hover:scale-110"
                               style={{ backgroundColor: `${activeService.accentHex}18` }}
                             >
-                              <Check
-                                size={15}
-                                strokeWidth={3}
-                                style={{ color: activeService.accentHex }}
+                              <Image
+                                src={item.iconPath}
+                                alt={item.text}
+                                width={20}
+                                height={20}
+                                className="object-contain w-full h-full"
                               />
                             </div>
                             <span className="text-white/75 font-medium text-[15px] leading-snug">
-                              {item}
+                              {item.text}
                             </span>
                           </motion.div>
                         ))}
@@ -294,13 +307,20 @@ export function ServicesSection() {
                             initial={{ scale: 0.5, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2, type: "spring", bounce: 0.3 }}
-                            className="relative z-10 w-28 h-28 sm:w-32 sm:h-32 rounded-3xl flex items-center justify-center shadow-2xl"
+                            className="relative z-10 w-28 h-28 sm:w-32 sm:h-32 rounded-3xl flex items-center justify-center shadow-2xl overflow-hidden p-4"
                             style={{
-                              background: `linear-gradient(135deg, ${activeService.accentHex}, ${activeService.accentHex}CC)`,
-                              boxShadow: `0 20px 60px ${activeService.accentHex}40`,
+                              background: `linear-gradient(135deg, ${activeService.accentHex}20, ${activeService.accentHex}40)`,
+                              border: `1px solid ${activeService.accentHex}40`,
+                              boxShadow: `0 20px 60px ${activeService.accentHex}20`,
                             }}
                           >
-                            <activeService.icon size={52} strokeWidth={1.5} className="text-white" />
+                            <Image
+                              src={activeService.imagePath}
+                              alt={activeService.titleAr}
+                              width={80}
+                              height={80}
+                              className="object-contain w-full h-full"
+                            />
                           </motion.div>
                         </div>
 
@@ -358,16 +378,17 @@ export function ServicesSection() {
                 {/* Top row */}
                 <div className="flex items-center justify-between mb-5">
                   <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-400 group-hover:scale-110"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden p-2 transition-all duration-400 group-hover:scale-110"
                     style={{
                       backgroundColor: `${service.accentHex}12`,
                     }}
                   >
-                    <service.icon
-                      size={22}
-                      strokeWidth={1.5}
-                      style={{ color: service.accentHex }}
-                      className="transition-colors duration-400"
+                    <Image
+                      src={service.imagePath}
+                      alt={service.titleAr}
+                      width={32}
+                      height={32}
+                      className="object-contain w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-400"
                     />
                   </div>
                   <ArrowLeft

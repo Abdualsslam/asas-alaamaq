@@ -93,14 +93,13 @@ export function Footer() {
                   <a
                     href={`tel:${phone.raw}`}
                     className="flex items-start gap-4 text-white/60 hover:text-white transition-colors group"
-                    dir="ltr"
                   >
                     <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-equipment-orange group-hover:text-white transition-colors border border-white/5 group-hover:border-equipment-orange text-white/50">
                       <Phone size={18} />
                     </div>
                     <div className="flex flex-col text-right">
                       <span className="text-xs text-white/40 mb-1">اتصل بنا</span>
-                      <span className="font-medium tracking-wider text-sm">{phone.display}</span>
+                      <span className="font-medium tracking-wider text-sm" dir="ltr">{phone.display}</span>
                     </div>
                   </a>
                 </li>
@@ -148,7 +147,7 @@ export function Footer() {
 
           <button
             onClick={scrollToTop}
-            className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-[#050505] border border-white/10 rounded-full flex items-center justify-center text-white/50 hover:text-equipment-orange hover:border-equipment-orange transition-all hover:-translate-y-1 z-20 shadow-lg shadow-black/50"
+            className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-equipment-orange border border-transparent rounded-full flex items-center justify-center text-white hover:bg-[#c25f24] transition-all hover:-translate-y-1.5 z-20 shadow-lg shadow-equipment-orange/25"
             aria-label="العودة للأعلى"
           >
             <ArrowUp size={18} />

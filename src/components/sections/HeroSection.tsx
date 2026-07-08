@@ -14,10 +14,11 @@ import {
   useTransform,
   type Variants,
 } from "framer-motion";
-import { ArrowLeft, ArrowDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowDown } from "lucide-react";
 import { SlotText } from "slot-text/react";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/i18n";
 
 /** Depth ruler levels (metres). 0 = ground surface. */
 const depthLevels = [0, 3, 6, 9, 12, 15, 18] as const;
@@ -42,8 +43,7 @@ function DepthValue({
 }
 
 /**
- * Deterministic dust particles — generated at module load. Rendered client-only
- * (see useSyncExternalStore below) to avoid SSR/CSR float mismatches.
+ * Deterministic dust particles — generated at module load.
  */
 const PARTICLES = Array.from({ length: 26 }, (_, i) => {
   const seed = (n: number) => {
@@ -59,15 +59,6 @@ const PARTICLES = Array.from({ length: 26 }, (_, i) => {
     opacity: (0.15 + seed(5.55) * 0.4).toFixed(3),
   };
 });
-
-/** Services displayed in the strip below the hero */
-const heroServices = [
-  "سند الحفريات",
-  "الشوتكريت",
-  "الميكروبايل",
-  "نزح المياه",
-  "التصريف تحت السطحي",
-];
 
 const headlineParent: Variants = {
   hidden: {},
@@ -88,16 +79,16 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
-  // Client-only gate for decorative particles (hydration-safe).
   const isClient = useSyncExternalStore(
     () => () => { },
     () => true,
     () => false
   );
-  // Content stays hidden until the intro video reaches its final frame.
   const [revealed, setRevealed] = useState(false);
-  // Ambient: depth-ruler numbers roll from 0 to their values shortly after mount.
   const [rulerReady, setRulerReady] = useState(false);
+  const { t, isRTL, locale } = useTranslation();
+
+  const CtaArrow = isRTL ? ArrowLeft : ArrowRight;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -109,7 +100,6 @@ export function HeroSection() {
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-28%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  // Listen for the preloaderFinished event to begin video playback
   const [preloaderDone, setPreloaderDone] = useState(false);
 
   useEffect(() => {
@@ -118,7 +108,6 @@ export function HeroSection() {
     };
     window.addEventListener("preloaderFinished", handlePreloaderDone);
     
-    // Check if the preloader finished before this component mounted
     if (typeof window !== "undefined" && (window as any).preloaderFinished) {
       setPreloaderDone(true);
     }
@@ -126,7 +115,6 @@ export function HeroSection() {
     return () => window.removeEventListener("preloaderFinished", handlePreloaderDone);
   }, []);
 
-  // Caching safeguard: trigger video loaded event if video is already cached/ready on mount
   useEffect(() => {
     const video = videoRef.current;
     if (video && video.readyState >= 3) {
@@ -135,7 +123,6 @@ export function HeroSection() {
     }
   }, []);
 
-  // Control video playback based on preloader state with a 500ms delayed start
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -148,7 +135,6 @@ export function HeroSection() {
     let playTimer: number;
 
     if (preloaderDone) {
-      // Start playing after a 500ms cinematic pause once preloader is done
       playTimer = window.setTimeout(() => {
         video.play().catch((err) => {
           console.log("Video auto-play blocked or failed, playing muted:", err);
@@ -163,7 +149,6 @@ export function HeroSection() {
     };
   }, [preloaderDone, reduceMotion]);
 
-  // Reveal the content after the video ends (or fallback timer starting from preloader finish + 500ms delay)
   useEffect(() => {
     if (!preloaderDone) return;
     
@@ -172,14 +157,14 @@ export function HeroSection() {
       return;
     }
     
-    const t = window.setTimeout(() => setRevealed(true), 3700); // 500ms play delay + 3200ms duration
-    return () => window.clearTimeout(t);
+    const t2 = window.setTimeout(() => setRevealed(true), 3700);
+    return () => window.clearTimeout(t2);
   }, [preloaderDone, reduceMotion]);
 
   useEffect(() => {
     if (!revealed || reduceMotion) return;
-    const t = window.setTimeout(() => setRulerReady(true), 650);
-    return () => window.clearTimeout(t);
+    const t2 = window.setTimeout(() => setRulerReady(true), 650);
+    return () => window.clearTimeout(t2);
   }, [revealed, reduceMotion]);
 
   const anim = revealed ? "visible" : "hidden";
@@ -191,7 +176,7 @@ export function HeroSection() {
         id="hero"
         className="relative min-h-[100svh] w-full overflow-hidden bg-charcoal text-white"
       >
-        {/* ---------- Video background (plays once, rests on last frame) ---------- */}
+        {/* ---------- Video background ---------- */}
         <motion.div
           style={reduceMotion ? undefined : { y: videoY, scale: videoScale }}
           className="absolute inset-0 will-change-transform"
@@ -200,7 +185,7 @@ export function HeroSection() {
             ref={videoRef}
             className="h-full w-full object-cover brightness-[0.78] contrast-[1.05] saturate-[1.1]"
             poster="/hero-poster.jpg"
-            autoPlay={false} // Autoplay is controlled manually via preloaderDone useEffect
+            autoPlay={false}
             muted
             playsInline
             preload="auto"
@@ -215,12 +200,17 @@ export function HeroSection() {
           </video>
         </motion.div>
 
-        {/* ---------- Cinematic scrims (lighter, focused on text side) ---------- */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-charcoal/90 via-charcoal/60 to-transparent md:from-charcoal/88 md:via-charcoal/45 md:to-transparent" />
+        {/* ---------- Cinematic scrims ---------- */}
+        <div className={cn(
+          "pointer-events-none absolute inset-0",
+          isRTL
+            ? "bg-gradient-to-t md:bg-gradient-to-l from-charcoal/90 via-charcoal/60 to-transparent md:from-charcoal/88 md:via-charcoal/45 md:to-transparent"
+            : "bg-gradient-to-t md:bg-gradient-to-r from-charcoal/90 via-charcoal/60 to-transparent md:from-charcoal/88 md:via-charcoal/45 md:to-transparent"
+        )} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 md:h-1/2 bg-gradient-to-t from-charcoal/95 via-charcoal/50 to-transparent md:from-charcoal/70 md:via-charcoal/30 md:to-transparent" />
         <div className="film-grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
 
-        {/* ---------- Dust particles (ambient, during & after video) ---------- */}
+        {/* ---------- Dust particles ---------- */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {isClient &&
             PARTICLES.map((p, idx) => (
@@ -247,11 +237,22 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: revealed ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="pointer-events-none absolute inset-y-0 left-[8%] z-10 hidden items-center lg:flex xl:left-[14%] 2xl:left-[20%]"
+          className={cn(
+            "pointer-events-none absolute inset-y-0 z-10 hidden items-center lg:flex",
+            isRTL
+              ? "left-[8%] xl:left-[14%] 2xl:left-[20%]"
+              : "right-[8%] xl:right-[14%] 2xl:right-[20%]"
+          )}
         >
           <div className="relative flex h-[56vh] flex-col justify-between">
-            <span className="absolute right-[5px] top-0 h-full w-px bg-gradient-to-b from-transparent via-white/25 to-transparent" />
-            <span className="depth-scan absolute right-[3px] h-1 w-1 -translate-y-1/2 rounded-full bg-equipment-orange shadow-[0_0_8px_2px_rgba(217,107,43,0.7)]" />
+            <span className={cn(
+              "absolute top-0 h-full w-px bg-gradient-to-b from-transparent via-white/25 to-transparent",
+              isRTL ? "right-[5px]" : "left-[5px]"
+            )} />
+            <span className={cn(
+              "depth-scan absolute h-1 w-1 -translate-y-1/2 rounded-full bg-equipment-orange shadow-[0_0_8px_2px_rgba(217,107,43,0.7)]",
+              isRTL ? "right-[3px]" : "left-[3px]"
+            )} />
             {depthLevels.map((level, idx) => (
               <div key={level} className="flex items-center gap-2.5">
                 <span
@@ -275,7 +276,7 @@ export function HeroSection() {
                   </span>
                   {idx === 0 && (
                     <span className="mt-1 text-[9px] tracking-wide text-white/45">
-                      سطح الأرض
+                      {t.hero.groundSurface}
                     </span>
                   )}
                 </div>
@@ -298,14 +299,17 @@ export function HeroSection() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="mb-5 md:mb-7 flex items-center gap-3"
             > <span dir="ltr" className="flex items-center gap-2">
-                <span className="h-px w-10 md:w-14 bg-gradient-to-l from-equipment-orange to-equipment-orange/10" />
+                <span className={cn(
+                  "h-px w-10 md:w-14",
+                  isRTL
+                    ? "bg-gradient-to-l from-equipment-orange to-equipment-orange/10"
+                    : "bg-gradient-to-r from-equipment-orange to-equipment-orange/10"
+                )} />
                 <span className="h-1.5 w-1.5 rotate-45 bg-equipment-orange shadow-[0_0_8px_rgba(217,107,43,0.55)]" />
-
               </span>
               <span className="text-[13px] md:text-sm font-semibold tracking-wide text-equipment-orange">
-                هندسة أرضية متخصصة
+                {t.hero.eyebrow}
               </span>
-
             </motion.div>
 
             {/* Headline — masked line reveal */}
@@ -320,7 +324,7 @@ export function HeroSection() {
                   variants={headlineLine}
                   className="block text-[clamp(2.2rem,10vw,5rem)] md:text-[clamp(2.5rem,6vw,5rem)] font-black text-white"
                 >
-                  نُسيطر على التربة
+                  {t.hero.headline1}
                 </motion.span>
               </span>
               <span className="block overflow-hidden pt-1 pb-4 -mb-3 md:pb-6 md:-mb-5">
@@ -328,7 +332,7 @@ export function HeroSection() {
                   variants={headlineLine}
                   className="block text-[clamp(1.5rem,7vw,3.2rem)] md:text-[clamp(1.8rem,4.5vw,3.2rem)] font-light text-sand-secondary"
                 >
-                  قبل أن تسيطر على
+                  {t.hero.headline2}
                 </motion.span>
               </span>
               <span className="block overflow-hidden pt-1 pb-4 md:pb-6">
@@ -336,7 +340,7 @@ export function HeroSection() {
                   variants={headlineLine}
                   className="block text-[clamp(2.2rem,11vw,5rem)] md:text-[clamp(2.5rem,6.5vw,5rem)] font-black text-equipment-orange"
                 >
-                  المشروع
+                  {t.hero.headline3}
                 </motion.span>
               </span>
             </motion.h1>
@@ -347,10 +351,12 @@ export function HeroSection() {
               initial="hidden"
               animate={anim}
               transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="hero-text-shadow mb-8 md:mb-10 max-w-[600px] border-r-2 border-equipment-orange/40 pr-4 md:pr-5 text-[15px] leading-[1.7] md:leading-relaxed text-white/80 md:text-base lg:text-lg"
+              className={cn(
+                "hero-text-shadow mb-8 md:mb-10 max-w-[600px] border-equipment-orange/40 text-[15px] leading-[1.7] md:leading-relaxed text-white/80 md:text-base lg:text-lg",
+                isRTL ? "border-r-2 pr-4 md:pr-5" : "border-l-2 pl-4 md:pl-5"
+              )}
             >
-              حلول هندسية متخصصة في سند الحفريات، الشوتكريت، الميكروبايل، نزح
-              المياه، والتصريف تحت السطحي — لضمان استقرار الموقع وسلامة التنفيذ.
+              {t.hero.subtitle}
             </motion.p>
 
             {/* CTAs */}
@@ -365,18 +371,22 @@ export function HeroSection() {
                 href="https://wa.me/966501850513"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex justify-center items-center gap-3 rounded-full bg-equipment-orange py-3 md:py-2 px-6 md:pr-7 md:pl-2 text-[15px] md:text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
+                className="group flex justify-center items-center gap-3 rounded-full bg-equipment-orange py-3 md:py-2 px-6 text-[15px] md:text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
+                style={{ paddingInlineEnd: "0.5rem", paddingInlineStart: "1.75rem" }}
               >
-                ناقش مشروعك معنا
-                <span className="grid h-8 w-8 md:h-9 md:w-9 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:-translate-x-1">
-                  <ArrowLeft size={16} />
+                {t.hero.cta1}
+                <span className={cn(
+                  "grid h-8 w-8 md:h-9 md:w-9 place-items-center rounded-full bg-white/20 transition-transform duration-300",
+                  isRTL ? "group-hover:-translate-x-1" : "group-hover:translate-x-1"
+                )}>
+                  <CtaArrow size={16} />
                 </span>
               </a>
               <a
                 href="#services"
                 className="flex justify-center items-center rounded-full border border-white/25 bg-white/5 px-6 py-3 md:px-7 md:py-4 text-[15px] md:text-base font-medium text-white backdrop-blur-sm transition-colors duration-300 hover:border-white/50 hover:bg-white/10"
               >
-                استعرض خدماتنا
+                {t.hero.cta2}
               </a>
             </motion.div>
           </motion.div>
@@ -388,9 +398,9 @@ export function HeroSection() {
             animate={{ opacity: revealed ? 1 : 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="pointer-events-auto absolute bottom-24 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
-            aria-label="اكتشف المزيد"
+            aria-label={t.hero.discover}
           >
-            <span className="text-xs tracking-wider text-white/50">اكتشف المزيد</span>
+            <span className="text-xs tracking-wider text-white/50">{t.hero.discover}</span>
             <ArrowDown
               size={18}
               className="animate-bounce text-equipment-orange motion-reduce:animate-none"
@@ -403,12 +413,12 @@ export function HeroSection() {
       <div className="relative z-10 border-t border-white/10 border-b-2 border-equipment-orange bg-charcoal">
         <Container>
           <div className="flex items-center justify-center py-5 overflow-x-auto">
-            {heroServices.map((service, idx) => (
+            {t.hero.services.map((service, idx) => (
               <div key={service} className="flex items-center shrink-0">
                 <span className="px-4 md:px-6 py-1 text-sm font-medium tracking-wide text-white/65 md:text-[0.9rem]">
                   {service}
                 </span>
-                {idx < heroServices.length - 1 && (
+                {idx < t.hero.services.length - 1 && (
                   <span className="h-4 w-px bg-white/20" />
                 )}
               </div>

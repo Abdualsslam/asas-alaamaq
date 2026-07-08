@@ -116,10 +116,13 @@
 }
 
 html {
-  direction: rtl;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html[lang="en"] {
+  --font-brand: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -220,7 +223,7 @@ a {
 .engineering-line::after {
   content: "";
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   top: -3px;
   width: 8px;
   height: 9px;

@@ -8,11 +8,12 @@ import {
   useReducedMotion,
   type Variants,
 } from "framer-motion";
-import { Menu, X, Phone, ArrowLeft } from "lucide-react";
+import { Menu, X, Phone, ArrowLeft, ArrowRight, Globe } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { contactInfo } from "@/data/contact";
 import { cn } from "@/lib/utils";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { useTranslation } from "@/i18n";
 
 const panelVariants: Variants = {
   hidden: { x: "100%" },
@@ -21,6 +22,15 @@ const panelVariants: Variants = {
     transition: { type: "spring", stiffness: 260, damping: 30 },
   },
   exit: { x: "100%", transition: { duration: 0.3, ease: "easeInOut" } },
+};
+
+const panelVariantsLTR: Variants = {
+  hidden: { x: "-100%" },
+  visible: {
+    x: "0%",
+    transition: { type: "spring", stiffness: 260, damping: 30 },
+  },
+  exit: { x: "-100%", transition: { duration: 0.3, ease: "easeInOut" } },
 };
 
 const listVariants: Variants = {
@@ -32,12 +42,29 @@ const itemVariants: Variants = {
   visible: { opacity: 1, x: 0 },
 };
 
+const itemVariantsLTR: Variants = {
+  hidden: { opacity: 0, x: -24 },
+  visible: { opacity: 1, x: 0 },
+};
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("hero");
   const reduceMotion = useReducedMotion();
   const headerRevealDelay = reduceMotion ? 0 : 3;
+  const { t, locale, toggleLocale, isRTL } = useTranslation();
+
+  const navLabels = [
+    t.nav.home,
+    t.nav.about,
+    t.nav.services,
+    t.nav.methodology,
+    t.nav.projects,
+    t.nav.contact,
+  ];
+
+  const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -46,8 +73,7 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll-spy: highlight the nav item for the section crossing the viewport's
-  // middle band, so the active link keeps its orange underline.
+  // Scroll-spy
   useEffect(() => {
     const sections = navItems
       .map((item) => document.getElementById(item.href.slice(1)))
@@ -96,11 +122,11 @@ export function Header() {
               : "border-white/15 bg-charcoal/25 shadow-lg shadow-white/5 backdrop-blur-xl"
           )}
         >
-          {/* Logo — Right side */}
+          {/* Logo */}
           <a
             href="#hero"
             className="flex items-center gap-3 md:gap-3.5 flex-shrink-0"
-            aria-label="أساس الأعماق للمقاولات"
+            aria-label={t.header.brandSub}
           >
             <div
               className={cn(
@@ -110,21 +136,21 @@ export function Header() {
             >
               <Image
                 src="/brand/icon.svg"
-                alt="أساس الأعماق للمقاولات"
+                alt={t.header.brandSub}
                 width={30}
                 height={30}
                 className="h-full w-auto"
                 priority
               />
             </div>
-            <div className="flex flex-col text-right">
+            <div className={cn("flex flex-col", isRTL ? "text-right" : "text-left")}>
               <span
                 className={cn(
                   "text-[14px] md:text-[16px] font-bold tracking-wider leading-tight transition-colors duration-300",
                   isScrolled ? "text-charcoal" : "text-white"
                 )}
               >
-                ASAS AL-AAMAQ
+                {t.header.brandName}
               </span>
               <span
                 className={cn(
@@ -132,14 +158,14 @@ export function Header() {
                   isScrolled ? "text-charcoal/70" : "text-white/70"
                 )}
               >
-                أساس الأعماق للمقاولات
+                {t.header.brandSub}
               </span>
             </div>
           </a>
 
           {/* Desktop Navigation — Center */}
           <ul className="hidden lg:flex items-center gap-2 flex-1 justify-center">
-            {navItems.map((item) => {
+            {navItems.map((item, idx) => {
               const isActive = activeId === item.href.slice(1);
               return (
                 <li key={item.href} className="relative">
@@ -160,7 +186,7 @@ export function Header() {
                             : "font-medium text-white/75 group-hover:text-white"
                       )}
                     >
-                      {item.label}
+                      {navLabels[idx]}
                     </span>
 
                     {/* Hover Line */}
@@ -171,7 +197,7 @@ export function Header() {
                       )}
                     />
 
-                    {/* Active Indicator (Accent Line + Dot below) */}
+                    {/* Active Indicator */}
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
@@ -198,16 +224,35 @@ export function Header() {
             })}
           </ul>
 
-          {/* Desktop CTA — Left side */}
-          <a
-            href="#contact"
-            className="group hidden lg:inline-flex items-center gap-3 rounded-full bg-equipment-orange py-1.5 pr-6 pl-2 text-sm font-semibold text-white! shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
-          >
-            تواصل معنا
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:rotate-12">
-              <Phone size={14} />
-            </span>
-          </a>
+          {/* Desktop: Language Switch + CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLocale}
+              className={cn(
+                "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-bold transition-all duration-300 border cursor-pointer",
+                isScrolled
+                  ? "border-earth-brown/20 text-earth-brown hover:bg-earth-brown/10"
+                  : "border-white/20 text-white/80 hover:bg-white/10"
+              )}
+              aria-label={locale === "ar" ? "Switch to English" : "التبديل للعربية"}
+            >
+              <Globe size={14} />
+              <span>{t.header.langSwitch}</span>
+            </button>
+
+            {/* CTA */}
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange py-1.5 text-sm font-semibold text-white! shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
+              style={{ paddingInlineStart: "1.5rem", paddingInlineEnd: "0.5rem" }}
+            >
+              {t.header.contactCta}
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:rotate-12">
+                <Phone size={14} />
+              </span>
+            </a>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -216,7 +261,7 @@ export function Header() {
               "lg:hidden p-2 transition-colors",
               isScrolled ? "text-charcoal" : "text-white"
             )}
-            aria-label="فتح القائمة"
+            aria-label={t.header.openMenu}
           >
             <Menu size={24} />
           </button>
@@ -238,35 +283,38 @@ export function Header() {
 
             {/* Panel */}
             <motion.div
-              variants={panelVariants}
+              variants={isRTL ? panelVariants : panelVariantsLTR}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="absolute top-0 right-0 flex h-full w-[85%] max-w-sm flex-col bg-sand-light shadow-2xl"
+              className={cn(
+                "absolute top-0 flex h-full w-[85%] max-w-sm flex-col bg-sand-light shadow-2xl",
+                isRTL ? "right-0" : "left-0"
+              )}
             >
               {/* Panel header */}
               <div className="flex items-center justify-between border-b border-border p-5">
                 <div className="flex items-center gap-2.5">
                   <Image
                     src="/brand/icon.svg"
-                    alt="أساس الأعماق للمقاولات"
+                    alt={t.header.brandSub}
                     width={26}
                     height={26}
                     className="h-[26px] w-auto"
                   />
-                  <div className="flex flex-col text-right">
+                  <div className={cn("flex flex-col", isRTL ? "text-right" : "text-left")}>
                     <span className="text-sm font-bold tracking-wider leading-tight text-charcoal">
-                      ASAS AL-AAMAQ
+                      {t.header.brandName}
                     </span>
                     <span className="text-[9px] font-medium leading-none mt-0.5 text-charcoal/70">
-                      أساس الأعماق للمقاولات
+                      {t.header.brandSub}
                     </span>
                   </div>
                 </div>
                 <button
                   onClick={closeMenu}
                   className="p-2 text-charcoal transition-colors hover:text-earth-brown"
-                  aria-label="إغلاق القائمة"
+                  aria-label={t.header.closeMenu}
                 >
                   <X size={22} />
                 </button>
@@ -280,19 +328,33 @@ export function Header() {
                 className="flex-1 overflow-y-auto px-4 py-6"
               >
                 <ul className="flex flex-col gap-1">
-                  {navItems.map((item) => (
-                    <motion.li key={item.href} variants={itemVariants}>
+                  {navItems.map((item, idx) => (
+                    <motion.li key={item.href} variants={isRTL ? itemVariants : itemVariantsLTR}>
                       <a
                         href={item.href}
                         onClick={closeMenu}
                         className="flex items-center justify-between rounded-lg px-4 py-3 text-base font-medium text-charcoal transition-colors hover:bg-earth-brown/5 hover:text-earth-brown"
                       >
-                        {item.label}
-                        <ArrowLeft size={16} className="text-earth-brown/40" />
+                        {navLabels[idx]}
+                        <ArrowIcon size={16} className="text-earth-brown/40" />
                       </a>
                     </motion.li>
                   ))}
                 </ul>
+
+                {/* Mobile Language Toggle */}
+                <div className="mt-4 px-4">
+                  <button
+                    onClick={() => {
+                      toggleLocale();
+                      closeMenu();
+                    }}
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-earth-brown/20 bg-earth-brown/5 px-4 py-3 text-sm font-bold text-earth-brown transition-colors hover:bg-earth-brown/10 cursor-pointer"
+                  >
+                    <Globe size={16} />
+                    <span>{locale === "ar" ? "Switch to English" : "التبديل للعربية"}</span>
+                  </button>
+                </div>
               </motion.nav>
 
               {/* Contact + CTA */}
@@ -305,14 +367,14 @@ export function Header() {
                   <span dir="ltr">{contactInfo.phones[0].display}</span>
                 </a>
                 <a
-                  href={contactInfo.whatsapp.getLink()}
+                  href={contactInfo.whatsapp.getLink(locale)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMenu}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#20BD5A] shadow-md shadow-[#25D366]/10"
                 >
                   <WhatsAppIcon size={18} />
-                  تواصل معنا عبر واتساب
+                  {t.header.whatsappCta}
                 </a>
               </div>
             </motion.div>

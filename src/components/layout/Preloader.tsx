@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AnimeBrandLoader } from "../ui/AnimeBrandLoader";
+import { useTranslation } from "@/i18n";
 
 interface PreloaderProps {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface PreloaderProps {
 
 export function Preloader({ children }: PreloaderProps) {
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Disable scroll on mount
@@ -85,8 +87,8 @@ export function Preloader({ children }: PreloaderProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
               >
-                <p className="text-[#F4F0EA] font-medium text-sm tracking-wider">جاري تهيئة وتأمين الأساسات...</p>
-                <span className="text-[#D96B2B] text-xs font-mono mt-1.5 block tracking-widest uppercase">Securing Depth & Strata</span>
+                <p className="text-[#F4F0EA] font-medium text-sm tracking-wider">{t.preloader.loading}</p>
+                <span className="text-[#D96B2B] text-xs font-mono mt-1.5 block tracking-widest uppercase">{t.preloader.securing}</span>
               </motion.div>
             </div>
           </motion.div>

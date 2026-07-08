@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "slot-text/style.css";
+import { LanguageProvider } from "@/i18n";
 
 export const metadata: Metadata = {
   title: "أساس الأعماق للمقاولات | ASAS AL-AAMAQ",
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
     "shotcrete",
     "micropile",
     "dewatering",
+    "geotechnical engineering",
+    "excavation stability",
   ],
   authors: [{ name: "أساس الأعماق للمقاولات" }],
   openGraph: {
@@ -27,6 +30,7 @@ export const metadata: Metadata = {
     description:
       "هندسة متخصصة في التحكم بالتربة والمياه الجوفية واستقرار الحفريات العميقة.",
     locale: "ar_SA",
+    alternateLocale: "en_US",
     type: "website",
     siteName: "أساس الأعماق للمقاولات",
   },
@@ -41,8 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className="antialiased">
-      <body className="min-h-screen font-brand">{children}</body>
+    <html lang="ar" dir="rtl" className="antialiased" suppressHydrationWarning>
+      <body className="min-h-screen font-brand">
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

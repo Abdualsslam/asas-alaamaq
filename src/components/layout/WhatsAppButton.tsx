@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { contactInfo } from "@/data/contact";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { useTranslation } from "@/i18n";
 
 export function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const { t, locale } = useTranslation();
 
   useEffect(() => {
     // Show after hero animation (approx 3.2s) or if scrolled
@@ -33,11 +35,11 @@ export function WhatsAppButton() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-          href={contactInfo.whatsapp.getLink()}
+          href={contactInfo.whatsapp.getLink(locale)}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 hover:scale-110 transition-all duration-300 group"
-          aria-label="تواصل عبر واتساب"
+          aria-label={t.whatsapp.tooltip}
         >
           <WhatsAppIcon
             size={26}

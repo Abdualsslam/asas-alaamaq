@@ -37,8 +37,6 @@ const servicesData = [
       { text: "تقليل المخاطر الميدانية بشكل فوري", iconPath: "/images/servises/علامة تحقق فني.webp" },
     ],
     imagePath: "/images/servises/الخرسانة المقذوفة.webp",
-    stat: "50K+",
-    statLabel: "متر مربع",
     gradient: "from-[#934E34] to-[#7A3F2A]",
     accentHex: "#934E34",
   },
@@ -361,20 +359,24 @@ export function ServicesSection() {
                         <div className="absolute left-0 right-0 h-[1.5px] bg-white/25 depth-scan z-15 pointer-events-none" />
 
                         {/* Floating Tech Stat Badge */}
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.2, duration: 0.4 }}
-                          className="absolute bottom-4 right-4 z-20 backdrop-blur-md border border-white/10 rounded-xl px-5 py-3.5 text-right shadow-lg"
-                          style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
-                        >
-                          <span className="text-3xl font-black block text-white font-mono leading-none tracking-tight" dir="ltr">
-                            {activeService.stat}
-                          </span>
-                          <span className="text-[9px] text-white/50 font-bold block mt-1 tracking-wider uppercase">
-                            {activeService.statLabel}
-                          </span>
-                        </motion.div>
+                        {activeService.stat && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.2, duration: 0.4 }}
+                            className="absolute bottom-4 right-4 z-20 backdrop-blur-md border border-white/10 rounded-xl px-5 py-3.5 text-right shadow-lg"
+                            style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
+                          >
+                            <span className="text-3xl font-black block text-white font-mono leading-none tracking-tight" dir="ltr">
+                              {activeService.stat}
+                            </span>
+                            {activeService.statLabel && (
+                              <span className="text-[9px] text-white/50 font-bold block mt-1 tracking-wider uppercase">
+                                {activeService.statLabel}
+                              </span>
+                            )}
+                          </motion.div>
+                        )}
                       </div>
 
                       {/* Scope of Work specifications */}
@@ -552,17 +554,21 @@ export function ServicesSection() {
                             <div className="absolute inset-0 mix-blend-multiply opacity-[0.06]" style={{ backgroundColor: service.accentHex }} />
                             
                             {/* Floating Stats */}
-                            <div
-                              className="absolute bottom-3 right-3 z-20 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 text-right"
-                              style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
-                            >
-                              <span className="text-2xl font-black block text-white font-mono leading-none" dir="ltr">
-                                {service.stat}
-                              </span>
-                              <span className="text-[8px] text-white/50 font-bold block mt-0.5 tracking-wider uppercase">
-                                {service.statLabel}
-                              </span>
-                            </div>
+                            {service.stat && (
+                              <div
+                                className="absolute bottom-3 right-3 z-20 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 text-right"
+                                style={{ background: "linear-gradient(135deg, rgba(31,31,31,0.9) 0%, rgba(31,31,31,0.8) 100%)" }}
+                              >
+                                <span className="text-2xl font-black block text-white font-mono leading-none" dir="ltr">
+                                  {service.stat}
+                                </span>
+                                {service.statLabel && (
+                                  <span className="text-[8px] text-white/50 font-bold block mt-0.5 tracking-wider uppercase">
+                                    {service.statLabel}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                           </div>
 
                           {/* Description text */}

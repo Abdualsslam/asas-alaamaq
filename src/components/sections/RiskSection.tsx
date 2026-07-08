@@ -180,7 +180,7 @@ export function RiskSection() {
             <MotionReveal delay={0.7}>
               <div className="w-full relative rounded-[2rem] overflow-hidden">
                 <Image
-                  src="/images/risk-diagram.webp"
+                  src="/images/risk-diagram.png"
                   alt="مخطط طبقات التربة وحلول سند الحفريات"
                   width={1086}
                   height={1448}

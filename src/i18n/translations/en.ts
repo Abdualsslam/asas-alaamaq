@@ -305,7 +305,7 @@ export const en: Translations = {
         label: "Perforated pipe drainage installation",
         category: "Perforated Pipe",
       },
-      { label: "Pile drilling operations", category: "Micropile" },
+      { label: "Drilling and shoring operations", category: "Shoring" },
       { label: "Deep excavation shoring", category: "Shoring" },
       {
         label: "Anchor stabilization installation",
@@ -318,11 +318,11 @@ export const en: Translations = {
       },
       { label: "Site preparation works", category: "Shoring" },
       { label: "Temporary support systems", category: "Shoring" },
-      { label: "Field quality control", category: "Micropile" },
+      { label: "Side support and quality control", category: "Shoring" },
       { label: "Heavy drilling equipment", category: "Shoring" },
       {
-        label: "Reinforcement and concrete pouring",
-        category: "Micropile",
+        label: "Shoring reinforcement and concrete",
+        category: "Shoring",
       },
       {
         label: "Timber shoring and wall support",
@@ -330,8 +330,8 @@ export const en: Translations = {
       },
       { label: "Advanced field execution", category: "Shotcrete" },
       {
-        label: "Groundwater dewatering systems",
-        category: "Dewatering",
+        label: "Shotcrete spraying operations",
+        category: "Shotcrete",
       },
       {
         label: "On-site perforated pipe network installation",

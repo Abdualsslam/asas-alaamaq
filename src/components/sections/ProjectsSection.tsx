@@ -19,23 +19,64 @@ const gallerySources = [
   { id: 8, src: "/images/gallary/img (8).webp" },
   { id: 9, src: "/images/gallary/img (9).webp" },
   { id: 10, src: "/images/gallary/img (10).webp" },
-  { id: 11, src: "/images/gallary/img (11).webp" },
-  { id: 12, src: "/images/gallary/img (12).webp" },
+  { id: 11, src: "/images/gallary/img (12).webp" },
+  { id: 12, src: "/images/gallary/img (11).webp" },
   { id: 13, src: "/images/gallary/img (13).webp" },
   { id: 14, src: "/images/gallary/img (14).webp" },
   { id: 15, src: "/images/gallary/img (15).webp" },
 ];
 
-function getCardLayout(index: number): string {
-  const pos = index % 5;
-  switch (pos) {
-    case 0: return "sm:col-span-2 h-[320px] md:h-[380px]";
-    case 1: return "h-[320px] md:h-[380px]";
-    case 2: return "h-[280px] md:h-[320px]";
-    case 3: return "sm:col-span-2 h-[280px] md:h-[320px]";
-    case 4: return "h-[280px] md:h-[320px]";
-    default: return "h-[280px] md:h-[320px]";
+function getCardLayout(index: number, totalCount: number): string {
+  const heightClass = "h-[320px] md:h-[360px]";
+
+  if (totalCount <= 1) {
+    return `sm:col-span-2 lg:col-span-2 ${heightClass}`;
   }
+
+  let numThrees = 0;
+  let numTwos = 0;
+
+  switch (totalCount % 3) {
+    case 0:
+      numThrees = totalCount / 3;
+      numTwos = 0;
+      break;
+    case 1:
+      numTwos = 2;
+      numThrees = Math.max(0, Math.floor((totalCount - 4) / 3));
+      break;
+    case 2:
+      numTwos = 1;
+      numThrees = Math.max(0, Math.floor((totalCount - 2) / 3));
+      break;
+  }
+
+  let currentIndex = 0;
+
+  for (let r = 0; r < numThrees; r++) {
+    if (index >= currentIndex && index < currentIndex + 3) {
+      return `col-span-1 ${heightClass}`;
+    }
+    currentIndex += 3;
+  }
+
+  for (let r = 0; r < numTwos; r++) {
+    if (index === currentIndex) {
+      const isEven = r % 2 === 0;
+      return isEven
+        ? `sm:col-span-2 lg:col-span-2 ${heightClass}`
+        : `col-span-1 ${heightClass}`;
+    }
+    if (index === currentIndex + 1) {
+      const isEven = r % 2 === 0;
+      return isEven
+        ? `col-span-1 ${heightClass}`
+        : `sm:col-span-2 lg:col-span-2 ${heightClass}`;
+    }
+    currentIndex += 2;
+  }
+
+  return `col-span-1 ${heightClass}`;
 }
 
 function GalleryCard({
@@ -227,7 +268,7 @@ export function ProjectsSection() {
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => (
-                <GalleryCard key={image.id} image={image} index={index} onOpen={() => openLightbox(index)} layoutClass={getCardLayout(index)} label={image.label} category={image.category} brandWatermark={t.projects.brandWatermark} />
+                <GalleryCard key={image.id} image={image} index={index} onOpen={() => openLightbox(index)} layoutClass={getCardLayout(index, filteredImages.length)} label={image.label} category={image.category} brandWatermark={t.projects.brandWatermark} />
               ))}
             </AnimatePresence>
           </motion.div>

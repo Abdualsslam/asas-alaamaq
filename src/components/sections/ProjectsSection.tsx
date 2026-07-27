@@ -169,8 +169,8 @@ export function ProjectsSection() {
 
   const filteredImages = activeFilterIdx === 0
     ? [
-        ...galleryImages.filter((img) => img.category !== categories[1]),
-        ...galleryImages.filter((img) => img.category === categories[1]),
+        ...categories.slice(1).flatMap((cat) => galleryImages.filter((img) => img.category === cat)),
+        ...galleryImages.filter((img) => !categories.slice(1).includes(img.category)),
       ]
     : galleryImages.filter((img) => img.category === activeFilter);
 

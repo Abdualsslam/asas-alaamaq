@@ -14,6 +14,9 @@ import { contactInfo } from "@/data/contact";
 import { cn } from "@/lib/utils";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { trackLanguageSwitch, trackPhoneClick, trackWhatsAppClick, trackContactCtaClick } from "@/lib/analytics";
 
 const panelVariants: Variants = {
   hidden: { x: "100%" },
@@ -53,7 +56,21 @@ export function Header() {
   const [activeId, setActiveId] = useState("hero");
   const reduceMotion = useReducedMotion();
   const headerRevealDelay = reduceMotion ? 0 : 3;
-  const { t, locale, toggleLocale, isRTL } = useTranslation();
+  const { t, locale, isRTL } = useTranslation();
+  const pathname = usePathname();
+
+  const targetLocale = locale === "ar" ? "en" : "ar";
+  const getTargetHref = () => {
+    const currentPath = pathname || "/";
+    const segments = currentPath.split("/");
+    if (segments[1] === "ar" || segments[1] === "en") {
+      segments[1] = targetLocale;
+    } else {
+      segments.splice(1, 0, targetLocale);
+    }
+    return segments.join("/") || "/";
+  };
+  const targetHref = getTargetHref();
 
   const navLabels = [
     t.nav.home,
@@ -227,8 +244,9 @@ export function Header() {
           {/* Desktop: Language Switch + CTA */}
           <div className="hidden lg:flex items-center gap-3">
             {/* Language Toggle */}
-            <button
-              onClick={toggleLocale}
+            <Link
+              href={targetHref}
+              onClick={() => trackLanguageSwitch(targetLocale, "header_desktop")}
               className={cn(
                 "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-bold transition-all duration-300 border cursor-pointer",
                 isScrolled
@@ -239,11 +257,12 @@ export function Header() {
             >
               <Globe size={14} />
               <span>{t.header.langSwitch}</span>
-            </button>
+            </Link>
 
             {/* CTA */}
             <a
               href="#contact"
+              onClick={() => trackContactCtaClick("header_desktop", locale)}
               className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange py-1.5 text-sm font-semibold text-white! shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
               style={{ paddingInlineStart: "1.5rem", paddingInlineEnd: "0.5rem" }}
             >
@@ -344,16 +363,17 @@ export function Header() {
 
                 {/* Mobile Language Toggle */}
                 <div className="mt-4 px-4">
-                  <button
+                  <Link
+                    href={targetHref}
                     onClick={() => {
-                      toggleLocale();
+                      trackLanguageSwitch(targetLocale, "header_mobile");
                       closeMenu();
                     }}
                     className="flex w-full items-center justify-center gap-2 rounded-lg border border-earth-brown/20 bg-earth-brown/5 px-4 py-3 text-sm font-bold text-earth-brown transition-colors hover:bg-earth-brown/10 cursor-pointer"
                   >
                     <Globe size={16} />
                     <span>{locale === "ar" ? "Switch to English" : "التبديل للعربية"}</span>
-                  </button>
+                  </Link>
                 </div>
               </motion.nav>
 
@@ -361,6 +381,7 @@ export function Header() {
               <div className="space-y-4 border-t border-border p-6">
                 <a
                   href={`tel:${contactInfo.phones[0].raw}`}
+                  onClick={() => trackPhoneClick("header_mobile", locale)}
                   className="flex items-center gap-3 text-sm text-concrete-gray transition-colors hover:text-earth-brown"
                 >
                   <Phone size={16} className="text-earth-brown" />
@@ -370,7 +391,10 @@ export function Header() {
                   href={contactInfo.whatsapp.getLink(locale)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={closeMenu}
+                  onClick={() => {
+                    trackWhatsAppClick("header_mobile", locale);
+                    closeMenu();
+                  }}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#20BD5A] shadow-md shadow-[#25D366]/10"
                 >
                   <WhatsAppIcon size={18} />

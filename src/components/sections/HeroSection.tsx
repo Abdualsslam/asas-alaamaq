@@ -19,6 +19,8 @@ import { SlotText } from "slot-text/react";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/i18n";
+import { contactInfo } from "@/data/contact";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 /** Depth ruler levels (metres). 0 = ground surface. */
 const depthLevels = [0, 3, 6, 9, 12, 15, 18] as const;
@@ -368,9 +370,10 @@ export function HeroSection() {
               className="mt-6 md:mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 md:gap-4 w-full sm:w-auto"
             >
               <a
-                href="https://wa.me/966501850513"
+                href={contactInfo.whatsapp.getLink(locale)}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("hero", locale)}
                 className="group flex justify-center items-center gap-3 rounded-full bg-equipment-orange py-3 md:py-2 px-6 text-[15px] md:text-base font-semibold text-white shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
                 style={{ paddingInlineEnd: "0.5rem", paddingInlineStart: "1.75rem" }}
               >

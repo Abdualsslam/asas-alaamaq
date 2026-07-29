@@ -12,13 +12,17 @@ import { SafetySection } from "@/components/sections/SafetySection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { FinalCTASection } from "@/components/sections/FinalCTASection";
 import { Preloader } from "@/components/layout/Preloader";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
   return (
     <Preloader>
       <SmoothScroll>
         <Header />
         <main>
+          <JsonLd locale={locale} />
           <HeroSection />
           <RiskSection />
           <AboutSection />

@@ -8,6 +8,7 @@ import { Container } from "@/components/ui/Container";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
+import { trackPhoneClick, trackEmailClick, trackWhatsAppClick } from "@/lib/analytics";
 
 export function Footer() {
   const { t, locale, isRTL } = useTranslation();
@@ -57,6 +58,8 @@ export function Footer() {
               <a
                 href={contactInfo.whatsapp.getLink(locale)}
                 target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick("footer", locale)}
                 className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-equipment-orange hover:border-equipment-orange hover:text-white transition-all text-white/50"
                 aria-label="WhatsApp"
               >
@@ -64,6 +67,7 @@ export function Footer() {
               </a>
               <a
                 href={contactInfo.getMailtoLink(locale)}
+                onClick={() => trackEmailClick("footer", locale)}
                 className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-equipment-orange hover:border-equipment-orange hover:text-white transition-all text-white/50"
                 aria-label="Email"
               >
@@ -110,6 +114,7 @@ export function Footer() {
                 <li key={phone.raw}>
                   <a
                     href={`tel:${phone.raw}`}
+                    onClick={() => trackPhoneClick("footer", locale)}
                     className="flex items-start gap-4 text-white/60 hover:text-white transition-colors group"
                   >
                     <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-equipment-orange group-hover:text-white transition-colors border border-white/5 group-hover:border-equipment-orange text-white/50">
@@ -125,6 +130,7 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${contactInfo.email}`}
+                  onClick={() => trackEmailClick("footer", locale)}
                   className="flex items-start gap-4 text-white/60 hover:text-white transition-colors group"
                 >
                   <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-equipment-orange group-hover:text-white transition-colors border border-white/5 group-hover:border-equipment-orange text-white/50">

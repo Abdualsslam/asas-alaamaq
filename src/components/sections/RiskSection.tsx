@@ -149,6 +149,7 @@ export function RiskSection() {
                   width={1086}
                   height={1448}
                   className="w-full h-auto object-contain"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
                 />
               </div>

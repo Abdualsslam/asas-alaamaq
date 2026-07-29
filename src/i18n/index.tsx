@@ -3,11 +3,9 @@
 import {
   createContext,
   useContext,
-  useState,
-  useEffect,
-  useCallback,
   type ReactNode,
 } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { ar, type Translations } from "./translations/ar";
 import { en } from "./translations/en";
 
@@ -25,41 +23,30 @@ const translations: Record<Locale, Translations> = { ar, en };
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
-const STORAGE_KEY = "asas-lang";
+export function LanguageProvider({ children, locale }: { children: ReactNode; locale: Locale }) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("ar");
-  const [mounted, setMounted] = useState(false);
-
-  // On mount, read saved preference
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
-    if (saved === "ar" || saved === "en") {
-      setLocaleState(saved);
+  const setLocale = (newLocale: Locale) => {
+    if (newLocale === locale) return;
+    
+    const segments = pathname.split("/");
+    if (segments[1] === "ar" || segments[1] === "en") {
+      segments[1] = newLocale;
+    } else {
+      segments.splice(1, 0, newLocale);
     }
-    setMounted(true);
-  }, []);
+    
+    router.push(segments.join("/") || "/");
+  };
 
-  // Sync <html> attributes whenever locale changes
-  useEffect(() => {
-    if (!mounted) return;
-    const html = document.documentElement;
-    html.lang = locale;
-    html.dir = locale === "ar" ? "rtl" : "ltr";
-    localStorage.setItem(STORAGE_KEY, locale);
-  }, [locale, mounted]);
-
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
-  }, []);
-
-  const toggleLocale = useCallback(() => {
-    setLocaleState((prev) => (prev === "ar" ? "en" : "ar"));
-  }, []);
+  const toggleLocale = () => {
+    setLocale(locale === "ar" ? "en" : "ar");
+  };
 
   const value: LanguageContextType = {
     locale,
-    t: translations[locale],
+    t: translations[locale] || translations["ar"],
     toggleLocale,
     setLocale,
     isRTL: locale === "ar",

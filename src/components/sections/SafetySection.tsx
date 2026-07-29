@@ -61,7 +61,7 @@ export function SafetySection() {
             <div className="absolute -top-32 -left-32 w-80 h-80 bg-blue-500/10 blur-[100px] rounded-full" />
 
             <div className={cn("absolute bottom-0 w-full lg:w-[45%] h-[75%] lg:h-[90%] pointer-events-none select-none overflow-hidden", isRTL ? "left-0 rounded-bl-3xl" : "right-0 rounded-br-3xl")}>
-              <Image src="/images/safety_worker.webp" alt="" fill className="object-cover object-bottom opacity-20 lg:opacity-30 group-hover:opacity-45 transition-opacity duration-700"
+              <Image src="/images/safety_worker.webp" alt="" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-bottom opacity-20 lg:opacity-30 group-hover:opacity-45 transition-opacity duration-700"
                 style={{ WebkitMaskImage: `linear-gradient(to ${isRTL ? 'right' : 'left'}, black 30%, transparent 90%), linear-gradient(to top, black 85%, transparent 100%)`, maskImage: `linear-gradient(to ${isRTL ? 'right' : 'left'}, black 30%, transparent 90%), linear-gradient(to top, black 85%, transparent 100%)`, maskComposite: "intersect", WebkitMaskComposite: "source-in" }} />
             </div>
 

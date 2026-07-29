@@ -8,6 +8,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
+import { trackWhatsAppClick, trackEmailClick, trackPhoneClick } from "@/lib/analytics";
 
 export function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -128,6 +129,7 @@ export function FinalCTASection() {
                   href={contactInfo.whatsapp.getLink(locale)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick("final_cta", locale)}
                   className="flex items-center justify-between bg-gradient-to-r from-[#25D366] to-[#20BD5A] p-5 rounded-2xl transition-all shadow-lg shadow-[#25D366]/20 hover:shadow-[#25D366]/40 group/btn relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
@@ -147,6 +149,7 @@ export function FinalCTASection() {
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   href={contactInfo.getMailtoLink(locale)}
+                  onClick={() => trackEmailClick("final_cta", locale)}
                   className="flex items-center justify-between bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 p-5 rounded-2xl transition-all group/mail"
                 >
                   <div className="flex items-center gap-4">
@@ -168,6 +171,7 @@ export function FinalCTASection() {
                       <a
                         key={phone.raw}
                         href={`tel:${phone.raw}`}
+                        onClick={() => trackPhoneClick("final_cta", locale)}
                         className="flex items-center justify-center gap-3 hover:text-equipment-orange transition-colors text-white/80 bg-white/5 hover:bg-white/10 py-3 px-6 rounded-xl border border-white/5"
                         dir="ltr"
                       >

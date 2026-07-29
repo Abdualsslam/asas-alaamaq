@@ -140,7 +140,7 @@ export function CapabilitiesSection() {
           <div className="w-full lg:w-[42%] flex justify-center">
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, ease: "easeOut" }} className="relative w-full aspect-[4/3] max-w-[480px] lg:max-w-none">
               <div className="relative w-full h-full overflow-hidden rounded-2xl">
-                <Image src="/images/capabilities.webp" alt="" fill className="object-cover object-center opacity-90 select-none" style={{ WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 50%, black 20%, transparent 100%)", maskImage: "radial-gradient(ellipse 65% 55% at 50% 50%, black 20%, transparent 100%)" }} />
+                <Image src="/images/capabilities.webp" alt={titleParts.join(" ")} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center opacity-90 select-none" style={{ WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 50%, black 20%, transparent 100%)", maskImage: "radial-gradient(ellipse 65% 55% at 50% 50%, black 20%, transparent 100%)" }} />
               </div>
               <div className="absolute inset-0 pointer-events-none select-none">
                 <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#FAF8F5] to-transparent" />

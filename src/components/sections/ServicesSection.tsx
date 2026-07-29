@@ -8,6 +8,7 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
+import { trackServiceView } from "@/lib/analytics";
 
 const servicesMetadata = [
   {
@@ -170,7 +171,10 @@ export function ServicesSection() {
                   return (
                     <button
                       key={service.id}
-                      onClick={() => setActiveId(service.id)}
+                      onClick={() => {
+                        setActiveId(service.id);
+                        trackServiceView(service.id, locale);
+                      }}
                       className={cn("relative w-full cursor-pointer focus:outline-none transition-all duration-300", isRTL ? "text-right" : "text-left")}
                     >
                       <div className={`px-7 py-6 transition-all duration-300 flex flex-col gap-1.5 ${isActive ? "bg-white shadow-[inset_-3px_0_0_0_rgba(0,0,0,0.1),0_4px_24px_rgba(0,0,0,0.02)]" : "hover:bg-charcoal/[0.01]"}`}>
@@ -185,9 +189,9 @@ export function ServicesSection() {
 
                         <div className="flex items-center justify-between">
                           <div className={cn("flex flex-col", isRTL ? "items-start text-right" : "items-start text-left")}>
-                            <h4 className={`text-[17px] font-black transition-colors duration-300 ${isActive ? "text-charcoal" : "text-charcoal/60"}`}>
+                            <h3 className={`text-[17px] font-black transition-colors duration-300 ${isActive ? "text-charcoal" : "text-charcoal/60"}`}>
                               {locale === "ar" ? content.titleAr : content.titleEn}
-                            </h4>
+                            </h3>
                           </div>
                           <span
                             className={`text-[10px] font-mono transition-colors duration-300 ${isActive ? "font-bold" : "text-charcoal/30"}`}
@@ -282,9 +286,9 @@ export function ServicesSection() {
                       {/* Scope of Work */}
                       <div className="mt-8">
                         <div className="flex items-center justify-between border-b border-charcoal/[0.06] pb-3 mb-5">
-                          <h5 className="text-[11px] font-mono font-bold text-charcoal/40 uppercase tracking-widest">
+                          <h4 className="text-[11px] font-mono font-bold text-charcoal/40 uppercase tracking-widest">
                             [ {t.services.scopeOfWork} ]
-                          </h5>
+                          </h4>
                           <span className="text-[10px] font-mono font-bold" style={{ color: activeMeta.accentHex }}>
                             {(locale === "ar" ? activeContent.titleAr : activeContent.titleEn).toUpperCase()}
                           </span>
@@ -301,7 +305,7 @@ export function ServicesSection() {
                                 style={{ backgroundColor: `${activeMeta.accentHex}08`, borderColor: `${activeMeta.accentHex}18` }}
                               >
                                 <div className="relative w-4.5 h-4.5">
-                                  <Image src={activeMeta.iconPaths[idx]} alt={text} fill className="object-contain" />
+                                  <Image src={activeMeta.iconPaths[idx]} alt={text} fill sizes="32px" className="object-contain" />
                                 </div>
                               </div>
                               <span className="text-charcoal/80 font-bold text-[13px] leading-snug group-hover:text-charcoal transition-colors duration-300">
@@ -371,12 +375,15 @@ export function ServicesSection() {
                 >
                   <button
                     className={cn("w-full flex items-center justify-between p-5 cursor-pointer select-none focus:outline-none", isRTL ? "text-right" : "text-left")}
-                    onClick={() => setActiveId(service.id)}
+                    onClick={() => {
+                      setActiveId(service.id);
+                      trackServiceView(service.id, locale);
+                    }}
                   >
                     <div className={cn("flex flex-col", isRTL ? "items-start text-right" : "items-start text-left")}>
-                      <h4 className={`text-base font-black transition-colors ${isActive ? "text-charcoal" : "text-charcoal/70"}`}>
+                      <h3 className={`text-base font-black transition-colors ${isActive ? "text-charcoal" : "text-charcoal/70"}`}>
                         {locale === "ar" ? content.titleAr : content.titleEn}
-                      </h4>
+                      </h3>
                     </div>
                     <div className="flex items-center gap-2.5">
                       <ChevronLeft size={15} className={`transition-transform duration-300 text-charcoal/40 ${isActive ? "-rotate-90" : isRTL ? "rotate-180" : ""}`} />
@@ -413,13 +420,13 @@ export function ServicesSection() {
                           <p className="text-sm text-concrete-gray leading-relaxed">{content.description}</p>
 
                           <div className="flex flex-col gap-2.5">
-                            <h5 className="text-[10px] font-mono font-bold text-charcoal/40 tracking-wider">[ {t.services.serviceIncludes} ]</h5>
+                            <h4 className="text-[10px] font-mono font-bold text-charcoal/40 tracking-wider">[ {t.services.serviceIncludes} ]</h4>
                             <div className="flex flex-col gap-2">
                               {content.includes.map((text, idx) => (
                                 <div key={idx} className="flex items-center gap-3.5 p-3 rounded-xl bg-sand-light/10 border border-charcoal/[0.04]">
                                   <div className="w-8 h-8 rounded-lg flex items-center justify-center border flex-shrink-0" style={{ backgroundColor: `${service.accentHex}08`, borderColor: `${service.accentHex}18` }}>
                                     <div className="relative w-4 h-4">
-                                      <Image src={service.iconPaths[idx]} alt={text} fill className="object-contain" />
+                                      <Image src={service.iconPaths[idx]} alt={text} fill sizes="32px" className="object-contain" />
                                     </div>
                                   </div>
                                   <span className="text-charcoal/80 font-bold text-xs">{text}</span>

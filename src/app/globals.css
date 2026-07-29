@@ -1,48 +1,5 @@
 @import "tailwindcss";
 
-/* ===========================
-   FONT FACES - DIN Next LT Arabic
-   =========================== */
-
-@font-face {
-  font-family: "DIN Next LT Arabic";
-  src: url("/fonts/DINNextLTArabic-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Next LT Arabic";
-  src: url("/fonts/DINNextLTArabic-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Next LT Arabic";
-  src: url("/fonts/DINNextLTArabic-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Next LT Arabic";
-  src: url("/fonts/DINNextLTArabic-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN Next LT Arabic";
-  src: url("/fonts/DINNextLTArabic-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ===========================
    CSS VARIABLES
@@ -101,7 +58,7 @@
   --color-background: var(--color-background);
   --color-foreground: var(--color-foreground);
 
-  --font-brand: "DIN Next LT Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-brand: var(--font-din-next), "Segoe UI", Tahoma, sans-serif;
 }
 
 /* ===========================

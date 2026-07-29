@@ -7,6 +7,7 @@ import { X, ChevronLeft, ChevronRight, Camera, Layers, ZoomIn } from "lucide-rea
 import { Container } from "@/components/ui/Container";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
+import { trackProjectView } from "@/lib/analytics";
 
 const gallerySources = [
   { id: 1, src: "/images/gallary/img (1).webp" },
@@ -186,7 +187,7 @@ export function ProjectsSection() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [activeFilterIdx, setActiveFilterIdx] = useState<number>(0);
   const sectionRef = useRef<HTMLElement>(null);
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, locale } = useTranslation();
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -215,7 +216,10 @@ export function ProjectsSection() {
       ]
     : galleryImages.filter((img) => img.category === activeFilter);
 
-  const openLightbox = (index: number) => setLightboxIndex(index);
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    trackProjectView(filteredImages[index].label, locale);
+  };
   const closeLightbox = () => setLightboxIndex(null);
   const nextImage = () => setLightboxIndex((prev) => prev !== null ? (prev + 1) % filteredImages.length : null);
   const prevImage = () => setLightboxIndex((prev) => prev !== null ? (prev - 1 + filteredImages.length) % filteredImages.length : null);

@@ -59,6 +59,5 @@ export class Project {
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);
-ProjectSchema.index({ slug: 1 }, { unique: true });
 ProjectSchema.index({ status: 1, sortOrder: 1 });
 ProjectSchema.index({ categoryId: 1 });

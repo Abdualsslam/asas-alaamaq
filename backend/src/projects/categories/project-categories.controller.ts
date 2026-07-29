@@ -29,10 +29,7 @@ export class ProjectCategoriesController {
     return { data: await this.service.create(dto) };
   }
   @Patch(":id")
-  async update(
-    @Param("id") id: string,
-    @Body() dto: UpdateProjectCategoryDto,
-  ) {
+  async update(@Param("id") id: string, @Body() dto: UpdateProjectCategoryDto) {
     return { data: await this.service.update(id, dto) };
   }
   @Delete(":id")

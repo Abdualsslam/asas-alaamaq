@@ -2,17 +2,17 @@
 
 import { useRef } from "react";
 import { Mail, Phone, MapPin, HardHat, Building2, ChevronLeft, ChevronRight } from "lucide-react";
-import { contactInfo } from "@/data/contact";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
 import { Container } from "@/components/ui/Container";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
-import { cn } from "@/lib/utils";
 import { trackWhatsAppClick, trackEmailClick, trackPhoneClick } from "@/lib/analytics";
 
 export function FinalCTASection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { t, locale, isRTL } = useTranslation();
+  const { contactInfo } = useSiteSettings();
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -167,7 +167,7 @@ export function FinalCTASection() {
                 <div className="pt-8 mt-8 border-t border-white/5">
                   <div className="text-center text-white/40 text-sm mb-5 font-medium">{t.contact.callDirect}</div>
                   <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                    {contactInfo.phones.map((phone, idx) => (
+                    {contactInfo.phones.map((phone) => (
                       <a
                         key={phone.raw}
                         href={`tel:${phone.raw}`}

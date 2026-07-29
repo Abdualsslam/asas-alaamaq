@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import { validateSeedEnvironment } from "../config/env.validation";
 import { SeedModule } from "./seed.module";
 import { SeedService } from "./seed.service";

@@ -20,7 +20,7 @@ export function Preloader({ children }: PreloaderProps) {
     let videoReady = false;
 
     // Check if video is already flagged as loaded (e.g. from cached load)
-    if (typeof window !== "undefined" && (window as any).heroVideoLoaded) {
+    if (typeof window !== "undefined" && window.heroVideoLoaded) {
       videoReady = true;
     }
 
@@ -30,7 +30,7 @@ export function Preloader({ children }: PreloaderProps) {
         document.body.style.overflow = "";
         
         // Dispatch finished event to trigger video autoplay cross-fade
-        (window as any).preloaderFinished = true;
+        window.preloaderFinished = true;
         window.dispatchEvent(new Event("preloaderFinished"));
       }
     };

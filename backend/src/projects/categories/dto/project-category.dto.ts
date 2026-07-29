@@ -1,10 +1,5 @@
 import { PartialType } from "@nestjs/swagger";
-import {
-  IsInt,
-  IsString,
-  Matches,
-  MinLength,
-} from "class-validator";
+import { IsInt, IsString, Matches, MinLength } from "class-validator";
 import { SLUG_PATTERN } from "../../../common/constants";
 
 export class CreateProjectCategoryDto {

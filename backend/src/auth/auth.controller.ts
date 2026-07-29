@@ -12,10 +12,7 @@ import type { Response } from "express";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
 import { AuthGuard } from "./auth.guard";
-import {
-  AuthenticatedAdmin,
-  CurrentAdmin,
-} from "./current-admin.decorator";
+import { AuthenticatedAdmin, CurrentAdmin } from "./current-admin.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -59,12 +56,18 @@ export class AuthController {
   logout(@Res({ passthrough: true }) response: Response) {
     const cookieName =
       this.configService.get<string>("COOKIE_NAME") ?? "asas_admin_session";
+    const sameSiteValue =
+      this.configService.get<string>("COOKIE_SAME_SITE") ?? "lax";
+    const sameSite =
+      sameSiteValue === "none" || sameSiteValue === "strict"
+        ? sameSiteValue
+        : "lax";
     response.clearCookie(cookieName, {
       httpOnly: true,
       secure:
         this.configService.get<string>("COOKIE_SECURE") === "true" ||
         this.configService.get<string>("NODE_ENV") === "production",
-      sameSite: "lax",
+      sameSite,
       domain: this.configService.get<string>("COOKIE_DOMAIN") || undefined,
       path: "/api",
     });

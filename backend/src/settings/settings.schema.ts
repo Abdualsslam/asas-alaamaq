@@ -87,4 +87,3 @@ export class Settings {
 }
 
 export const SettingsSchema = SchemaFactory.createForClass(Settings);
-SettingsSchema.index({ key: 1 }, { unique: true });

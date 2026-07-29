@@ -2,8 +2,8 @@ import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import cookieParser from "cookie-parser";
-import express from "express";
+import * as cookieParser from "cookie-parser";
+import * as express from "express";
 import { AppModule } from "./app.module";
 import { ApiExceptionFilter } from "./common/filters/api-exception.filter";
 import { validationExceptionFactory } from "./common/validation";
@@ -42,9 +42,7 @@ async function bootstrap() {
       .setTitle("ASAS AL-AAMAQ CMS API")
       .setDescription("Minimal CMS API")
       .setVersion("1.0")
-      .addCookieAuth(
-        config.get<string>("COOKIE_NAME") ?? "asas_admin_session",
-      )
+      .addCookieAuth(config.get<string>("COOKIE_NAME") ?? "asas_admin_session")
       .build();
     SwaggerModule.setup(
       "api/docs",

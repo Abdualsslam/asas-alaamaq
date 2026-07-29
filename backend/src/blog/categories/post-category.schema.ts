@@ -23,4 +23,3 @@ export class PostCategory {
 }
 
 export const PostCategorySchema = SchemaFactory.createForClass(PostCategory);
-PostCategorySchema.index({ slug: 1 }, { unique: true });

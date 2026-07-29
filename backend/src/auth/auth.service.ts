@@ -1,10 +1,7 @@
-import {
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { JwtService } from "@nestjs/jwt";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import { Model } from "mongoose";
 import { Admin, AdminDocument } from "../admins/admin.schema";
 

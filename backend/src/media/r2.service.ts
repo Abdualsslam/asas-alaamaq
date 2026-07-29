@@ -24,10 +24,10 @@ export class R2Service {
         "R2_ACCOUNT_ID",
       )}.r2.cloudflarestorage.com`,
       credentials: {
-        accessKeyId:
-          this.configService.getOrThrow<string>("R2_ACCESS_KEY_ID"),
-        secretAccessKey:
-          this.configService.getOrThrow<string>("R2_SECRET_ACCESS_KEY"),
+        accessKeyId: this.configService.getOrThrow<string>("R2_ACCESS_KEY_ID"),
+        secretAccessKey: this.configService.getOrThrow<string>(
+          "R2_SECRET_ACCESS_KEY",
+        ),
       },
     });
   }

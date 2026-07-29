@@ -62,7 +62,6 @@ export class Post {
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
-PostSchema.index({ slug: 1 }, { unique: true });
 PostSchema.index({ status: 1, publishedAt: -1 });
 PostSchema.index({ categoryId: 1 });
 PostSchema.index({ createdAt: -1 });

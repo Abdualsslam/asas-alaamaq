@@ -2,25 +2,29 @@
 
 import Image from "next/image";
 import { Phone, Mail, MapPin, ChevronLeft, ChevronRight, ArrowUp } from "lucide-react";
-import { navItems } from "@/data/navigation";
-import { contactInfo } from "@/data/contact";
+import { navItems, resolveNavHref } from "@/data/navigation";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { trackPhoneClick, trackEmailClick, trackWhatsAppClick } from "@/lib/analytics";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
   const { t, locale, isRTL } = useTranslation();
+  const pathname = usePathname();
+  const { contactInfo } = useSiteSettings();
 
-  const navLabels = [
-    t.nav.home,
-    t.nav.about,
-    t.nav.services,
-    t.nav.methodology,
-    t.nav.projects,
-    t.nav.contact,
-  ];
+  const navLabels: Record<string, string> = {
+    "#hero": t.nav.home,
+    "#about": t.nav.about,
+    "#services": t.nav.services,
+    "#execution": t.nav.methodology,
+    "#projects": t.nav.projects,
+    "/blog": t.nav.blog,
+    "#contact": t.nav.contact,
+  };
 
   const Chevron = isRTL ? ChevronLeft : ChevronRight;
   const location = contactInfo.location[locale];
@@ -83,10 +87,10 @@ export function Footer() {
               {t.footer.quickLinks}
             </h3>
             <ul className="flex flex-col gap-3">
-              {navItems.map((item, idx) => (
+              {navItems.map((item) => (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={resolveNavHref(item.href, locale, pathname)}
                     className="flex items-center gap-2 text-white/50 hover:text-white group transition-colors duration-300 w-fit"
                   >
                     <Chevron size={14} className={cn(
@@ -96,7 +100,7 @@ export function Footer() {
                     <span className={cn(
                       "transform transition-transform",
                       isRTL ? "group-hover:-translate-x-1" : "group-hover:translate-x-1"
-                    )}>{navLabels[idx]}</span>
+                    )}>{navLabels[item.href]}</span>
                   </a>
                 </li>
               ))}

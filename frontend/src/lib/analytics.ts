@@ -1,6 +1,9 @@
 import { sendGTMEvent } from '@next/third-parties/google';
 
-export const trackEvent = (eventName: string, data?: Record<string, any>) => {
+export const trackEvent = (
+  eventName: string,
+  data?: Record<string, string | number | boolean | undefined>,
+) => {
   if (typeof window !== 'undefined') {
     sendGTMEvent({ event: eventName, ...data });
   }

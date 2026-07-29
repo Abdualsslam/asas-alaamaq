@@ -9,8 +9,8 @@ import {
   type Variants,
 } from "framer-motion";
 import { Menu, X, Phone, ArrowLeft, ArrowRight, Globe } from "lucide-react";
-import { navItems } from "@/data/navigation";
-import { contactInfo } from "@/data/contact";
+import { navItems, resolveNavHref } from "@/data/navigation";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
 import { cn } from "@/lib/utils";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
@@ -55,9 +55,11 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("hero");
   const reduceMotion = useReducedMotion();
-  const headerRevealDelay = reduceMotion ? 0 : 3;
   const { t, locale, isRTL } = useTranslation();
   const pathname = usePathname();
+  const isLanding = pathname === `/${locale}` || pathname === `/${locale}/`;
+  const headerRevealDelay = reduceMotion || !isLanding ? 0 : 3;
+  const { contactInfo } = useSiteSettings();
 
   const targetLocale = locale === "ar" ? "en" : "ar";
   const getTargetHref = () => {
@@ -72,14 +74,15 @@ export function Header() {
   };
   const targetHref = getTargetHref();
 
-  const navLabels = [
-    t.nav.home,
-    t.nav.about,
-    t.nav.services,
-    t.nav.methodology,
-    t.nav.projects,
-    t.nav.contact,
-  ];
+  const navLabels: Record<string, string> = {
+    "#hero": t.nav.home,
+    "#about": t.nav.about,
+    "#services": t.nav.services,
+    "#execution": t.nav.methodology,
+    "#projects": t.nav.projects,
+    "/blog": t.nav.blog,
+    "#contact": t.nav.contact,
+  };
 
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
@@ -93,6 +96,7 @@ export function Header() {
   // Scroll-spy
   useEffect(() => {
     const sections = navItems
+      .filter((item) => item.href.startsWith("#"))
       .map((item) => document.getElementById(item.href.slice(1)))
       .filter((el): el is HTMLElement => el !== null);
     if (sections.length === 0) return;
@@ -141,7 +145,7 @@ export function Header() {
         >
           {/* Logo */}
           <a
-            href="#hero"
+            href={resolveNavHref("#hero", locale, pathname)}
             className="flex items-center gap-3 md:gap-3.5 flex-shrink-0"
             aria-label={t.header.brandSub}
           >
@@ -182,12 +186,15 @@ export function Header() {
 
           {/* Desktop Navigation — Center */}
           <ul className="hidden lg:flex items-center gap-2 flex-1 justify-center">
-            {navItems.map((item, idx) => {
-              const isActive = activeId === item.href.slice(1);
+            {navItems.filter((item) => item.href !== "/blog").map((item) => {
+              const href = resolveNavHref(item.href, locale, pathname);
+              const isActive = item.href.startsWith("#")
+                ? activeId === item.href.slice(1)
+                : pathname === href;
               return (
                 <li key={item.href} className="relative">
                   <a
-                    href={item.href}
+                    href={href}
                     aria-current={isActive ? "page" : undefined}
                     className="group relative px-4 py-2.5 text-[14px] block transition-colors"
                   >
@@ -203,7 +210,7 @@ export function Header() {
                             : "font-medium text-white/75 group-hover:text-white"
                       )}
                     >
-                      {navLabels[idx]}
+                      {navLabels[item.href]}
                     </span>
 
                     {/* Hover Line */}
@@ -261,7 +268,7 @@ export function Header() {
 
             {/* CTA */}
             <a
-              href="#contact"
+              href={resolveNavHref("#contact", locale, pathname)}
               onClick={() => trackContactCtaClick("header_desktop", locale)}
               className="group inline-flex items-center gap-3 rounded-full bg-equipment-orange py-1.5 text-sm font-semibold text-white! shadow-lg shadow-equipment-orange/25 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c25f24] hover:shadow-xl hover:shadow-equipment-orange/40"
               style={{ paddingInlineStart: "1.5rem", paddingInlineEnd: "0.5rem" }}
@@ -347,14 +354,14 @@ export function Header() {
                 className="flex-1 overflow-y-auto px-4 py-6"
               >
                 <ul className="flex flex-col gap-1">
-                  {navItems.map((item, idx) => (
+                  {navItems.map((item) => (
                     <motion.li key={item.href} variants={isRTL ? itemVariants : itemVariantsLTR}>
                       <a
-                        href={item.href}
+                        href={resolveNavHref(item.href, locale, pathname)}
                         onClick={closeMenu}
                         className="flex items-center justify-between rounded-lg px-4 py-3 text-base font-medium text-charcoal transition-colors hover:bg-earth-brown/5 hover:text-earth-brown"
                       >
-                        {navLabels[idx]}
+                        {navLabels[item.href]}
                         <ArrowIcon size={16} className="text-earth-brown/40" />
                       </a>
                     </motion.li>

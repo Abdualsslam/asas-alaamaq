@@ -13,6 +13,7 @@ export const ar = {
     services: "خدماتنا",
     methodology: "منهجيتنا",
     projects: "أعمالنا",
+    blog: "المدونة",
     contact: "تواصل معنا",
   },
 

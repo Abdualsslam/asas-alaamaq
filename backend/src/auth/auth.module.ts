@@ -14,9 +14,7 @@ import { AuthService } from "./auth.service";
       inject: [ConfigService],
       useFactory: (configService: ConfigService): JwtModuleOptions => {
         const expiresIn = (configService.get<string>("JWT_EXPIRES_IN") ??
-          "12h") as NonNullable<
-          JwtModuleOptions["signOptions"]
-        >["expiresIn"];
+          "12h") as NonNullable<JwtModuleOptions["signOptions"]>["expiresIn"];
         return {
           secret: configService.getOrThrow<string>("JWT_SECRET"),
           signOptions: { expiresIn },

@@ -19,7 +19,7 @@ import { SlotText } from "slot-text/react";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "@/i18n";
-import { contactInfo } from "@/data/contact";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
 /** Depth ruler levels (metres). 0 = ground surface. */
@@ -89,6 +89,7 @@ export function HeroSection() {
   const [revealed, setRevealed] = useState(false);
   const [rulerReady, setRulerReady] = useState(false);
   const { t, isRTL, locale } = useTranslation();
+  const { contactInfo } = useSiteSettings();
 
   const CtaArrow = isRTL ? ArrowLeft : ArrowRight;
 
@@ -110,17 +111,20 @@ export function HeroSection() {
     };
     window.addEventListener("preloaderFinished", handlePreloaderDone);
     
-    if (typeof window !== "undefined" && (window as any).preloaderFinished) {
-      setPreloaderDone(true);
-    }
+    const initialTimer = window.preloaderFinished
+      ? window.setTimeout(handlePreloaderDone, 0)
+      : undefined;
     
-    return () => window.removeEventListener("preloaderFinished", handlePreloaderDone);
+    return () => {
+      window.removeEventListener("preloaderFinished", handlePreloaderDone);
+      if (initialTimer) window.clearTimeout(initialTimer);
+    };
   }, []);
 
   useEffect(() => {
     const video = videoRef.current;
     if (video && video.readyState >= 3) {
-      (window as any).heroVideoLoaded = true;
+      window.heroVideoLoaded = true;
       window.dispatchEvent(new Event("heroVideoLoaded"));
     }
   }, []);
@@ -155,8 +159,8 @@ export function HeroSection() {
     if (!preloaderDone) return;
     
     if (reduceMotion) {
-      setRevealed(true);
-      return;
+      const revealTimer = window.setTimeout(() => setRevealed(true), 0);
+      return () => window.clearTimeout(revealTimer);
     }
     
     const t2 = window.setTimeout(() => setRevealed(true), 3700);
@@ -193,7 +197,7 @@ export function HeroSection() {
             preload="auto"
             aria-hidden="true"
             onCanPlay={() => {
-              (window as any).heroVideoLoaded = true;
+              window.heroVideoLoaded = true;
               window.dispatchEvent(new Event("heroVideoLoaded"));
             }}
             onEnded={() => setRevealed(true)}

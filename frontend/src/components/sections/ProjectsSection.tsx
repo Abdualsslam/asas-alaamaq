@@ -8,24 +8,18 @@ import { Container } from "@/components/ui/Container";
 import { useTranslation } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { trackProjectView } from "@/lib/analytics";
+import { projectGalleryFallback } from "@/data/project-gallery-fallback";
+import type { GalleryProject } from "@/lib/adapters/project-gallery";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
+import { findSettingStat } from "@/lib/adapters/site-settings";
 
-const gallerySources = [
-  { id: 1, src: "/images/gallary/img (1).webp" },
-  { id: 2, src: "/images/gallary/img (2).webp" },
-  { id: 3, src: "/images/gallary/img (3).webp" },
-  { id: 4, src: "/images/gallary/img (4).webp" },
-  { id: 5, src: "/images/gallary/img (5).webp" },
-  { id: 6, src: "/images/gallary/img (6).webp" },
-  { id: 7, src: "/images/gallary/img (7).webp" },
-  { id: 8, src: "/images/gallary/img (8).webp" },
-  { id: 9, src: "/images/gallary/img (9).webp" },
-  { id: 10, src: "/images/gallary/img (10).webp" },
-  { id: 11, src: "/images/gallary/img (12).webp" },
-  { id: 12, src: "/images/gallary/img (11).webp" },
-  { id: 13, src: "/images/gallary/img (13).webp" },
-  { id: 14, src: "/images/gallary/img (14).webp" },
-  { id: 15, src: "/images/gallary/img (15).webp" },
-];
+type GalleryDisplayItem = {
+  id: number;
+  src: string;
+  label: string;
+  category: string;
+  projectId?: string;
+};
 
 function getCardLayout(index: number, totalCount: number): string {
   const heightClass = "h-[320px] md:h-[360px]";
@@ -152,7 +146,7 @@ function GalleryCard({
   );
 }
 
-function Lightbox({ images, labels, categories, currentIndex, onClose, onNext, onPrev, onGoTo }: { images: typeof gallerySources; labels: string[]; categories: string[]; currentIndex: number; onClose: () => void; onNext: () => void; onPrev: () => void; onGoTo: (i: number) => void }) {
+function Lightbox({ images, labels, categories, currentIndex, onClose, onNext, onPrev, onGoTo }: { images: GalleryDisplayItem[]; labels: string[]; categories: string[]; currentIndex: number; onClose: () => void; onNext: () => void; onPrev: () => void; onGoTo: (i: number) => void }) {
   const current = images[currentIndex];
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); if (e.key === "ArrowLeft") onNext(); if (e.key === "ArrowRight") onPrev(); };
@@ -183,11 +177,14 @@ function Lightbox({ images, labels, categories, currentIndex, onClose, onNext, o
   );
 }
 
-export function ProjectsSection() {
+export function ProjectsSection({ initialProjects }: { initialProjects?: GalleryProject[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [activeFilterIdx, setActiveFilterIdx] = useState<number>(0);
   const sectionRef = useRef<HTMLElement>(null);
   const { t, isRTL, locale } = useTranslation();
+  const { settings } = useSiteSettings();
+  const yearsExperience =
+    findSettingStat(settings, "years-experience")?.value ?? 10;
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const bgY1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -196,12 +193,14 @@ export function ProjectsSection() {
   const categories = t.projects.categories;
   const imagesMeta = t.projects.images;
 
-  // Build gallery images with translations
-  const galleryImages = gallerySources.map((src, idx) => ({
-    ...src,
-    label: imagesMeta[idx]?.label ?? "",
-    category: imagesMeta[idx]?.category ?? "",
-  }));
+  // Keep the approved local gallery as the exact fallback renderer input.
+  const galleryImages: GalleryDisplayItem[] = initialProjects?.length
+    ? initialProjects
+    : projectGalleryFallback.map((src, idx) => ({
+        ...src,
+        label: imagesMeta[idx]?.label ?? "",
+        category: imagesMeta[idx]?.category ?? "",
+      }));
 
   const activeFilter = categories[activeFilterIdx];
 
@@ -255,7 +254,7 @@ export function ProjectsSection() {
               </div>
               <div className="w-px bg-white/10 hidden lg:block" />
               <div className={cn("lg:text-left", isRTL ? "text-center" : "text-center")}>
-                <div className="flex items-center gap-2 mb-1"><Camera size={18} className="text-earth-brown" /><span className="text-3xl font-black text-white tabular-nums">+10</span></div>
+                <div className="flex items-center gap-2 mb-1"><Camera size={18} className="text-earth-brown" /><span className="text-3xl font-black text-white tabular-nums">+{yearsExperience}</span></div>
                 <span className="text-gray-500 text-sm font-medium">{t.projects.yearsExperience}</span>
               </div>
             </div>
@@ -272,7 +271,7 @@ export function ProjectsSection() {
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((image, index) => (
-                <GalleryCard key={image.id} image={image} index={index} onOpen={() => openLightbox(index)} layoutClass={getCardLayout(index, filteredImages.length)} label={image.label} category={image.category} brandWatermark={t.projects.brandWatermark} />
+                <GalleryCard key={image.projectId ?? image.id} image={image} index={index} onOpen={() => openLightbox(index)} layoutClass={getCardLayout(index, filteredImages.length)} label={image.label} category={image.category} brandWatermark={t.projects.brandWatermark} />
               ))}
             </AnimatePresence>
           </motion.div>

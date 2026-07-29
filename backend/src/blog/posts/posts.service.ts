@@ -13,10 +13,7 @@ import {
   PostCategoryDocument,
 } from "../categories/post-category.schema";
 import { CreatePostDto, UpdatePostDto } from "./dto/post.dto";
-import {
-  AdminPostQueryDto,
-  PublicPostQueryDto,
-} from "./dto/post-query.dto";
+import { AdminPostQueryDto, PublicPostQueryDto } from "./dto/post-query.dto";
 import { Post, PostDocument } from "./post.schema";
 
 @Injectable()

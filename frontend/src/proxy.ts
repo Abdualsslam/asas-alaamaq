@@ -7,6 +7,15 @@ const defaultLocale = "ar";
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (
+    pathname === "/sitemap.xml" ||
+    pathname === "/robots.txt" ||
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/")
+  ) {
+    return NextResponse.next();
+  }
+
   // Check if the path is missing a locale
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`

@@ -11,10 +11,7 @@ function flattenErrors(
       field,
       message,
     }));
-    return [
-      ...ownErrors,
-      ...flattenErrors(error.children ?? [], field),
-    ];
+    return [...ownErrors, ...flattenErrors(error.children ?? [], field)];
   });
 }
 

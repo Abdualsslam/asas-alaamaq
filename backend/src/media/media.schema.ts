@@ -33,5 +33,4 @@ export class Media {
 }
 
 export const MediaSchema = SchemaFactory.createForClass(Media);
-MediaSchema.index({ storageKey: 1 }, { unique: true });
 MediaSchema.index({ createdAt: -1 });

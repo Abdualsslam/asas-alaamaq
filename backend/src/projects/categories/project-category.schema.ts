@@ -24,5 +24,3 @@ export class ProjectCategory {
 
 export const ProjectCategorySchema =
   SchemaFactory.createForClass(ProjectCategory);
-ProjectCategorySchema.index({ slug: 1 }, { unique: true });
-ProjectCategorySchema.index({ sortOrder: 1 });

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectModel } from "@nestjs/mongoose";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import { imageSize } from "image-size";
 import { Model } from "mongoose";
 import { readFile, stat } from "node:fs/promises";
@@ -15,11 +15,7 @@ import {
 } from "../projects/categories/project-category.schema";
 import { Project, ProjectDocument } from "../projects/project.schema";
 import { Settings, SettingsDocument } from "../settings/settings.schema";
-import {
-  initialSettings,
-  legacyGallery,
-  projectCategories,
-} from "./seed-data";
+import { initialSettings, legacyGallery, projectCategories } from "./seed-data";
 
 export interface SeedReport {
   admin: "created" | "existing";
@@ -181,23 +177,18 @@ export class SeedService {
     );
     const legacySlugs = legacyGallery.map((item) => item.slug);
     const categorySlugs = projectCategories.map((category) => category.slug);
-    const [
-      categoryCount,
-      mediaCount,
-      projectCount,
-      settingsCount,
-      projects,
-    ] = await Promise.all([
-      this.categoryModel.countDocuments({ slug: { $in: categorySlugs } }),
-      this.mediaModel.countDocuments({ storageKey: { $in: legacyKeys } }),
-      this.projectModel.countDocuments({ slug: { $in: legacySlugs } }),
-      this.settingsModel.countDocuments({ key: "main" }),
-      this.projectModel
-        .find({ slug: { $in: legacySlugs } })
-        .select("coverMediaId")
-        .lean()
-        .exec(),
-    ]);
+    const [categoryCount, mediaCount, projectCount, settingsCount, projects] =
+      await Promise.all([
+        this.categoryModel.countDocuments({ slug: { $in: categorySlugs } }),
+        this.mediaModel.countDocuments({ storageKey: { $in: legacyKeys } }),
+        this.projectModel.countDocuments({ slug: { $in: legacySlugs } }),
+        this.settingsModel.countDocuments({ key: "main" }),
+        this.projectModel
+          .find({ slug: { $in: legacySlugs } })
+          .select("coverMediaId")
+          .lean()
+          .exec(),
+      ]);
     let brokenMediaRefs = 0;
     for (const project of projects) {
       if (

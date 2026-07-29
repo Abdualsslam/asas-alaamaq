@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { contactInfo } from "@/data/contact";
+import { useSiteSettings } from "@/components/providers/SiteSettingsProvider";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { useTranslation } from "@/i18n";
 import { trackWhatsAppClick } from "@/lib/analytics";
@@ -10,6 +10,7 @@ import { trackWhatsAppClick } from "@/lib/analytics";
 export function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(false);
   const { t, locale } = useTranslation();
+  const { contactInfo } = useSiteSettings();
 
   useEffect(() => {
     // Show after hero animation (approx 3.2s) or if scrolled
@@ -18,12 +19,13 @@ export function WhatsAppButton() {
       if (window.scrollY > 100) setIsVisible(true);
     };
     
-    // Check initial scroll position
-    if (window.scrollY > 100) setIsVisible(true);
+    // Check initial scroll position after the effect has subscribed.
+    const initialTimer = window.setTimeout(handleScroll, 0);
     
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       clearTimeout(timer);
+      clearTimeout(initialTimer);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);

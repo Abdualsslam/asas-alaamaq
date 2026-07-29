@@ -12,10 +12,7 @@ import {
   CreatePostCategoryDto,
   UpdatePostCategoryDto,
 } from "./dto/post-category.dto";
-import {
-  PostCategory,
-  PostCategoryDocument,
-} from "./post-category.schema";
+import { PostCategory, PostCategoryDocument } from "./post-category.schema";
 
 @Injectable()
 export class PostCategoriesService {

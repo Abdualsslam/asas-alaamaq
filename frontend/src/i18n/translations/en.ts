@@ -15,6 +15,7 @@ export const en: Translations = {
     services: "Services",
     methodology: "Methodology",
     projects: "Projects",
+    blog: "Blog",
     contact: "Contact",
   },
 

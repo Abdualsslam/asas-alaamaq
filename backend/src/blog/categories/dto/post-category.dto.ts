@@ -18,6 +18,4 @@ export class CreatePostCategoryDto {
   slug!: string;
 }
 
-export class UpdatePostCategoryDto extends PartialType(
-  CreatePostCategoryDto,
-) {}
+export class UpdatePostCategoryDto extends PartialType(CreatePostCategoryDto) {}

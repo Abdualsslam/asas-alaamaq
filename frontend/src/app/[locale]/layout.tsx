@@ -7,11 +7,11 @@ import { GoogleTagManager } from '@next/third-parties/google';
 
 const dinNext = localFont({
   src: [
-    { path: "../../public/fonts/DINNextLTArabic-Light.ttf", weight: "300", style: "normal" },
-    { path: "../../public/fonts/DINNextLTArabic-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/DINNextLTArabic-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/DINNextLTArabic-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/DINNextLTArabic-Black.ttf", weight: "900", style: "normal" },
+    { path: "../../../public/fonts/DINNextLTArabic-Light.ttf", weight: "300", style: "normal" },
+    { path: "../../../public/fonts/DINNextLTArabic-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../../public/fonts/DINNextLTArabic-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../../public/fonts/DINNextLTArabic-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../../../public/fonts/DINNextLTArabic-Black.ttf", weight: "900", style: "normal" },
   ],
   variable: "--font-din-next",
   display: "swap",

@@ -186,7 +186,7 @@ export function Header() {
 
           {/* Desktop Navigation — Center */}
           <ul className="hidden lg:flex items-center gap-2 flex-1 justify-center">
-            {navItems.filter((item) => item.href !== "/blog").map((item) => {
+            {navItems.map((item) => {
               const href = resolveNavHref(item.href, locale, pathname);
               const isActive = item.href.startsWith("#")
                 ? activeId === item.href.slice(1)

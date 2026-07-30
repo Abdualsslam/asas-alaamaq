@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Install dependencies first for better caching
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the application
 COPY . .
@@ -23,7 +23,7 @@ RUN apk add --no-cache curl
 
 # Copy package files and install only production dependencies
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm ci --only=production
 
 # Copy built application from the builder stage
 COPY --from=builder /app/dist ./dist

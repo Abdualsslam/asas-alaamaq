@@ -36,7 +36,7 @@ EXPOSE ${PORT}
 
 # Healthcheck using curl to verify the server is accepting connections
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -s -o /dev/null http://localhost:${PORT}/api/ || exit 1
+  CMD curl -f http://localhost:${PORT}/api/health || exit 1
 
 # Start the application
 CMD ["npm", "run", "start:prod"]

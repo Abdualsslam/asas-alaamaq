@@ -8,6 +8,7 @@ import { MediaModule } from "./media/media.module";
 import { ProjectsModule } from "./projects/projects.module";
 import { PublicModule } from "./public/public.module";
 import { SettingsModule } from "./settings/settings.module";
+import { HealthModule } from "./health/health.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SettingsModule } from "./settings/settings.module";
     MediaModule,
     SettingsModule,
     PublicModule,
+    HealthModule,
   ],
 })
 export class AppModule {}
